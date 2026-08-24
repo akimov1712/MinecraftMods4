@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="showcase_section_pick">Mod du jour</string>
+    <string name="showcase_section_pick_subtitle">Une sélection différente chaque jour</string>
+    <string name="showcase_pick_badge">MOD DU JOUR</string>
+    <string name="showcase_pick_action">Ouvrir le mod</string>
+    <string name="showcase_section_trending">Tendances</string>
+    <string name="showcase_section_trending_subtitle">Ce que tout le monde installe</string>
+    <string name="showcase_section_popular">Populaires</string>
+    <string name="showcase_section_popular_subtitle">Les plus téléchargés</string>
+    <string name="showcase_section_fresh">Nouveautés</string>
+    <string name="showcase_section_fresh_subtitle">Tout juste ajoutés au catalogue</string>
+    <string name="showcase_section_top_rated">Mieux notés</string>
+    <string name="showcase_section_top_rated_subtitle">Les meilleures notes des joueurs</string>
+    <string name="showcase_see_all">Tout</string>
+    <string name="showcase_stat_catalog">Au catalogue</string>
+    <string name="showcase_stat_saved">Enregistrés</string>
+    <string name="showcase_stat_rating">Note du top</string>
+    <string name="showcase_fresh_badge">NOUVEAU</string>
+    <string name="showcase_versions_title">Versions de Minecraft prises en charge</string>
+    <string name="showcase_tip_title">Astuce du jour</string>
+    <string name="showcase_footer_title">C\'est tout pour aujourd\'hui</string>
+    <string name="showcase_footer_body">%1$s mods au catalogue, et ça continue</string>
+    <string name="showcase_browse_back">Retour</string>
+    <string name="showcase_browse_count">%1$s trouvés</string>
+    <string name="showcase_browse_retry">Réessayer</string>
+    <string-array name="showcase_tips">
+        <item>Touchez le marque-page d\'un mod pour l\'enregistrer.</item>
+        <item>Les fichiers téléchargés s\'ouvrent directement dans Minecraft.</item>
+        <item>Vérifiez les versions prises en charge avant d\'installer.</item>
+        <item>Le mod du jour change à minuit : revenez demain.</item>
+        <item>Les cartes rejoignent vos mondes, les skins la garde-robe.</item>
+    </string-array>
+    <string name="search_hint">Mods, cartes, skins…</string>
+    <string name="search_back">Retour</string>
+    <string name="search_empty_title">Aucun résultat</string>
+    <string name="search_empty_body">Essayez un mot plus court ou différent.</string>
+    <string name="search_suggestions_hint">Le temps de choisir — ce que tout le monde installe</string>
+</resources>

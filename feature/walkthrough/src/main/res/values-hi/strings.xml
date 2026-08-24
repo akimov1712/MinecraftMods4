@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="walkthrough_title">इंस्टॉल कैसे करें</string>
+    <string name="walkthrough_step_label">चरण %1$d</string>
+    <string name="walkthrough_s1_title">कोई कंटेंट चुनें</string>
+    <string name="walkthrough_s1_text">कैटलॉग से कोई भी कंटेंट खोलें और «फ़ाइलें प्राप्त करें» पर टैप करें।</string>
+    <string name="walkthrough_s2_title">फ़ाइल डाउनलोड करें</string>
+    <string name="walkthrough_s2_text">«डाउनलोड» पर टैप करें और फ़ाइल सहेजे जाने तक प्रतीक्षा करें।</string>
+    <string name="walkthrough_s3_title">«इंस्टॉल» पर टैप करें</string>
+    <string name="walkthrough_s3_text">सहेजने के बाद «इंस्टॉल» पर टैप करें — सिस्टम पूछता है कि फ़ाइल किस ऐप से खोलें।</string>
+    <string name="walkthrough_s4_title">Minecraft चुनें</string>
+    <string name="walkthrough_s4_text">सूची से Minecraft चुनें। गेम खुलकर कंटेंट आयात करता है।</string>
+    <string name="walkthrough_s5_title">आयात की प्रतीक्षा करें</string>
+    <string name="walkthrough_s5_text">Minecraft आयात की प्रगति दिखाता है। इसे पूरा होने दें।</string>
+    <string name="walkthrough_s6_title">अपने वर्ल्ड में सक्षम करें</string>
+    <string name="walkthrough_s6_text">वर्ल्ड सेटिंग्स में पैक को रिसोर्स या बिहेवियर पैक के रूप में जोड़ें।</string>
+    <string name="walkthrough_s7_title">आनंद लें!</string>
+    <string name="walkthrough_s7_text">वर्ल्ड शुरू करें और अपने नए कंटेंट का आनंद लें। पहले महत्वपूर्ण वर्ल्ड का बैकअप लें।</string>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="compendium_title">FAQ</string>
+    <string name="compendium_search_hint">FAQ durchsuchen</string>
+    <string name="compendium_empty">Keine Antworten passen zu deiner Suche</string>
+    <string name="faq_group_start">Erste Schritte</string>
+    <string name="faq_group_install">Installation</string>
+    <string name="faq_group_ingame">Im Spiel</string>
+    <string name="faq_group_app">Über die App</string>
+    <string name="faq_group_content">Inhalte &amp; Sicherheit</string>
+    <string name="faq_what_q">Was macht diese App?</string>
+    <string name="faq_what_a">Du kannst kostenlose Inhalte — Addons, Karten, Texturen und Skins — für Minecraft durchsuchen und installieren.</string>
+    <string name="faq_internet_q">Brauche ich eine Internetverbindung?</string>
+    <string name="faq_internet_a">Ja, zum Durchsuchen und Herunterladen. Eine gespeicherte Datei kannst du offline installieren.</string>
+    <string name="faq_how_q">Wie installiere ich einen Inhalt?</string>
+    <string name="faq_how_a">Öffne einen Inhalt, tippe auf „Dateien holen“, lade die Datei herunter und tippe auf „Installieren“ — Minecraft öffnet sich und importiert sie automatisch.</string>
+    <string name="faq_fail_q">Die Installation hat nicht funktioniert. Was nun?</string>
+    <string name="faq_fail_a">Stelle sicher, dass Minecraft installiert und aktuell ist, und versuche es dann erneut.</string>
+    <string name="faq_stuck_q">Mein Download hängt.</string>
+    <string name="faq_stuck_a">Manche Dateien liegen auf Servern, die in einigen Regionen langsam sind. Ein VPN hilft oft.</string>
+    <string name="faq_hidden_q">Installiert, aber ich finde es im Spiel nicht.</string>
+    <string name="faq_hidden_a">Aktiviere das Paket in den Welteinstellungen und schalte nötige experimentelle Optionen ein.</string>
+    <string name="faq_lag_q">Das Spiel ruckelt nach der Installation.</string>
+    <string name="faq_lag_a">Große Addons brauchen mehr Ressourcen. Verringere die Sichtweite oder entferne andere Pakete.</string>
+    <string name="faq_ads_q">Warum gibt es Werbung?</string>
+    <string name="faq_ads_a">Werbung hält die App und alle Inhalte vollständig kostenlos.</string>
+    <string name="faq_free_q">Ist alles kostenlos?</string>
+    <string name="faq_free_a">Ja — jeder Inhalt im Katalog ist kostenlos zum Herunterladen und Installieren.</string>
+    <string name="faq_fresh_q">Wie oft kommen neue Inhalte dazu?</string>
+    <string name="faq_fresh_a">Der Katalog wird regelmäßig mit neuen Inhalten aktualisiert.</string>
+    <string name="faq_safe_q">Sind die Dateien sicher für meine Welten?</string>
+    <string name="faq_safe_a">Inhalte sind in Minecrafts eigenen Formaten verpackt. Sichere wichtige Welten, bevor du große Addons hinzufügst.</string>
+</resources>

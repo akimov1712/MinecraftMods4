@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string name="outreach_title">문의하기</string><string name="outreach_mode_recommend">콘텐츠 제안</string><string name="outreach_mode_report">피드백 보내기</string><string name="outreach_email_hint">이메일</string><string name="outreach_message_recommend_hint">어떤 콘텐츠를 추가할까요?</string><string name="outreach_message_report_hint">무슨 일이 있었는지 알려주세요</string><string name="outreach_submit">보내기</string><string name="outreach_sent">감사합니다! 메시지를 받았습니다.</string></resources>

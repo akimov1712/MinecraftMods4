@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="compendium_title">FAQ</string>
+    <string name="compendium_search_hint">Search the FAQ</string>
+    <string name="compendium_empty">No answers match your search</string>
+
+    <string name="faq_group_start">Getting started</string>
+    <string name="faq_group_install">Installing</string>
+    <string name="faq_group_ingame">In game</string>
+    <string name="faq_group_app">About the app</string>
+    <string name="faq_group_content">Content &amp; safety</string>
+
+    <string name="faq_what_q">What does this app do?</string>
+    <string name="faq_what_a">It lets you browse and install free creations — addons, maps, textures and skins — for Minecraft.</string>
+    <string name="faq_internet_q">Do I need an internet connection?</string>
+    <string name="faq_internet_a">Yes, to browse and download. Once a file is saved you can install it offline.</string>
+
+    <string name="faq_how_q">How do I install a creation?</string>
+    <string name="faq_how_a">Open a creation, tap Get files, download the file, then tap Install — Minecraft opens and imports it automatically.</string>
+    <string name="faq_fail_q">Installation didn\'t work. What now?</string>
+    <string name="faq_fail_a">Make sure Minecraft is installed and updated, then try installing the file again.</string>
+    <string name="faq_stuck_q">My download is stuck.</string>
+    <string name="faq_stuck_a">Some files are hosted on servers that are slow in certain regions. Turning on a VPN often helps.</string>
+
+    <string name="faq_hidden_q">I installed it but can\'t find it in game.</string>
+    <string name="faq_hidden_a">Enable the pack in your world settings, and turn on any experimental toggles the creation requires.</string>
+    <string name="faq_lag_q">The game lags after installing.</string>
+    <string name="faq_lag_a">Heavy addons need more resources. Lower your render distance or remove other packs.</string>
+
+    <string name="faq_ads_q">Why are there ads?</string>
+    <string name="faq_ads_a">Ads keep the app and all creations completely free.</string>
+    <string name="faq_free_q">Is everything free?</string>
+    <string name="faq_free_a">Yes — every creation in the catalog is free to download and install.</string>
+
+    <string name="faq_fresh_q">How often is new content added?</string>
+    <string name="faq_fresh_a">The catalog is updated regularly with new creations.</string>
+    <string name="faq_safe_q">Are the files safe for my worlds?</string>
+    <string name="faq_safe_a">Creations are packaged in Minecraft\'s own formats. Back up important worlds before adding big addons.</string>
+</resources>

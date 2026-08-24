@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string name="outreach_title">संपर्क करें</string><string name="outreach_mode_recommend">कंटेंट सुझाएँ</string><string name="outreach_mode_report">फ़ीडबैक भेजें</string><string name="outreach_email_hint">आपका ईमेल</string><string name="outreach_message_recommend_hint">हमें कौन-सा कंटेंट जोड़ना चाहिए?</string><string name="outreach_message_report_hint">हमें बताएँ कि क्या हुआ</string><string name="outreach_submit">भेजें</string><string name="outreach_sent">धन्यवाद! हमें आपका संदेश मिल गया।</string></resources>

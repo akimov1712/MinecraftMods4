@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ignition_title">Mods Studio</string>
+    <string name="ignition_tagline">Minecraft PE용 모드, 맵, 스킨</string>
+    <string name="ignition_ready_badge">준비 완료</string>
+    <string name="ignition_ready_body">카탈로그를 불러왔어요</string>
+    <string name="ignition_enter">앱으로 들어가기</string>
+    <string-array name="ignition_hints">
+        <item>카탈로그를 깨우는 중…</item>
+        <item>오늘의 모드를 고르는 중…</item>
+        <item>게임 버전을 확인하는 중…</item>
+        <item>거의 다 됐어요…</item>
+    </string-array>
+    <string-array name="ignition_steps">
+        <item>카탈로그</item>
+        <item>오늘의 모드</item>
+        <item>섹션</item>
+    </string-array>
+</resources>

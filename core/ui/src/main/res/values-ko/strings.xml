@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="atlas_ad">광고</string>
+    <string name="atlas_retry">다시 시도</string>
+    <string name="atlas_empty_title">아직 아무것도 없습니다</string>
+    <string name="atlas_error_title">문제가 발생했습니다</string>
+    <string name="atlas_error_body">연결을 확인하고 다시 시도해 주세요.</string>
+    <string name="fault_timeout">요청 시간이 초과되었습니다. 다시 시도해 주세요.</string>
+    <string name="fault_no_connection">인터넷 연결이 없습니다.</string>
+    <string name="fault_server">현재 서버를 사용할 수 없습니다.</string>
+    <string name="fault_serialization">예기치 않은 응답을 받았습니다.</string>
+    <string name="fault_bad_request">요청에 문제가 있었습니다.</string>
+    <string name="fault_not_found">검색 결과가 없습니다.</string>
+    <string name="fault_unknown">예기치 않은 오류가 발생했습니다.</string>
+    <string name="fault_validation">입력한 데이터를 확인해 주세요.</string>
+    <string name="category_addon">애드온</string>
+    <string name="category_maps">맵</string>
+    <string name="category_texture">텍스처</string>
+    <string name="category_skin">스킨</string>
+</resources>

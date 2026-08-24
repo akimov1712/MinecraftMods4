@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="atlas_ad">إعلان</string>
+    <string name="atlas_retry">إعادة المحاولة</string>
+    <string name="atlas_empty_title">لا يوجد شيء هنا بعد</string>
+    <string name="atlas_error_title">حدث خطأ ما</string>
+    <string name="atlas_error_body">يرجى التحقق من اتصالك وإعادة المحاولة.</string>
+    <string name="fault_timeout">انتهت مهلة الطلب. يرجى إعادة المحاولة.</string>
+    <string name="fault_no_connection">لا يوجد اتصال بالإنترنت.</string>
+    <string name="fault_server">الخادم غير متاح حاليًا.</string>
+    <string name="fault_serialization">تم استلام استجابة غير متوقعة.</string>
+    <string name="fault_bad_request">حدث خطأ في الطلب.</string>
+    <string name="fault_not_found">لم يتم العثور على شيء.</string>
+    <string name="fault_unknown">حدث خطأ غير متوقع.</string>
+    <string name="fault_validation">يرجى التحقق من البيانات المُدخلة.</string>
+    <string name="category_addon">إضافات</string>
+    <string name="category_maps">خرائط</string>
+    <string name="category_texture">قوام</string>
+    <string name="category_skin">سكنات</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="atlas_ad">Ad</string>
+    <string name="atlas_retry">Try again</string>
+    <string name="atlas_empty_title">Nothing here yet</string>
+    <string name="atlas_error_title">Something went wrong</string>
+    <string name="atlas_error_body">Please check your connection and try again.</string>
+
+    <!-- Fault messages -->
+    <string name="fault_timeout">The request timed out. Please try again.</string>
+    <string name="fault_no_connection">No internet connection.</string>
+    <string name="fault_server">The server is unavailable right now.</string>
+    <string name="fault_serialization">Received an unexpected response.</string>
+    <string name="fault_bad_request">Something was wrong with the request.</string>
+    <string name="fault_not_found">Nothing was found.</string>
+    <string name="fault_unknown">An unexpected error occurred.</string>
+    <string name="fault_validation">Please check the entered data.</string>
+
+    <!-- Creation categories -->
+    <string name="category_addon">Addon</string>
+    <string name="category_maps">Maps</string>
+    <string name="category_texture">Textures</string>
+    <string name="category_skin">Skins</string>
+</resources>

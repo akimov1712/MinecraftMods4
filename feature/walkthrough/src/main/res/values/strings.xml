@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="walkthrough_title">How to install</string>
+    <string name="walkthrough_step_label">Step %1$d</string>
+
+    <string name="walkthrough_s1_title">Pick a creation</string>
+    <string name="walkthrough_s1_text">Open any creation from the catalog and tap “Get files”.</string>
+    <string name="walkthrough_s2_title">Download the file</string>
+    <string name="walkthrough_s2_text">Tap Download and wait for the file to finish saving.</string>
+    <string name="walkthrough_s3_title">Tap Install</string>
+    <string name="walkthrough_s3_text">Once saved, tap Install — the system asks which app should open the file.</string>
+    <string name="walkthrough_s4_title">Choose Minecraft</string>
+    <string name="walkthrough_s4_text">Select Minecraft from the list. The game opens and imports the content.</string>
+    <string name="walkthrough_s5_title">Wait for the import</string>
+    <string name="walkthrough_s5_text">Minecraft shows an import progress bar. Let it finish.</string>
+    <string name="walkthrough_s6_title">Enable it in your world</string>
+    <string name="walkthrough_s6_text">In world settings, add the pack under Resource or Behavior packs.</string>
+    <string name="walkthrough_s7_title">Enjoy!</string>
+    <string name="walkthrough_s7_text">Start the world and enjoy your new creation. Back up important worlds first.</string>
+</resources>

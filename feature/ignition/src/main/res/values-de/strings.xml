@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ignition_title">Mods Studio</string>
+    <string name="ignition_tagline">Mods, Karten und Skins für Minecraft PE</string>
+    <string name="ignition_ready_badge">BEREIT</string>
+    <string name="ignition_ready_body">Dein Katalog ist geladen</string>
+    <string name="ignition_enter">App öffnen</string>
+    <string-array name="ignition_hints">
+        <item>Katalog wird geweckt…</item>
+        <item>Mod des Tages wird gewählt…</item>
+        <item>Spielversionen werden geprüft…</item>
+        <item>Gleich fertig…</item>
+    </string-array>
+    <string-array name="ignition_steps">
+        <item>Katalog</item>
+        <item>Mod des Tages</item>
+        <item>Sektionen</item>
+    </string-array>
+</resources>

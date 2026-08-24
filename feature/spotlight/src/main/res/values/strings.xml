@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="spotlight_versions_title">Supported versions</string>
+    <string name="spotlight_get_files">Get files</string>
+    <string name="spotlight_how_to_install">How to install</string>
+    <string name="spotlight_report">Report a problem</string>
+    <string name="spotlight_report_title">Report a problem</string>
+    <string name="spotlight_report_email_hint">Your email</string>
+    <string name="spotlight_report_message_hint">Describe the problem</string>
+    <string name="spotlight_report_send">Send</string>
+    <string name="spotlight_report_cancel">Cancel</string>
+    <string name="spotlight_report_sent">Thanks! Your report was sent.</string>
+</resources>

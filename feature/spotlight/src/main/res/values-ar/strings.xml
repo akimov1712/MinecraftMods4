@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="spotlight_versions_title">الإصدارات المدعومة</string>
+    <string name="spotlight_get_files">الحصول على الملفات</string>
+    <string name="spotlight_how_to_install">كيفية التثبيت</string>
+    <string name="spotlight_report">الإبلاغ عن مشكلة</string>
+    <string name="spotlight_report_title">الإبلاغ عن مشكلة</string>
+    <string name="spotlight_report_email_hint">بريدك الإلكتروني</string>
+    <string name="spotlight_report_message_hint">صف المشكلة</string>
+    <string name="spotlight_report_send">إرسال</string>
+    <string name="spotlight_report_cancel">إلغاء</string>
+    <string name="spotlight_report_sent">شكرًا! تم إرسال بلاغك.</string>
+</resources>

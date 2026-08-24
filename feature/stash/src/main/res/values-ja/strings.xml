@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string name="stash_title">保存済み</string><string name="stash_count">%1$d 件保存済み</string><string name="stash_empty">保存済みはまだありません</string><string name="stash_empty_hint">コンテンツのブックマークをタップするとここに保存されます。</string></resources>

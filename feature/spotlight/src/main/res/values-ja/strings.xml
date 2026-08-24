@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="spotlight_versions_title">対応バージョン</string>
+    <string name="spotlight_get_files">ファイルを取得</string>
+    <string name="spotlight_how_to_install">インストール方法</string>
+    <string name="spotlight_report">問題を報告</string>
+    <string name="spotlight_report_title">問題を報告</string>
+    <string name="spotlight_report_email_hint">メールアドレス</string>
+    <string name="spotlight_report_message_hint">問題を説明してください</string>
+    <string name="spotlight_report_send">送信</string>
+    <string name="spotlight_report_cancel">キャンセル</string>
+    <string name="spotlight_report_sent">ありがとうございます。報告を送信しました。</string>
+</resources>

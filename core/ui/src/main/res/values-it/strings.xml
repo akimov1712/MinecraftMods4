@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="atlas_ad">Annuncio</string>
+    <string name="atlas_retry">Riprova</string>
+    <string name="atlas_empty_title">Ancora niente qui</string>
+    <string name="atlas_error_title">Qualcosa è andato storto</string>
+    <string name="atlas_error_body">Controlla la connessione e riprova.</string>
+    <string name="fault_timeout">Richiesta scaduta. Riprova.</string>
+    <string name="fault_no_connection">Nessuna connessione a internet.</string>
+    <string name="fault_server">Il server al momento non è disponibile.</string>
+    <string name="fault_serialization">Ricevuta una risposta inattesa.</string>
+    <string name="fault_bad_request">C\'era qualcosa di sbagliato nella richiesta.</string>
+    <string name="fault_not_found">Nessun risultato trovato.</string>
+    <string name="fault_unknown">Si è verificato un errore imprevisto.</string>
+    <string name="fault_validation">Controlla i dati inseriti.</string>
+    <string name="category_addon">Addon</string>
+    <string name="category_maps">Mappe</string>
+    <string name="category_texture">Texture</string>
+    <string name="category_skin">Skin</string>
+</resources>

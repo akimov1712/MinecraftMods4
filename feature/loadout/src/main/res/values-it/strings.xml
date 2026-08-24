@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loadout_title">File</string>
+    <string name="loadout_download">Scarica</string>
+    <string name="loadout_cancel">Annulla</string>
+    <string name="loadout_install">Installa</string>
+    <string name="loadout_downloading">Download… %1$d%%</string>
+    <string name="loadout_ready">Salvato</string>
+    <string name="loadout_vpn_hint">Download bloccato? Attiva una VPN.</string>
+    <string name="loadout_download_failed">Download non riuscito. Riprova.</string>
+    <string name="loadout_open_failed">Impossibile aprire il file. Minecraft è installato?</string>
+    <string name="loadout_unknown_size">Dimensione sconosciuta</string>
+</resources>

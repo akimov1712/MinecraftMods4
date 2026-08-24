@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hub_tab_showcase">Catalog</string>
+    <string name="hub_tab_stash">Saved</string>
+    <string name="hub_tab_outreach">Submit</string>
+    <string name="hub_tab_compendium">FAQ</string>
+    <string name="hub_tab_placeholder">%1$s — coming soon</string>
+    <string name="hub_search">Search</string>
+</resources>

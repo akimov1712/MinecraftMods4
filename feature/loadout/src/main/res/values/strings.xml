@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loadout_title">Files</string>
+    <string name="loadout_download">Download</string>
+    <string name="loadout_cancel">Cancel</string>
+    <string name="loadout_install">Install</string>
+    <string name="loadout_downloading">Downloading… %1$d%%</string>
+    <string name="loadout_ready">Saved</string>
+    <string name="loadout_vpn_hint">Download seems stuck? Try turning on a VPN.</string>
+    <string name="loadout_download_failed">Download failed. Please try again.</string>
+    <string name="loadout_open_failed">Couldn\'t open the file. Is Minecraft installed?</string>
+    <string name="loadout_unknown_size">Unknown size</string>
+</resources>

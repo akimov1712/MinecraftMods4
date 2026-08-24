@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stash_title">Saved</string>
+    <string name="stash_count">%1$d saved</string>
+    <string name="stash_empty">No saved creations yet</string>
+    <string name="stash_empty_hint">Tap the bookmark on a creation to keep it here.</string>
+</resources>

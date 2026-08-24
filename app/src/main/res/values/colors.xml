@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Mirrors Palette.Canvas / Palette.Accent so the system splash matches the app. -->
+    <color name="canvas">#FF05080B</color>
+    <color name="accent">#FF29E07F</color>
+    <color name="transparent">#00000000</color>
+</resources>

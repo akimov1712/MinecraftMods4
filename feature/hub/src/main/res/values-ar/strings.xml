@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hub_tab_showcase">الكتالوج</string>
+    <string name="hub_tab_stash">المحفوظة</string>
+    <string name="hub_tab_outreach">إرسال</string>
+    <string name="hub_tab_compendium">الأسئلة الشائعة</string>
+    <string name="hub_tab_placeholder">%1$s — قريبًا</string>
+    <string name="hub_search">بحث</string>
+</resources>

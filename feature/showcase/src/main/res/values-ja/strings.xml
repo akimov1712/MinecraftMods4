@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="showcase_section_pick">今日のMOD</string>
+    <string name="showcase_section_pick_subtitle">毎日えらび直す一本</string>
+    <string name="showcase_pick_badge">今日のMOD</string>
+    <string name="showcase_pick_action">MODを開く</string>
+    <string name="showcase_section_trending">トレンド</string>
+    <string name="showcase_section_trending_subtitle">いま入れられている人気作</string>
+    <string name="showcase_section_popular">人気</string>
+    <string name="showcase_section_popular_subtitle">ダウンロードが最も多い順</string>
+    <string name="showcase_section_fresh">新着</string>
+    <string name="showcase_section_fresh_subtitle">カタログに追加されたばかり</string>
+    <string name="showcase_section_top_rated">高評価</string>
+    <string name="showcase_section_top_rated_subtitle">プレイヤー評価がいちばん高い</string>
+    <string name="showcase_see_all">すべて</string>
+    <string name="showcase_stat_catalog">カタログ</string>
+    <string name="showcase_stat_saved">保存済み</string>
+    <string name="showcase_stat_rating">トップ評価</string>
+    <string name="showcase_fresh_badge">新着</string>
+    <string name="showcase_versions_title">対応する Minecraft バージョン</string>
+    <string name="showcase_tip_title">今日のヒント</string>
+    <string name="showcase_footer_title">今日はここまで</string>
+    <string name="showcase_footer_body">カタログには %1$s 件、さらに増加中</string>
+    <string name="showcase_browse_back">戻る</string>
+    <string name="showcase_browse_count">%1$s 件</string>
+    <string name="showcase_browse_retry">再試行</string>
+    <string-array name="showcase_tips">
+        <item>MODのしおりをタップすると保存済みに入ります。</item>
+        <item>ダウンロードしたファイルはそのままMinecraftで開けます。</item>
+        <item>導入する前に対応バージョンを確認しましょう。</item>
+        <item>今日のMODは深夜0時に入れ替わります。また明日。</item>
+        <item>マップはワールド一覧に、スキンは着替え画面に入ります。</item>
+    </string-array>
+    <string name="search_hint">MOD、マップ、スキンを検索…</string>
+    <string name="search_back">戻る</string>
+    <string name="search_empty_title">見つかりませんでした</string>
+    <string name="search_empty_body">短い言葉や別の言葉で試してください。</string>
+    <string name="search_suggestions_hint">迷ったら — いま入れられている作品</string>
+</resources>

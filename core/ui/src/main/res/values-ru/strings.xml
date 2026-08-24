@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="atlas_ad">Реклама</string>
+    <string name="atlas_retry">Повторить</string>
+    <string name="atlas_empty_title">Здесь пока пусто</string>
+    <string name="atlas_error_title">Что-то пошло не так</string>
+    <string name="atlas_error_body">Проверьте соединение и попробуйте снова.</string>
+
+    <!-- Fault messages -->
+    <string name="fault_timeout">Время ожидания истекло. Попробуйте снова.</string>
+    <string name="fault_no_connection">Нет подключения к интернету.</string>
+    <string name="fault_server">Сервер сейчас недоступен.</string>
+    <string name="fault_serialization">Получен неожиданный ответ.</string>
+    <string name="fault_bad_request">Что-то не так с запросом.</string>
+    <string name="fault_not_found">Ничего не найдено.</string>
+    <string name="fault_unknown">Произошла непредвиденная ошибка.</string>
+    <string name="fault_validation">Проверьте введённые данные.</string>
+
+    <!-- Creation categories -->
+    <string name="category_addon">Аддоны</string>
+    <string name="category_maps">Карты</string>
+    <string name="category_texture">Текстуры</string>
+    <string name="category_skin">Скины</string>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="showcase_section_pick">Мод дня</string>
+    <string name="showcase_section_pick_subtitle">Каждый день новый выбор редакции</string>
+    <string name="showcase_pick_badge">МОД ДНЯ</string>
+    <string name="showcase_pick_action">Открыть мод</string>
+    <string name="showcase_section_trending">В тренде</string>
+    <string name="showcase_section_trending_subtitle">То, что ставят прямо сейчас</string>
+    <string name="showcase_section_popular">Популярные</string>
+    <string name="showcase_section_popular_subtitle">Больше всего скачиваний</string>
+    <string name="showcase_section_fresh">Новинки</string>
+    <string name="showcase_section_fresh_subtitle">Только что добавили в каталог</string>
+    <string name="showcase_section_top_rated">Высокий рейтинг</string>
+    <string name="showcase_section_top_rated_subtitle">Лучшие оценки игроков</string>
+    <string name="showcase_see_all">Все</string>
+    <string name="showcase_stat_catalog">В каталоге</string>
+    <string name="showcase_stat_saved">Сохранено</string>
+    <string name="showcase_stat_rating">Рейтинг топа</string>
+    <string name="showcase_fresh_badge">НОВОЕ</string>
+    <string name="showcase_versions_title">Поддерживаемые версии Minecraft</string>
+    <string name="showcase_tip_title">Совет дня</string>
+    <string name="showcase_footer_title">На сегодня это всё</string>
+    <string name="showcase_footer_body">%1$s модов в каталоге и всё больше</string>
+    <string name="showcase_browse_back">Назад</string>
+    <string name="showcase_browse_count">Найдено: %1$s</string>
+    <string name="showcase_browse_retry">Повторить</string>
+    <string-array name="showcase_tips">
+        <item>Нажми на закладку у мода — он сохранится во вкладке «Закладки».</item>
+        <item>Скачанный файл открывается прямо в Minecraft — просто нажми на него.</item>
+        <item>Перед установкой проверь поддерживаемые версии игры.</item>
+        <item>Мод дня меняется в полночь — загляни завтра.</item>
+        <item>Карты попадают в список миров, а скины — в гардероб.</item>
+    </string-array>
+    <string name="search_hint">Моды, карты, скины…</string>
+    <string name="search_back">Назад</string>
+    <string name="search_empty_title">Ничего не нашлось</string>
+    <string name="search_empty_body">Попробуй короче или другое слово.</string>
+    <string name="search_suggestions_hint">Пока думаешь — что ставят сейчас</string>
+</resources>

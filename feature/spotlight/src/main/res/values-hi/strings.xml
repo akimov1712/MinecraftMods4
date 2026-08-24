@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="spotlight_versions_title">समर्थित संस्करण</string>
+    <string name="spotlight_get_files">फ़ाइलें प्राप्त करें</string>
+    <string name="spotlight_how_to_install">इंस्टॉल कैसे करें</string>
+    <string name="spotlight_report">समस्या की रिपोर्ट करें</string>
+    <string name="spotlight_report_title">समस्या की रिपोर्ट करें</string>
+    <string name="spotlight_report_email_hint">आपका ईमेल</string>
+    <string name="spotlight_report_message_hint">समस्या का वर्णन करें</string>
+    <string name="spotlight_report_send">भेजें</string>
+    <string name="spotlight_report_cancel">रद्द करें</string>
+    <string name="spotlight_report_sent">धन्यवाद! आपकी रिपोर्ट भेज दी गई।</string>
+</resources>

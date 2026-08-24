@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string name="stash_title">Enregistrés</string><string name="stash_count">%1$d enregistrés</string><string name="stash_empty">Rien d\'enregistré pour l\'instant</string><string name="stash_empty_hint">Touche le marque-page d\'un contenu pour le garder ici.</string></resources>

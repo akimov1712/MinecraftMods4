@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="walkthrough_title">Como instalar</string>
+    <string name="walkthrough_step_label">Passo %1$d</string>
+    <string name="walkthrough_s1_title">Escolha um conteúdo</string>
+    <string name="walkthrough_s1_text">Abra qualquer conteúdo do catálogo e toque em «Obter arquivos».</string>
+    <string name="walkthrough_s2_title">Baixe o arquivo</string>
+    <string name="walkthrough_s2_text">Toque em «Baixar» e aguarde o arquivo terminar de salvar.</string>
+    <string name="walkthrough_s3_title">Toque em «Instalar»</string>
+    <string name="walkthrough_s3_text">Depois de salvo, toque em «Instalar» — o sistema pergunta qual app deve abrir o arquivo.</string>
+    <string name="walkthrough_s4_title">Escolha o Minecraft</string>
+    <string name="walkthrough_s4_text">Selecione o Minecraft na lista. O jogo abre e importa o conteúdo.</string>
+    <string name="walkthrough_s5_title">Aguarde a importação</string>
+    <string name="walkthrough_s5_text">O Minecraft mostra uma barra de progresso de importação. Deixe terminar.</string>
+    <string name="walkthrough_s6_title">Ative no seu mundo</string>
+    <string name="walkthrough_s6_text">Nas configurações do mundo, adicione o pacote em pacotes de recursos ou de comportamento.</string>
+    <string name="walkthrough_s7_title">Aproveite!</string>
+    <string name="walkthrough_s7_text">Inicie o mundo e aproveite o novo conteúdo. Faça backup dos mundos importantes antes.</string>
+</resources>

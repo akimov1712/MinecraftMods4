@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="showcase_section_pick">Mod del día</string>
+    <string name="showcase_section_pick_subtitle">Una elección nueva cada día</string>
+    <string name="showcase_pick_badge">MOD DEL DÍA</string>
+    <string name="showcase_pick_action">Abrir mod</string>
+    <string name="showcase_section_trending">Tendencias</string>
+    <string name="showcase_section_trending_subtitle">Lo que todos instalan ahora</string>
+    <string name="showcase_section_popular">Populares</string>
+    <string name="showcase_section_popular_subtitle">Los más descargados</string>
+    <string name="showcase_section_fresh">Novedades</string>
+    <string name="showcase_section_fresh_subtitle">Recién llegados al catálogo</string>
+    <string name="showcase_section_top_rated">Mejor valorados</string>
+    <string name="showcase_section_top_rated_subtitle">Las mejores notas de los jugadores</string>
+    <string name="showcase_see_all">Todo</string>
+    <string name="showcase_stat_catalog">En el catálogo</string>
+    <string name="showcase_stat_saved">Guardados</string>
+    <string name="showcase_stat_rating">Nota del top</string>
+    <string name="showcase_fresh_badge">NUEVO</string>
+    <string name="showcase_versions_title">Versiones de Minecraft compatibles</string>
+    <string name="showcase_tip_title">Consejo del día</string>
+    <string name="showcase_footer_title">Esto es todo por hoy</string>
+    <string name="showcase_footer_body">%1$s mods en el catálogo y subiendo</string>
+    <string name="showcase_browse_back">Atrás</string>
+    <string name="showcase_browse_count">%1$s encontrados</string>
+    <string name="showcase_browse_retry">Reintentar</string>
+    <string-array name="showcase_tips">
+        <item>Toca el marcador de un mod para guardarlo.</item>
+        <item>Los archivos descargados se abren directamente en Minecraft.</item>
+        <item>Comprueba las versiones compatibles antes de instalar.</item>
+        <item>El mod del día cambia a medianoche: vuelve mañana.</item>
+        <item>Los mapas van a tus mundos y las skins al vestidor.</item>
+    </string-array>
+    <string name="search_hint">Mods, mapas, skins…</string>
+    <string name="search_back">Atrás</string>
+    <string name="search_empty_title">Sin resultados</string>
+    <string name="search_empty_body">Prueba con otra palabra o más corta.</string>
+    <string name="search_suggestions_hint">Mientras decides — lo que todos instalan</string>
+</resources>

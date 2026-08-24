@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stash_title">Закладки</string>
+    <string name="stash_count">Сохранено: %1$d</string>
+    <string name="stash_empty">Пока нет сохранённого</string>
+    <string name="stash_empty_hint">Нажмите на закладку у дополнения, чтобы сохранить его сюда.</string>
+</resources>

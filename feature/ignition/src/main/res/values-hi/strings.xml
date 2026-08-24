@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ignition_title">Mods Studio</string>
+    <string name="ignition_tagline">Minecraft PE के लिए मॉड, मैप और स्किन</string>
+    <string name="ignition_ready_badge">तैयार</string>
+    <string name="ignition_ready_body">आपका कैटलॉग लोड हो गया</string>
+    <string name="ignition_enter">ऐप में जाएँ</string>
+    <string-array name="ignition_hints">
+        <item>कैटलॉग तैयार कर रहे हैं…</item>
+        <item>आज का मॉड चुन रहे हैं…</item>
+        <item>गेम वर्शन जाँच रहे हैं…</item>
+        <item>बस हो ही गया…</item>
+    </string-array>
+    <string-array name="ignition_steps">
+        <item>कैटलॉग</item>
+        <item>आज का मॉड</item>
+        <item>सेक्शन</item>
+    </string-array>
+</resources>

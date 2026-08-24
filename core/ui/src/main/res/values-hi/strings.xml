@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="atlas_ad">विज्ञापन</string>
+    <string name="atlas_retry">पुनः प्रयास करें</string>
+    <string name="atlas_empty_title">अभी यहाँ कुछ नहीं है</string>
+    <string name="atlas_error_title">कुछ गलत हो गया</string>
+    <string name="atlas_error_body">कृपया अपना कनेक्शन जाँचें और पुनः प्रयास करें।</string>
+    <string name="fault_timeout">अनुरोध का समय समाप्त हो गया। पुनः प्रयास करें।</string>
+    <string name="fault_no_connection">इंटरनेट कनेक्शन नहीं है।</string>
+    <string name="fault_server">सर्वर अभी उपलब्ध नहीं है।</string>
+    <string name="fault_serialization">अप्रत्याशित प्रतिक्रिया मिली।</string>
+    <string name="fault_bad_request">अनुरोध में कुछ गड़बड़ थी।</string>
+    <string name="fault_not_found">कुछ नहीं मिला।</string>
+    <string name="fault_unknown">एक अप्रत्याशित त्रुटि हुई।</string>
+    <string name="fault_validation">कृपया दर्ज किया गया डेटा जाँचें।</string>
+    <string name="category_addon">ऐडऑन</string>
+    <string name="category_maps">मानचित्र</string>
+    <string name="category_texture">टेक्सचर</string>
+    <string name="category_skin">स्किन</string>
+</resources>

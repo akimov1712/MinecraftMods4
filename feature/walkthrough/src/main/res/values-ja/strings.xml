@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="walkthrough_title">インストール方法</string>
+    <string name="walkthrough_step_label">ステップ %1$d</string>
+    <string name="walkthrough_s1_title">コンテンツを選ぶ</string>
+    <string name="walkthrough_s1_text">カタログから任意のコンテンツを開き「ファイルを取得」をタップします。</string>
+    <string name="walkthrough_s2_title">ファイルをダウンロード</string>
+    <string name="walkthrough_s2_text">「ダウンロード」をタップし、ファイルの保存が完了するまで待ちます。</string>
+    <string name="walkthrough_s3_title">「インストール」をタップ</string>
+    <string name="walkthrough_s3_text">保存後「インストール」をタップすると、どのアプリで開くか尋ねられます。</string>
+    <string name="walkthrough_s4_title">Minecraft を選ぶ</string>
+    <string name="walkthrough_s4_text">一覧から Minecraft を選びます。ゲームが開いてコンテンツを取り込みます。</string>
+    <string name="walkthrough_s5_title">取り込みを待つ</string>
+    <string name="walkthrough_s5_text">Minecraft が取り込みの進行状況を表示します。完了するまで待ちます。</string>
+    <string name="walkthrough_s6_title">ワールドで有効化</string>
+    <string name="walkthrough_s6_text">ワールド設定で、リソースパックまたはビヘイビアパックとして追加します。</string>
+    <string name="walkthrough_s7_title">お楽しみください！</string>
+    <string name="walkthrough_s7_text">ワールドを開始して新しいコンテンツをお楽しみください。先に大切なワールドをバックアップしましょう。</string>
+</resources>

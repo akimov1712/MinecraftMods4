@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="atlas_ad">広告</string>
+    <string name="atlas_retry">再試行</string>
+    <string name="atlas_empty_title">まだ何もありません</string>
+    <string name="atlas_error_title">問題が発生しました</string>
+    <string name="atlas_error_body">接続を確認してもう一度お試しください。</string>
+    <string name="fault_timeout">リクエストがタイムアウトしました。もう一度お試しください。</string>
+    <string name="fault_no_connection">インターネット接続がありません。</string>
+    <string name="fault_server">現在サーバーを利用できません。</string>
+    <string name="fault_serialization">予期しない応答を受信しました。</string>
+    <string name="fault_bad_request">リクエストに問題がありました。</string>
+    <string name="fault_not_found">何も見つかりませんでした。</string>
+    <string name="fault_unknown">予期しないエラーが発生しました。</string>
+    <string name="fault_validation">入力したデータを確認してください。</string>
+    <string name="category_addon">アドオン</string>
+    <string name="category_maps">マップ</string>
+    <string name="category_texture">テクスチャ</string>
+    <string name="category_skin">スキン</string>
+</resources>

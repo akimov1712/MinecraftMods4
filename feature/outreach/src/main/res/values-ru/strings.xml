@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="outreach_title">Связаться с нами</string>
+    <string name="outreach_mode_recommend">Предложить дополнение</string>
+    <string name="outreach_mode_report">Отзыв</string>
+    <string name="outreach_email_hint">Ваш email</string>
+    <string name="outreach_message_recommend_hint">Какое дополнение добавить?</string>
+    <string name="outreach_message_report_hint">Расскажите, что случилось</string>
+    <string name="outreach_submit">Отправить</string>
+    <string name="outreach_sent">Спасибо! Мы получили ваше сообщение.</string>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="showcase_section_pick">오늘의 모드</string>
+    <string name="showcase_section_pick_subtitle">매일 새로 고르는 한 가지</string>
+    <string name="showcase_pick_badge">오늘의 모드</string>
+    <string name="showcase_pick_action">모드 열기</string>
+    <string name="showcase_section_trending">인기 급상승</string>
+    <string name="showcase_section_trending_subtitle">지금 가장 많이 설치되는 모드</string>
+    <string name="showcase_section_popular">인기</string>
+    <string name="showcase_section_popular_subtitle">다운로드가 가장 많은 순서</string>
+    <string name="showcase_section_fresh">새로 나온 모드</string>
+    <string name="showcase_section_fresh_subtitle">카탈로그에 방금 추가됨</string>
+    <string name="showcase_section_top_rated">평점 높은 순</string>
+    <string name="showcase_section_top_rated_subtitle">플레이어 평점이 가장 높아요</string>
+    <string name="showcase_see_all">전체</string>
+    <string name="showcase_stat_catalog">카탈로그</string>
+    <string name="showcase_stat_saved">저장됨</string>
+    <string name="showcase_stat_rating">상위 평점</string>
+    <string name="showcase_fresh_badge">NEW</string>
+    <string name="showcase_versions_title">지원하는 Minecraft 버전</string>
+    <string name="showcase_tip_title">오늘의 팁</string>
+    <string name="showcase_footer_title">오늘은 여기까지</string>
+    <string name="showcase_footer_body">카탈로그에 %1$s개, 계속 늘어나는 중</string>
+    <string name="showcase_browse_back">뒤로</string>
+    <string name="showcase_browse_count">%1$s개 찾음</string>
+    <string name="showcase_browse_retry">다시 시도</string>
+    <string-array name="showcase_tips">
+        <item>모드의 북마크를 누르면 저장됨에 담깁니다.</item>
+        <item>내려받은 파일은 Minecraft에서 바로 열립니다.</item>
+        <item>설치하기 전에 지원 버전을 확인하세요.</item>
+        <item>오늘의 모드는 자정에 바뀝니다. 내일 다시 오세요.</item>
+        <item>맵은 월드 목록으로, 스킨은 옷장으로 들어갑니다.</item>
+    </string-array>
+    <string name="search_hint">모드, 맵, 스킨 검색…</string>
+    <string name="search_back">뒤로</string>
+    <string name="search_empty_title">결과가 없어요</string>
+    <string name="search_empty_body">더 짧거나 다른 단어로 검색해 보세요.</string>
+    <string name="search_suggestions_hint">고민되면 — 지금 많이 설치되는 모드</string>
+</resources>

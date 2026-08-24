@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loadout_title">파일</string>
+    <string name="loadout_download">다운로드</string>
+    <string name="loadout_cancel">취소</string>
+    <string name="loadout_install">설치</string>
+    <string name="loadout_downloading">다운로드 중… %1$d%%</string>
+    <string name="loadout_ready">저장됨</string>
+    <string name="loadout_vpn_hint">다운로드가 멈췄나요? VPN을 켜 보세요.</string>
+    <string name="loadout_download_failed">다운로드에 실패했습니다. 다시 시도해 주세요.</string>
+    <string name="loadout_open_failed">파일을 열 수 없습니다. Minecraft가 설치되어 있나요?</string>
+    <string name="loadout_unknown_size">크기 알 수 없음</string>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="compendium_title">FAQ</string>
+    <string name="compendium_search_hint">Rechercher dans la FAQ</string>
+    <string name="compendium_empty">Aucune réponse ne correspond à ta recherche</string>
+    <string name="faq_group_start">Pour commencer</string>
+    <string name="faq_group_install">Installation</string>
+    <string name="faq_group_ingame">En jeu</string>
+    <string name="faq_group_app">À propos de l\'app</string>
+    <string name="faq_group_content">Contenu et sécurité</string>
+    <string name="faq_what_q">Que fait cette application ?</string>
+    <string name="faq_what_a">Elle te permet de parcourir et d\'installer du contenu gratuit — addons, cartes, textures et skins — pour Minecraft.</string>
+    <string name="faq_internet_q">Ai-je besoin d\'une connexion internet ?</string>
+    <string name="faq_internet_a">Oui, pour parcourir et télécharger. Une fois le fichier enregistré, tu peux l\'installer hors ligne.</string>
+    <string name="faq_how_q">Comment installer un contenu ?</string>
+    <string name="faq_how_a">Ouvre un contenu, touche « Obtenir les fichiers », télécharge le fichier, puis touche « Installer » — Minecraft s\'ouvre et l\'importe automatiquement.</string>
+    <string name="faq_fail_q">L\'installation n\'a pas marché. Que faire ?</string>
+    <string name="faq_fail_a">Vérifie que Minecraft est installé et à jour, puis réessaie d\'installer le fichier.</string>
+    <string name="faq_stuck_q">Mon téléchargement est bloqué.</string>
+    <string name="faq_stuck_a">Certains fichiers sont sur des serveurs lents dans certaines régions. Activer un VPN aide souvent.</string>
+    <string name="faq_hidden_q">Je l\'ai installé mais je ne le trouve pas en jeu.</string>
+    <string name="faq_hidden_a">Active le pack dans les paramètres du monde et active les options expérimentales requises.</string>
+    <string name="faq_lag_q">Le jeu rame après l\'installation.</string>
+    <string name="faq_lag_a">Les gros addons demandent plus de ressources. Réduis la distance d\'affichage ou retire d\'autres packs.</string>
+    <string name="faq_ads_q">Pourquoi y a-t-il des publicités ?</string>
+    <string name="faq_ads_a">Les publicités gardent l\'app et tout le contenu entièrement gratuits.</string>
+    <string name="faq_free_q">Est-ce que tout est gratuit ?</string>
+    <string name="faq_free_a">Oui — tout le contenu du catalogue est gratuit à télécharger et installer.</string>
+    <string name="faq_fresh_q">À quelle fréquence du nouveau contenu est-il ajouté ?</string>
+    <string name="faq_fresh_a">Le catalogue est régulièrement mis à jour avec du nouveau contenu.</string>
+    <string name="faq_safe_q">Les fichiers sont-ils sûrs pour mes mondes ?</string>
+    <string name="faq_safe_a">Le contenu utilise les formats propres à Minecraft. Sauvegarde tes mondes importants avant d\'ajouter de gros addons.</string>
+</resources>

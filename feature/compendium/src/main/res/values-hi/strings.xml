@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="compendium_title">FAQ</string>
+    <string name="compendium_search_hint">FAQ खोजें</string>
+    <string name="compendium_empty">आपकी खोज से कोई उत्तर मेल नहीं खाता</string>
+    <string name="faq_group_start">शुरुआत</string>
+    <string name="faq_group_install">इंस्टॉल</string>
+    <string name="faq_group_ingame">गेम में</string>
+    <string name="faq_group_app">ऐप के बारे में</string>
+    <string name="faq_group_content">कंटेंट और सुरक्षा</string>
+    <string name="faq_what_q">यह ऐप क्या करता है?</string>
+    <string name="faq_what_a">यह आपको Minecraft के लिए मुफ़्त कंटेंट — ऐडऑन, मानचित्र, टेक्सचर और स्किन — ब्राउज़ और इंस्टॉल करने देता है।</string>
+    <string name="faq_internet_q">क्या मुझे इंटरनेट चाहिए?</string>
+    <string name="faq_internet_a">हाँ, ब्राउज़ और डाउनलोड के लिए। फ़ाइल सहेजने के बाद आप उसे ऑफ़लाइन इंस्टॉल कर सकते हैं।</string>
+    <string name="faq_how_q">कंटेंट कैसे इंस्टॉल करें?</string>
+    <string name="faq_how_a">कोई कंटेंट खोलें, «फ़ाइलें प्राप्त करें» पर टैप करें, फ़ाइल डाउनलोड करें और «इंस्टॉल» पर टैप करें — Minecraft खुलकर उसे स्वतः आयात कर लेता है।</string>
+    <string name="faq_fail_q">इंस्टॉल नहीं हुआ। अब क्या करें?</string>
+    <string name="faq_fail_a">सुनिश्चित करें कि Minecraft इंस्टॉल और अपडेटेड है, फिर फ़ाइल को दोबारा इंस्टॉल करें।</string>
+    <string name="faq_stuck_q">मेरा डाउनलोड अटक गया है।</string>
+    <string name="faq_stuck_a">कुछ फ़ाइलें ऐसे सर्वर पर होती हैं जो कुछ क्षेत्रों में धीमे होते हैं। VPN चालू करने से अक्सर मदद मिलती है।</string>
+    <string name="faq_hidden_q">इंस्टॉल किया पर गेम में नहीं दिखता।</string>
+    <string name="faq_hidden_a">वर्ल्ड सेटिंग्स में पैक चालू करें और ज़रूरी एक्सपेरिमेंटल विकल्प ऑन करें।</string>
+    <string name="faq_lag_q">इंस्टॉल के बाद गेम धीमा चलता है।</string>
+    <string name="faq_lag_a">भारी ऐडऑन को अधिक संसाधन चाहिए। रेंडर दूरी घटाएँ या अन्य पैक हटाएँ।</string>
+    <string name="faq_ads_q">विज्ञापन क्यों हैं?</string>
+    <string name="faq_ads_a">विज्ञापन ऐप और सारे कंटेंट को पूरी तरह मुफ़्त रखते हैं।</string>
+    <string name="faq_free_q">क्या सब कुछ मुफ़्त है?</string>
+    <string name="faq_free_a">हाँ — कैटलॉग का हर कंटेंट डाउनलोड और इंस्टॉल करने के लिए मुफ़्त है।</string>
+    <string name="faq_fresh_q">नया कंटेंट कितनी बार जुड़ता है?</string>
+    <string name="faq_fresh_a">कैटलॉग में नियमित रूप से नया कंटेंट जोड़ा जाता है।</string>
+    <string name="faq_safe_q">क्या फ़ाइलें मेरे वर्ल्ड के लिए सुरक्षित हैं?</string>
+    <string name="faq_safe_a">कंटेंट Minecraft के अपने फ़ॉर्मैट में होता है। बड़े ऐडऑन जोड़ने से पहले अपने महत्वपूर्ण वर्ल्ड का बैकअप लें।</string>
+</resources>

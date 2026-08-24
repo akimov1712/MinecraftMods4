@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string name="outreach_title">お問い合わせ</string><string name="outreach_mode_recommend">コンテンツを提案</string><string name="outreach_mode_report">フィードバックを送信</string><string name="outreach_email_hint">メールアドレス</string><string name="outreach_message_recommend_hint">どのコンテンツを追加しましょうか？</string><string name="outreach_message_report_hint">何が起きたか教えてください</string><string name="outreach_submit">送信</string><string name="outreach_sent">ありがとうございます。メッセージを受け取りました。</string></resources>
