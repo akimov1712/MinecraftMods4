@@ -5,15 +5,5 @@
     <string name="ignition_ready_badge">準備完了</string>
     <string name="ignition_ready_body">カタログを読み込みました</string>
     <string name="ignition_enter">アプリに入る</string>
-    <string-array name="ignition_hints">
-        <item>カタログを起こしています…</item>
-        <item>今日のMODを選んでいます…</item>
-        <item>対応バージョンを確認中…</item>
-        <item>もう少しです…</item>
-    </string-array>
-    <string-array name="ignition_steps">
-        <item>カタログ</item>
-        <item>今日のMOD</item>
-        <item>セクション</item>
-    </string-array>
+    <string name="ignition_loading">読み込み中…</string>
 </resources>

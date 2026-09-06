@@ -11,6 +11,7 @@ import com.arkivanov.decompose.value.Value
 import dev.mod.store.minecraft.feature.hub.DefaultHubComponent
 import dev.mod.store.minecraft.feature.ignition.DefaultIgnitionComponent
 import dev.mod.store.minecraft.feature.loadout.DefaultLoadoutComponent
+import dev.mod.store.minecraft.feature.outreach.DefaultOutreachComponent
 import dev.mod.store.minecraft.feature.search.DefaultSearchComponent
 import dev.mod.store.minecraft.feature.spotlight.DefaultSpotlightComponent
 import dev.mod.store.minecraft.feature.walkthrough.DefaultWalkthroughComponent
@@ -63,6 +64,7 @@ class DefaultRootComponent(
                     onBack = { navigation.pop() },
                     onOpenLoadout = { creationId -> navigation.pushNew(Config.Loadout(creationId)) },
                     onOpenWalkthrough = { navigation.pushNew(Config.Walkthrough) },
+                    onOpenOutreach = { navigation.pushNew(Config.Outreach) },
                 ),
             )
 
@@ -70,6 +72,13 @@ class DefaultRootComponent(
                 DefaultLoadoutComponent(
                     componentContext = context,
                     creationId = config.creationId,
+                    onBack = { navigation.pop() },
+                ),
+            )
+
+            Config.Outreach -> RootComponent.Child.Outreach(
+                DefaultOutreachComponent(
+                    componentContext = context,
                     onBack = { navigation.pop() },
                 ),
             )
@@ -98,6 +107,9 @@ class DefaultRootComponent(
 
         @Serializable
         data class Loadout(val creationId: Int) : Config
+
+        @Serializable
+        data object Outreach : Config
 
         @Serializable
         data object Walkthrough : Config

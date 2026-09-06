@@ -1,25 +1,30 @@
 package dev.mod.store.minecraft.feature.loadout
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Bolt
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Download
+import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -28,13 +33,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import dev.mod.store.minecraft.core.ui.component.ErrorState
+import dev.mod.store.minecraft.core.ui.component.GlassIconButton
 import dev.mod.store.minecraft.core.ui.component.NoticeHost
-import dev.mod.store.minecraft.core.ui.component.PillButton
-import dev.mod.store.minecraft.core.ui.modifier.pressable
+import dev.mod.store.minecraft.core.ui.effect.SmallShape
+import dev.mod.store.minecraft.core.ui.effect.popIn
+import dev.mod.store.minecraft.core.ui.effect.tappable
 import dev.mod.store.minecraft.core.ui.state.ScreenStage
 import dev.mod.store.minecraft.core.ui.theme.Palette
 import dev.mod.store.minecraft.core.ui.util.ObserveSignals
@@ -43,6 +53,13 @@ import dev.mod.store.minecraft.feature.loadout.LoadoutStore.FileStatus
 import dev.mod.store.minecraft.feature.loadout.LoadoutStore.Intent
 import dev.mod.store.minecraft.feature.loadout.LoadoutStore.Notice
 
+private val SIDE_PADDING = 16.dp
+
+/**
+ * The download queue. Each file is a single strip that fills with colour as it arrives — the row
+ * itself is the progress bar — and carries one round key that changes meaning as the file moves
+ * from "not here" to "downloading" to "ready to open".
+ */
 @Composable
 fun LoadoutPane(
     component: LoadoutComponent,
@@ -64,30 +81,37 @@ fun LoadoutPane(
         }
     }
 
-    Box(modifier = modifier.fillMaxSize().background(Palette.Canvas)) {
-        Column(modifier = Modifier.fillMaxSize().statusBarsPadding()) {
-            TopBar(
+    Box(modifier = modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .statusBarsPadding(),
+        ) {
+            Header(
                 title = state.title.ifBlank { stringResource(R.string.loadout_title) },
+                ready = state.items.count { it.status is FileStatus.Ready },
+                total = state.items.size,
                 onBack = component::back,
             )
-
-            if (state.showVpnHint) VpnHint()
 
             when {
                 state.stage is ScreenStage.Failed && state.items.isEmpty() ->
                     ErrorState(
                         message = (state.stage as ScreenStage.Failed).message,
                         onRetry = { component.onIntent(Intent.Retry) },
-                        modifier = Modifier.padding(20.dp),
+                        modifier = Modifier.padding(SIDE_PADDING),
                     )
 
                 else -> LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(horizontal = SIDE_PADDING, vertical = 10.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     items(items = state.items, key = { it.url }) { item ->
-                        FileRow(item = item, component = component)
+                        FileStrip(item = item, component = component)
+                    }
+                    if (state.showVpnHint) {
+                        item(key = "vpn") { StalledNote() }
                     }
                 }
             }
@@ -103,116 +127,169 @@ fun LoadoutPane(
 }
 
 @Composable
-private fun TopBar(title: String, onBack: () -> Unit) {
+private fun Header(title: String, ready: Int, total: Int, onBack: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        GlassIconButton(
+            icon = Icons.AutoMirrored.Rounded.ArrowBack,
+            contentDescription = null,
+            onClick = onBack,
+            size = 38.dp,
+        )
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = title,
+                color = Palette.TextPrimary,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            if (total > 0) {
+                Text(
+                    text = stringResource(R.string.loadout_progress_summary, ready, total),
+                    color = Palette.TextFaint,
+                    fontSize = 12.sp,
+                )
+            }
+        }
+    }
+}
+
+/** One file: the strip fills as it downloads, and the key on the right changes with its state. */
+@Composable
+private fun FileStrip(item: FileItem, component: LoadoutComponent) {
+    val downloading = item.status as? FileStatus.Downloading
+    val target = when {
+        item.status is FileStatus.Ready -> 1f
+        downloading != null -> downloading.fraction
+        else -> 0f
+    }
+    val fill by animateFloatAsState(
+        targetValue = target,
+        animationSpec = tween(280),
+        label = "file-fill",
+    )
+    val fillColor = if (item.status is FileStatus.Ready) Palette.Positive else Palette.Accent
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(66.dp)
+            .clip(SmallShape)
+            .background(Palette.Surface),
     ) {
         Box(
             modifier = Modifier
-                .size(44.dp)
-                .clip(CircleShape)
-                .pressable(onClick = onBack),
-            contentAlignment = Alignment.Center,
+                .fillMaxWidth(fill)
+                .fillMaxHeight()
+                .background(fillColor.copy(alpha = if (item.status is FileStatus.Ready) 0.12f else 0.22f)),
+        )
+
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 14.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Icon(
-                Icons.AutoMirrored.Rounded.ArrowBack,
-                contentDescription = null,
-                tint = Palette.TextPrimary,
-            )
-        }
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleLarge,
-            color = Palette.TextPrimary,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
-    }
-}
-
-@Composable
-private fun VpnHint() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .background(Palette.CategoryAmber.copy(alpha = 0.16f))
-            .padding(14.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
-    ) {
-        Icon(Icons.Rounded.Info, contentDescription = null, tint = Palette.CategoryAmber, modifier = Modifier.size(20.dp))
-        Text(
-            text = stringResource(R.string.loadout_vpn_hint),
-            style = MaterialTheme.typography.bodyMedium,
-            color = Palette.TextPrimary,
-        )
-    }
-}
-
-@Composable
-private fun FileRow(item: FileItem, component: LoadoutComponent) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(Palette.Surface)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(3.dp),
+            ) {
                 Text(
                     text = item.name,
-                    style = MaterialTheme.typography.titleMedium,
                     color = Palette.TextPrimary,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.SemiBold,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
                     text = statusText(item),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Palette.TextMuted,
+                    color = if (item.status is FileStatus.Ready) Palette.Positive else Palette.TextFaint,
+                    fontSize = 12.sp,
                 )
             }
-            FileAction(item = item, component = component)
-        }
 
-        (item.status as? FileStatus.Downloading)?.let { downloading ->
-            LinearProgressIndicator(
-                progress = { downloading.fraction },
-                modifier = Modifier.fillMaxWidth(),
-                color = Palette.Accent,
-                trackColor = Palette.SurfaceHigh,
-            )
+            FileKey(item = item, component = component)
         }
     }
 }
 
 @Composable
-private fun FileAction(item: FileItem, component: LoadoutComponent) {
-    when (item.status) {
-        FileStatus.Idle -> PillButton(
-            text = stringResource(R.string.loadout_download),
-            onClick = { component.onIntent(Intent.StartDownload(item.url)) },
-        )
+private fun FileKey(item: FileItem, component: LoadoutComponent) {
+    val (icon, tint, container, onClick) = when (item.status) {
+        FileStatus.Idle -> Quad(
+            Icons.Rounded.Download,
+            Palette.OnAccentDark,
+            Palette.Accent,
+        ) { component.onIntent(Intent.StartDownload(item.url)) }
 
-        is FileStatus.Downloading -> PillButton(
-            text = stringResource(R.string.loadout_cancel),
-            onClick = { component.onIntent(Intent.CancelDownload(item.url)) },
-            container = Palette.SurfaceHigh,
-            content = Palette.TextPrimary,
-        )
+        is FileStatus.Downloading -> Quad(
+            Icons.Rounded.Close,
+            Palette.TextPrimary,
+            Palette.SurfaceHigh,
+        ) { component.onIntent(Intent.CancelDownload(item.url)) }
 
-        FileStatus.Ready -> PillButton(
-            text = stringResource(R.string.loadout_install),
-            onClick = { component.onIntent(Intent.Install(item.url)) },
-            container = Palette.Positive,
+        FileStatus.Ready -> Quad(
+            Icons.Rounded.PlayArrow,
+            Palette.OnAccentDark,
+            Palette.Positive,
+        ) { component.onIntent(Intent.Install(item.url)) }
+    }
+
+    Box(
+        modifier = Modifier
+            .size(42.dp)
+            .clip(CircleShape)
+            .background(container)
+            .tappable(onClick = onClick)
+            .then(if (item.status is FileStatus.Ready) Modifier.popIn() else Modifier),
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = tint,
+            modifier = Modifier.size(20.dp),
+        )
+    }
+}
+
+/** Small carrier so the key's four properties can be destructured in one `when`. */
+private data class Quad(
+    val icon: androidx.compose.ui.graphics.vector.ImageVector,
+    val tint: Color,
+    val container: Color,
+    val onClick: () -> Unit,
+)
+
+@Composable
+private fun StalledNote() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Icon(
+            imageVector = Icons.Rounded.Bolt,
+            contentDescription = null,
+            tint = Palette.Gold,
+            modifier = Modifier.size(16.dp),
+        )
+        Text(
+            text = stringResource(R.string.loadout_vpn_hint),
+            color = Palette.TextMuted,
+            fontSize = 12.sp,
+            lineHeight = 17.sp,
         )
     }
 }

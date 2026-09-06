@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="compendium_title">FAQ</string>
-    <string name="compendium_search_hint">Поиск по FAQ</string>
-    <string name="compendium_empty">По запросу ничего не найдено</string>
+    <string name="compendium_title">Помощник</string>
 
-    <string name="faq_group_start">Начало работы</string>
-    <string name="faq_group_install">Установка</string>
-    <string name="faq_group_ingame">В игре</string>
-    <string name="faq_group_app">О приложении</string>
-    <string name="faq_group_content">Контент и безопасность</string>
 
     <string name="faq_what_q">Что делает это приложение?</string>
     <string name="faq_what_a">Позволяет просматривать и устанавливать бесплатные дополнения — аддоны, карты, текстуры и скины — для Minecraft.</string>
@@ -36,4 +29,20 @@
     <string name="faq_fresh_a">Каталог регулярно пополняется новыми дополнениями.</string>
     <string name="faq_safe_q">Безопасны ли файлы для моих миров?</string>
     <string name="faq_safe_a">Дополнения упакованы в собственные форматы Minecraft. Делайте резервную копию важных миров перед установкой больших аддонов.</string>
+    <string name="compendium_subtitle">Ответы на частые вопросы</string>
+    <string name="compendium_greeting">Привет! Выбери вопрос ниже — отвечу прямо здесь.</string>
+    <string name="compendium_prompt">Нажми на вопрос</string>
+    <string name="compendium_restart">Начать заново</string>
+    <string name="compendium_done">Это всё, что я знаю. Нажми стрелку сверху, чтобы начать заново.</string>
+    <string name="faq_how_chip">Как установить</string>
+    <string name="faq_fail_chip">Не установилось</string>
+    <string name="faq_stuck_chip">Не качается</string>
+    <string name="faq_hidden_chip">Не вижу в игре</string>
+    <string name="faq_lag_chip">Игра тормозит</string>
+    <string name="faq_what_chip">Что это за приложение</string>
+    <string name="faq_internet_chip">Нужен интернет?</string>
+    <string name="faq_free_chip">Это бесплатно?</string>
+    <string name="faq_ads_chip">Почему реклама</string>
+    <string name="faq_fresh_chip">Новые моды</string>
+    <string name="faq_safe_chip">Это безопасно</string>
 </resources>

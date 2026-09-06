@@ -5,15 +5,5 @@
     <string name="ignition_ready_badge">جاهز</string>
     <string name="ignition_ready_body">تم تحميل الكتالوج</string>
     <string name="ignition_enter">ادخل إلى التطبيق</string>
-    <string-array name="ignition_hints">
-        <item>نوقظ الكتالوج…</item>
-        <item>نختار مود اليوم…</item>
-        <item>نتحقق من إصدارات اللعبة…</item>
-        <item>اقتربنا…</item>
-    </string-array>
-    <string-array name="ignition_steps">
-        <item>الكتالوج</item>
-        <item>مود اليوم</item>
-        <item>الأقسام</item>
-    </string-array>
+    <string name="ignition_loading">جارٍ التحميل…</string>
 </resources>

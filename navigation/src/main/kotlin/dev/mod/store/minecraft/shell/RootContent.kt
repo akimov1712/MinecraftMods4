@@ -16,6 +16,7 @@ import dev.mod.store.minecraft.core.ui.theme.Palette
 import dev.mod.store.minecraft.feature.hub.HubPane
 import dev.mod.store.minecraft.feature.ignition.IgnitionPane
 import dev.mod.store.minecraft.feature.loadout.LoadoutPane
+import dev.mod.store.minecraft.feature.outreach.OutreachPane
 import dev.mod.store.minecraft.feature.search.SearchPane
 import dev.mod.store.minecraft.feature.spotlight.SpotlightPane
 import dev.mod.store.minecraft.feature.walkthrough.WalkthroughPane
@@ -43,6 +44,7 @@ fun RootContent(
                     is RootComponent.Child.Search -> SearchPane(child.component, Modifier.fillMaxSize())
                     is RootComponent.Child.Spotlight -> SpotlightPane(child.component, Modifier.fillMaxSize())
                     is RootComponent.Child.Loadout -> LoadoutPane(child.component, Modifier.fillMaxSize())
+                    is RootComponent.Child.Outreach -> OutreachPane(child.component, Modifier.fillMaxSize())
                     is RootComponent.Child.Walkthrough -> WalkthroughPane(child.component, Modifier.fillMaxSize())
                 }
             }

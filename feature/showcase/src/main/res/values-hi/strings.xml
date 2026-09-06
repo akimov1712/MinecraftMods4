@@ -36,4 +36,6 @@
     <string name="search_empty_title">कुछ नहीं मिला</string>
     <string name="search_empty_body">छोटा या दूसरा शब्द आज़माएँ।</string>
     <string name="search_suggestions_hint">जब तक सोच रहे हैं — अभी क्या इंस्टॉल हो रहा है</string>
+    <string name="showcase_ticker_line">%1$s — कैटलॉग में #%2$d</string>
+    <string name="showcase_chart_new">नया</string>
 </resources>

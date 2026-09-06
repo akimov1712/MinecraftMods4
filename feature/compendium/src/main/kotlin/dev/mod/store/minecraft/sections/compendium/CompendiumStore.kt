@@ -7,17 +7,26 @@ import com.arkivanov.mvikotlin.extensions.coroutines.coroutineExecutorFactory
 import dev.mod.store.minecraft.feature.compendium.CompendiumStore.Intent
 import dev.mod.store.minecraft.feature.compendium.CompendiumStore.State
 
+/**
+ * Help is a conversation, not a list of folded-up rows: the state is simply the order in which
+ * questions were asked, and the screen replays it as a dialogue.
+ */
 interface CompendiumStore : Store<Intent, State, Nothing> {
 
     sealed interface Intent {
-        data class Search(val query: String) : Intent
-        data class ToggleEntry(val id: String) : Intent
+        /** Ask one of the offered questions. */
+        data class Ask(val id: String) : Intent
+
+        /** Wipe the conversation and start over. */
+        data object Restart : Intent
     }
 
     data class State(
-        val query: String = "",
-        val expandedId: String? = null,
-    )
+        val asked: List<String> = emptyList(),
+    ) {
+        /** Questions that have not been asked yet, in their original order. */
+        val remaining: List<FaqEntry> get() = faqEntries.filter { it.id !in asked }
+    }
 }
 
 internal class CompendiumStoreFactory(private val storeFactory: StoreFactory) {
@@ -27,19 +36,19 @@ internal class CompendiumStoreFactory(private val storeFactory: StoreFactory) {
             name = "CompendiumStore",
             initialState = State(),
             executorFactory = coroutineExecutorFactory<Intent, Nothing, State, Message, Nothing> {
-                onIntent<Intent.Search> { dispatch(Message.QuerySet(it.query)) }
-                onIntent<Intent.ToggleEntry> { dispatch(Message.Toggled(it.id)) }
+                onIntent<Intent.Ask> { dispatch(Message.Asked(it.id)) }
+                onIntent<Intent.Restart> { dispatch(Message.Cleared) }
             },
             reducer = Reducer { message -> reduce(message) },
         ) {}
 
     private sealed interface Message {
-        data class QuerySet(val query: String) : Message
-        data class Toggled(val id: String) : Message
+        data class Asked(val id: String) : Message
+        data object Cleared : Message
     }
 
     private fun State.reduce(message: Message): State = when (message) {
-        is Message.QuerySet -> copy(query = message.query)
-        is Message.Toggled -> copy(expandedId = if (expandedId == message.id) null else message.id)
+        is Message.Asked -> if (message.id in asked) this else copy(asked = asked + message.id)
+        Message.Cleared -> State()
     }
 }

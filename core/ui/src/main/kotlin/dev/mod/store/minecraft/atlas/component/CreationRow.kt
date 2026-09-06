@@ -1,7 +1,6 @@
 package dev.mod.store.minecraft.core.ui.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,9 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ChatBubble
 import androidx.compose.material.icons.rounded.LocalFireDepartment
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Text
@@ -26,18 +23,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.mod.store.minecraft.core.ui.effect.SmallShape
 import dev.mod.store.minecraft.core.ui.effect.tappable
 import dev.mod.store.minecraft.core.ui.theme.Palette
 import dev.mod.store.minecraft.core.ui.util.formatCompact
 import dev.mod.store.minecraft.core.ui.util.formatRating
 import dev.mod.store.minecraft.domain.creation.CreationEntity
 
-private val ROW_SHAPE = RoundedCornerShape(22.dp)
-
-/**
- * A chart entry: rank numeral, square thumbnail, title and counters, plus whatever [trailing]
- * decoration the section wants (a movement arrow, a chevron…).
- */
+/** A chart line: place, small cover, name and its numbers on one line. */
 @Composable
 fun CreationRow(
     creation: CreationEntity,
@@ -49,49 +42,56 @@ fun CreationRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(ROW_SHAPE)
-            .background(Palette.Surface)
-            .border(1.dp, Palette.GlassStroke, ROW_SHAPE)
+            .clip(SmallShape)
             .tappable(onClick = onClick)
-            .padding(10.dp),
+            .padding(vertical = 7.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         if (rank != null) {
             Text(
                 text = rank.toString(),
-                modifier = Modifier.width(26.dp),
-                color = if (rank <= 3) Palette.Gold else Palette.TextMuted,
-                fontSize = if (rank <= 3) 22.sp else 18.sp,
-                fontWeight = FontWeight.ExtraBold,
+                modifier = Modifier.width(18.dp),
+                color = if (rank <= 3) Palette.Accent else Palette.TextFaint,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
             )
         }
 
+        trailing?.invoke(this)
+
         Box(
             modifier = Modifier
-                .size(58.dp)
-                .clip(RoundedCornerShape(18.dp))
+                .size(46.dp)
+                .clip(SmallShape)
                 .background(Palette.SurfaceHigh),
         ) {
-            RemoteImage(url = creation.imageUrl, modifier = Modifier.size(58.dp))
+            RemoteImage(url = creation.imageUrl, modifier = Modifier.size(46.dp))
         }
 
         Column(
             modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.spacedBy(3.dp),
         ) {
             Text(
                 text = creation.title,
                 color = Palette.TextPrimary,
                 fontSize = 14.sp,
                 lineHeight = 18.sp,
-                fontWeight = FontWeight.Bold,
-                maxLines = 2,
+                fontWeight = FontWeight.SemiBold,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                CategoryChip(creation.category)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Text(
+                    text = creationCategoryLabel(creation.category),
+                    color = Palette.TextFaint,
+                    fontSize = 12.sp,
+                )
                 if (creation.rating > 0.0) {
                     MetaChip(
                         text = formatRating(creation.rating),
@@ -105,16 +105,8 @@ fun CreationRow(
                         icon = Icons.Rounded.LocalFireDepartment,
                         tint = Palette.Ember,
                     )
-                } else if (creation.commentCount > 0) {
-                    MetaChip(
-                        text = formatCompact(creation.commentCount),
-                        icon = Icons.Rounded.ChatBubble,
-                        tint = Palette.Sky,
-                    )
                 }
             }
         }
-
-        trailing?.invoke(this)
     }
 }

@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="compendium_title">FAQ</string>
-    <string name="compendium_search_hint">Search the FAQ</string>
-    <string name="compendium_empty">No answers match your search</string>
+    <string name="compendium_title">Assistant</string>
 
-    <string name="faq_group_start">Getting started</string>
-    <string name="faq_group_install">Installing</string>
-    <string name="faq_group_ingame">In game</string>
-    <string name="faq_group_app">About the app</string>
-    <string name="faq_group_content">Content &amp; safety</string>
 
     <string name="faq_what_q">What does this app do?</string>
     <string name="faq_what_a">It lets you browse and install free creations — addons, maps, textures and skins — for Minecraft.</string>
@@ -36,4 +29,20 @@
     <string name="faq_fresh_a">The catalog is updated regularly with new creations.</string>
     <string name="faq_safe_q">Are the files safe for my worlds?</string>
     <string name="faq_safe_a">Creations are packaged in Minecraft\'s own formats. Back up important worlds before adding big addons.</string>
+    <string name="compendium_subtitle">Answers to the usual questions</string>
+    <string name="compendium_greeting">Hi! Pick a question below and I will answer it right here.</string>
+    <string name="compendium_prompt">Tap a question</string>
+    <string name="compendium_restart">Start over</string>
+    <string name="compendium_done">That\'s everything I know. Tap the arrow above to start over.</string>
+    <string name="faq_how_chip">How to install</string>
+    <string name="faq_fail_chip">Install failed</string>
+    <string name="faq_stuck_chip">Download stuck</string>
+    <string name="faq_hidden_chip">Can\'t find it in game</string>
+    <string name="faq_lag_chip">Game lags</string>
+    <string name="faq_what_chip">What is this app</string>
+    <string name="faq_internet_chip">Internet needed?</string>
+    <string name="faq_free_chip">Is it free?</string>
+    <string name="faq_ads_chip">Why ads</string>
+    <string name="faq_fresh_chip">New content</string>
+    <string name="faq_safe_chip">Is it safe</string>
 </resources>

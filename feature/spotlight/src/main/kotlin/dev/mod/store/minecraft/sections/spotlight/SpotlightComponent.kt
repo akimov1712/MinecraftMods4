@@ -23,6 +23,7 @@ interface SpotlightComponent {
     fun back()
     fun openLoadout()
     fun openWalkthrough()
+    fun openOutreach()
 }
 
 class DefaultSpotlightComponent(
@@ -31,6 +32,7 @@ class DefaultSpotlightComponent(
     private val onBack: () -> Unit,
     private val onOpenLoadout: (Int) -> Unit,
     private val onOpenWalkthrough: () -> Unit,
+    private val onOpenOutreach: () -> Unit,
 ) : SpotlightComponent, ComponentContext by componentContext, KoinComponent {
 
     private val storeFactory: StoreFactory by inject()
@@ -66,4 +68,5 @@ class DefaultSpotlightComponent(
     override fun back() = onBack()
     override fun openLoadout() = onOpenLoadout(creationId)
     override fun openWalkthrough() = onOpenWalkthrough()
+    override fun openOutreach() = onOpenOutreach()
 }

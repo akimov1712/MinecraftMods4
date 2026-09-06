@@ -5,15 +5,5 @@
     <string name="ignition_ready_badge">ГОТОВО</string>
     <string name="ignition_ready_body">Каталог загружен</string>
     <string name="ignition_enter">Перейти в приложение</string>
-    <string-array name="ignition_hints">
-        <item>Будим каталог…</item>
-        <item>Выбираем мод дня…</item>
-        <item>Проверяем версии игры…</item>
-        <item>Почти готово…</item>
-    </string-array>
-    <string-array name="ignition_steps">
-        <item>Каталог</item>
-        <item>Мод дня</item>
-        <item>Секции</item>
-    </string-array>
+    <string name="ignition_loading">Загружаем…</string>
 </resources>

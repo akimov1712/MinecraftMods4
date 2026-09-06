@@ -1,68 +1,58 @@
 package dev.mod.store.minecraft.core.ui.theme
 
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 /**
- * Charcoal and lava. Surfaces are cold stone — flat, neutral, textured rather than gradient —
- * and every warm thing on screen (actions, badges, the podium) glows like molten rock.
- *
- * Components read these tokens directly; [AtlasTheme] also feeds them into the Material scheme.
+ * A small, friendly palette: a soft dark background so bright mod covers pop, one warm orange for
+ * everything you can tap, and a handful of clear colours for the categories. Nothing else — the
+ * app is used by kids, so the fewer colours they have to learn, the better.
  */
 object Palette {
 
-    // Primary — molten rock
-    val Accent = Color(0xFFF04A21)
-    val AccentSoft = Color(0xFFFF8A52)
-    val AccentDeep = Color(0xFF8F2408)
+    // The one action colour
+    val Accent = Color(0xFFFF6A2B)
+    val AccentSoft = Color(0xFFFF9460)
+    val AccentDeep = Color(0xFFC94512)
 
-    /** Text/icons drawn over artwork and dark scrims. */
-    val OnAccent = Color(0xFFFFF3EC)
+    /** Text on artwork. */
+    val OnAccent = Color(0xFFFFF6F1)
 
-    /** Text/icons drawn on top of a filled [Accent] surface. */
-    val OnAccentDark = Color(0xFF1A0500)
+    /** Text on a filled [Accent] surface. */
+    val OnAccentDark = Color(0xFF2A0C00)
 
-    // Secondary voices
-    val Ember = Color(0xFFFF7A18)
-    val Gold = Color(0xFFFFC04A)
-    val Sky = Color(0xFF4FB6D6)
-    val Magenta = Color(0xFFC05CE8)
+    // Supporting colours
+    val Ember = Color(0xFFFF8A3D)
+    val Gold = Color(0xFFFFC53D)
+    val Sky = Color(0xFF4FC3F7)
+    val Magenta = Color(0xFFE879F9)
 
-    // Surfaces — cold stone, no colour cast
-    val Canvas = Color(0xFF08090B)
-    val Surface = Color(0xFF121317)
-    val SurfaceHigh = Color(0xFF1B1D22)
-    val Stroke = Color(0xFF2A2D34)
+    // Surfaces — soft, not pitch black
+    val Canvas = Color(0xFF14161B)
+    val Surface = Color(0xFF1E2128)
+    val SurfaceHigh = Color(0xFF272B34)
+    val Stroke = Color(0xFF343945)
 
     // Text
-    val TextPrimary = Color(0xFFECEDEF)
-    val TextMuted = Color(0xFF8D9198)
-    val TextFaint = Color(0xFF5C6068)
+    val TextPrimary = Color(0xFFF2F4F7)
+    val TextMuted = Color(0xFFA2AAB8)
+    val TextFaint = Color(0xFF6E7686)
 
     // Status
-    val Positive = Color(0xFF63C63F)
-    val Negative = Color(0xFFFF4D5E)
+    val Positive = Color(0xFF5ED47C)
+    val Negative = Color(0xFFFF6B6B)
 
-    // Shimmer sweep
-    val ShimmerBase = Color(0xFF14161A)
-    val ShimmerHighlight = Color(0xFF22262C)
+    // Placeholder shimmer
+    val ShimmerBase = Color(0xFF232730)
+    val ShimmerHighlight = Color(0xFF2F3540)
 
-    // Category accents
-    val CategoryLagoon = Color(0xFF4FB6D6)
-    val CategoryLime = Color(0xFF7FC241)
-    val CategoryRose = Color(0xFFC05CE8)
-    val CategoryAmber = Color(0xFFFFB020)
+    // Category colours
+    val CategoryLagoon = Sky
+    val CategoryLime = Color(0xFF8BD450)
+    val CategoryRose = Magenta
+    val CategoryAmber = Gold
 
-    // Translucent layers stacked over artwork
-    val Glass = Color(0x14FFFFFF)
-    val GlassStroke = Color(0x1AFFFFFF)
-    val Scrim = Color(0xCC05060A)
-
-    /** The signature lava sweep used on primary actions. */
-    val AccentGradient: Brush
-        get() = Brush.linearGradient(listOf(Accent, Ember))
-
-    /** Hotter variant for badges that must out-shout the artwork behind them. */
-    val EmberGradient: Brush
-        get() = Brush.linearGradient(listOf(Ember, Gold))
+    // Layers over artwork
+    val Glass = Color(0x1AFFFFFF)
+    val GlassStroke = Color(0x1FFFFFFF)
+    val Scrim = Color(0xB3101218)
 }

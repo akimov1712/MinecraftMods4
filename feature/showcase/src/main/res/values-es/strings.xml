@@ -36,4 +36,6 @@
     <string name="search_empty_title">Sin resultados</string>
     <string name="search_empty_body">Prueba con otra palabra o más corta.</string>
     <string name="search_suggestions_hint">Mientras decides — lo que todos instalan</string>
+    <string name="showcase_ticker_line">%1$s — #%2$d del catálogo</string>
+    <string name="showcase_chart_new">nuevo</string>
 </resources>

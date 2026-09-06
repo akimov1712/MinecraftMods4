@@ -36,4 +36,6 @@
     <string name="search_empty_title">لا توجد نتائج</string>
     <string name="search_empty_body">جرّب كلمة أقصر أو مختلفة.</string>
     <string name="search_suggestions_hint">بينما تفكر — ما يثبّته الجميع</string>
+    <string name="showcase_ticker_line">%1$s — #%2$d في الكتالوج</string>
+    <string name="showcase_chart_new">جديد</string>
 </resources>

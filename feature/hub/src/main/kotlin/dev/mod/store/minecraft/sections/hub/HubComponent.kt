@@ -8,8 +8,6 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import dev.mod.store.minecraft.feature.compendium.CompendiumComponent
 import dev.mod.store.minecraft.feature.compendium.DefaultCompendiumComponent
-import dev.mod.store.minecraft.feature.outreach.DefaultOutreachComponent
-import dev.mod.store.minecraft.feature.outreach.OutreachComponent
 import dev.mod.store.minecraft.feature.showcase.DefaultShowcaseComponent
 import dev.mod.store.minecraft.feature.showcase.ShowcaseComponent
 import dev.mod.store.minecraft.feature.stash.DefaultStashComponent
@@ -18,8 +16,7 @@ import kotlinx.serialization.Serializable
 
 /**
  * Bottom-bar container. Each tab is a child in a single stack; tapping a tab brings its child
- * to the front (preserving the others), so switching tabs keeps their state alive. Showcase is
- * live; the other three tabs are placeholders until their sections plug in.
+ * to the front (preserving the others), so switching tabs keeps their state alive.
  */
 interface HubComponent {
 
@@ -39,10 +36,6 @@ interface HubComponent {
 
         data class Stash(val component: StashComponent) : Child {
             override val tab: HubTab get() = HubTab.Stash
-        }
-
-        data class Outreach(val component: OutreachComponent) : Child {
-            override val tab: HubTab get() = HubTab.Outreach
         }
 
         data class Compendium(val component: CompendiumComponent) : Child {
@@ -78,10 +71,6 @@ class DefaultHubComponent(
                 DefaultStashComponent(context, onOpenCreation = onOpenCreation),
             )
 
-            Config.Outreach -> HubComponent.Child.Outreach(
-                DefaultOutreachComponent(context),
-            )
-
             Config.Compendium -> HubComponent.Child.Compendium(
                 DefaultCompendiumComponent(context),
             )
@@ -110,11 +99,6 @@ class DefaultHubComponent(
         }
 
         @Serializable
-        data object Outreach : Config {
-            override val tab: HubTab get() = HubTab.Outreach
-        }
-
-        @Serializable
         data object Compendium : Config {
             override val tab: HubTab get() = HubTab.Compendium
         }
@@ -123,7 +107,6 @@ class DefaultHubComponent(
     private fun HubTab.toConfig(): Config = when (this) {
         HubTab.Showcase -> Config.Showcase
         HubTab.Stash -> Config.Stash
-        HubTab.Outreach -> Config.Outreach
         HubTab.Compendium -> Config.Compendium
     }
 }

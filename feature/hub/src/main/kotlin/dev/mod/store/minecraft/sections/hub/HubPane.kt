@@ -1,11 +1,7 @@
 package dev.mod.store.minecraft.feature.hub
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,10 +9,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
@@ -28,24 +25,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import dev.mod.store.minecraft.core.ui.effect.halo
-import dev.mod.store.minecraft.core.ui.effect.pulse
 import dev.mod.store.minecraft.core.ui.effect.tappable
 import dev.mod.store.minecraft.core.ui.theme.Palette
 import dev.mod.store.minecraft.feature.compendium.CompendiumPane
-import dev.mod.store.minecraft.feature.outreach.OutreachPane
 import dev.mod.store.minecraft.feature.showcase.ShowcasePane
 import dev.mod.store.minecraft.feature.stash.StashPane
 
-/** Renders the active tab child above a floating glass tab bar. */
+/** Renders the active tab child above a thin tab strip. */
 @Composable
 fun HubPane(
     component: HubComponent,
@@ -70,15 +64,12 @@ fun HubPane(
             stack = component.stack,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(
-                    top = innerPadding.calculateTopPadding(),
-                    bottom = innerPadding.calculateBottomPadding(),
-                ),
+                .statusBarsPadding()
+                .padding(bottom = innerPadding.calculateBottomPadding()),
         ) { created ->
             when (val child = created.instance) {
                 is HubComponent.Child.Showcase -> ShowcasePane(child.component, Modifier.fillMaxSize())
                 is HubComponent.Child.Stash -> StashPane(child.component, Modifier.fillMaxSize())
-                is HubComponent.Child.Outreach -> OutreachPane(child.component, Modifier.fillMaxSize())
                 is HubComponent.Child.Compendium -> CompendiumPane(child.component, Modifier.fillMaxSize())
             }
         }
@@ -86,8 +77,8 @@ fun HubPane(
 }
 
 /**
- * Four tabs with the search key sunk into the middle of the bar — search is a place you go to,
- * not a field that eats the top of the home screen.
+ * A thin strip: a hairline, four evenly spaced keys, small icons and small labels. Search is one
+ * of the keys rather than a raised button, so nothing sticks out of the bar.
  */
 @Composable
 private fun HubBar(
@@ -95,104 +86,81 @@ private fun HubBar(
     onSelect: (HubTab) -> Unit,
     onSearch: () -> Unit,
 ) {
-    val tabs = HubTab.entries
-    Row(
-        modifier = Modifier
-            .navigationBarsPadding()
-            .padding(horizontal = 14.dp, vertical = 10.dp)
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(28.dp))
-            .background(Palette.Surface)
-            .border(1.dp, Palette.GlassStroke, RoundedCornerShape(28.dp))
-            .padding(horizontal = 4.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        tabs.take(2).forEach { tab ->
-            HubBarItem(tab = tab, active = tab == activeTab, onClick = { onSelect(tab) })
-        }
-        SearchKey(onClick = onSearch)
-        tabs.drop(2).forEach { tab ->
-            HubBarItem(tab = tab, active = tab == activeTab, onClick = { onSelect(tab) })
-        }
-    }
-}
-
-/** The molten round button in the centre of the bar. */
-@Composable
-private fun SearchKey(onClick: () -> Unit) {
-    val glow = pulse(from = 0.28f, to = 0.6f, periodMillis = 2400)
-    Box(
-        modifier = Modifier
-            .padding(horizontal = 10.dp)
-            .size(56.dp)
-            .halo(Palette.Accent, CircleShape, radius = 20.dp, alpha = glow)
-            .clip(CircleShape)
-            .background(Palette.AccentGradient)
-            .tappable(onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Icon(
-            imageVector = Icons.Rounded.Search,
-            contentDescription = stringResource(R.string.hub_search),
-            tint = Palette.OnAccentDark,
-            modifier = Modifier.size(26.dp),
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(1.dp)
+                .background(Palette.Stroke),
         )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Palette.Canvas)
+                .navigationBarsPadding()
+                .padding(horizontal = 4.dp, vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            HubKey(
+                icon = HubTab.Showcase.icon,
+                label = stringResource(HubTab.Showcase.labelRes),
+                active = activeTab == HubTab.Showcase,
+                onClick = { onSelect(HubTab.Showcase) },
+            )
+            HubKey(
+                icon = Icons.Rounded.Search,
+                label = stringResource(R.string.hub_search),
+                active = false,
+                onClick = onSearch,
+            )
+            HubKey(
+                icon = HubTab.Stash.icon,
+                label = stringResource(HubTab.Stash.labelRes),
+                active = activeTab == HubTab.Stash,
+                onClick = { onSelect(HubTab.Stash) },
+            )
+            HubKey(
+                icon = HubTab.Compendium.icon,
+                label = stringResource(HubTab.Compendium.labelRes),
+                active = activeTab == HubTab.Compendium,
+                onClick = { onSelect(HubTab.Compendium) },
+            )
+        }
     }
 }
 
 @Composable
-private fun RowScope.HubBarItem(
-    tab: HubTab,
+private fun RowScope.HubKey(
+    icon: ImageVector,
+    label: String,
     active: Boolean,
     onClick: () -> Unit,
 ) {
     val tint by animateColorAsState(
-        targetValue = if (active) Palette.Accent else Palette.TextMuted,
-        label = "tab-tint",
-    )
-    val lift by animateFloatAsState(
-        targetValue = if (active) 1.06f else 1f,
-        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
-        label = "tab-lift",
+        targetValue = if (active) Palette.Accent else Palette.TextFaint,
+        label = "key-tint",
     )
 
     Column(
         modifier = Modifier
             .weight(1f)
-            .clip(RoundedCornerShape(20.dp))
-            .tappable(onClick = onClick)
-            .padding(vertical = 8.dp),
+            .clip(RoundedCornerShape(10.dp))
+            .tappable(pressedScale = 0.94f, onClick = onClick)
+            .padding(vertical = 7.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(5.dp),
+        verticalArrangement = Arrangement.spacedBy(3.dp),
     ) {
-        Box(
-            modifier = Modifier
-                .scale(lift)
-                .then(
-                    if (active) {
-                        Modifier
-                            .halo(Palette.Accent, CircleShape, radius = 18.dp, alpha = 0.55f)
-                            .clip(CircleShape)
-                            .background(Palette.Accent.copy(alpha = 0.16f))
-                    } else {
-                        Modifier
-                    },
-                )
-                .padding(horizontal = 14.dp, vertical = 5.dp),
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                imageVector = tab.icon,
-                contentDescription = null,
-                tint = tint,
-                modifier = Modifier.size(21.dp),
-            )
-        }
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = tint,
+            modifier = Modifier.size(21.dp),
+        )
         Text(
-            text = stringResource(tab.labelRes),
+            text = label,
             color = tint,
             fontSize = 11.sp,
-            fontWeight = if (active) FontWeight.ExtraBold else FontWeight.Medium,
+            fontWeight = if (active) FontWeight.SemiBold else FontWeight.Normal,
             maxLines = 1,
         )
     }

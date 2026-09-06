@@ -21,11 +21,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.mod.store.minecraft.core.ui.effect.SmallShape
+import dev.mod.store.minecraft.core.ui.effect.card
 import dev.mod.store.minecraft.core.ui.modifier.pressable
 import dev.mod.store.minecraft.core.ui.theme.Palette
 
@@ -51,16 +54,14 @@ fun OutlineField(
     horizontalPadding: Dp = 20.dp,
 ) {
     val multiline = !singleLine || minLines > 1 || maxLines > 1
-    val shape: Shape = if (multiline) RoundedCornerShape(20.dp) else CircleShape
+    val shape: Shape = RectangleShape
     val verticalPadding = if (multiline) 14.dp else 0.dp
     val rowAlignment = if (multiline) Alignment.Top else Alignment.CenterVertically
 
     Row(
         modifier = modifier
             .defaultMinSize(minHeight = minHeight)
-            .clip(shape)
-            .background(Palette.Surface)
-            .border(width = 1.dp, color = Palette.Stroke, shape = shape)
+            .card(fill = Palette.SurfaceHigh, shape = SmallShape)
             .padding(horizontal = horizontalPadding, vertical = verticalPadding),
         verticalAlignment = rowAlignment,
     ) {

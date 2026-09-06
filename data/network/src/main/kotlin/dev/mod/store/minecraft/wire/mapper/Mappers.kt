@@ -16,8 +16,8 @@ import java.time.Instant
 
 internal fun CreationDto.toEntity(isBookmarked: Boolean = false): CreationEntity = CreationEntity(
     id = id,
-    title = title,
-    description = description,
+    title = title.unescapeHtml(),
+    description = description.unescapeHtml(),
     imageUrl = imageUrl,
     category = CreationCategory.fromResponse(category),
     gallery = gallery,
@@ -29,6 +29,32 @@ internal fun CreationDto.toEntity(isBookmarked: Boolean = false): CreationEntity
     publishedAtEpochMs = createdAt.toEpochMillisOrNull(),
     isBookmarked = isBookmarked,
 )
+
+/**
+ * Descriptions are pasted from web pages, so they arrive as fragments of HTML. Dropping the tags
+ * and turning the handful of entities that actually occur back into characters keeps things like
+ * `<figure>` and `-&gt;` from reaching the screen.
+ */
+private val HTML_TAG = Regex("<[^>]+>")
+private val BLANK_LINES = Regex("\n{3,}")
+
+private fun String.unescapeHtml(): String = this
+    .replace(HTML_TAG, "")
+    .replace("&nbsp;", " ")
+    .replace("&quot;", "\"")
+    .replace("&#39;", "'")
+    .replace("&apos;", "'")
+    .replace("&rsquo;", "\u2019")
+    .replace("&lsquo;", "\u2018")
+    .replace("&ldquo;", "\u201C")
+    .replace("&rdquo;", "\u201D")
+    .replace("&ndash;", "\u2013")
+    .replace("&mdash;", "\u2014")
+    .replace("&lt;", "<")
+    .replace("&gt;", ">")
+    .replace("&amp;", "&")
+    .replace(BLANK_LINES, "\n\n")
+    .trim()
 
 /** Parses the ISO-8601 timestamps the backend sends; unparseable or absent values become null. */
 private fun String.toEpochMillisOrNull(): Long? =

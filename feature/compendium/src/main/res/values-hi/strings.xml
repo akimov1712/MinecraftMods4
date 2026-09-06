@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="compendium_title">FAQ</string>
-    <string name="compendium_search_hint">FAQ खोजें</string>
-    <string name="compendium_empty">आपकी खोज से कोई उत्तर मेल नहीं खाता</string>
-    <string name="faq_group_start">शुरुआत</string>
-    <string name="faq_group_install">इंस्टॉल</string>
-    <string name="faq_group_ingame">गेम में</string>
-    <string name="faq_group_app">ऐप के बारे में</string>
-    <string name="faq_group_content">कंटेंट और सुरक्षा</string>
+    <string name="compendium_title">सहायक</string>
     <string name="faq_what_q">यह ऐप क्या करता है?</string>
     <string name="faq_what_a">यह आपको Minecraft के लिए मुफ़्त कंटेंट — ऐडऑन, मानचित्र, टेक्सचर और स्किन — ब्राउज़ और इंस्टॉल करने देता है।</string>
     <string name="faq_internet_q">क्या मुझे इंटरनेट चाहिए?</string>
@@ -30,4 +23,20 @@
     <string name="faq_fresh_a">कैटलॉग में नियमित रूप से नया कंटेंट जोड़ा जाता है।</string>
     <string name="faq_safe_q">क्या फ़ाइलें मेरे वर्ल्ड के लिए सुरक्षित हैं?</string>
     <string name="faq_safe_a">कंटेंट Minecraft के अपने फ़ॉर्मैट में होता है। बड़े ऐडऑन जोड़ने से पहले अपने महत्वपूर्ण वर्ल्ड का बैकअप लें।</string>
+    <string name="compendium_subtitle">आम सवालों के जवाब</string>
+    <string name="compendium_greeting">नमस्ते! नीचे कोई सवाल चुनें — जवाब यहीं मिलेगा।</string>
+    <string name="compendium_prompt">सवाल पर टैप करें</string>
+    <string name="compendium_restart">फिर से शुरू करें</string>
+    <string name="compendium_done">बस इतना ही जानता हूँ। ऊपर टैप करके फिर से शुरू करें।</string>
+    <string name="faq_how_chip">कैसे इंस्टॉल करें</string>
+    <string name="faq_fail_chip">इंस्टॉल नहीं हुआ</string>
+    <string name="faq_stuck_chip">डाउनलोड अटका</string>
+    <string name="faq_hidden_chip">गेम में नहीं दिखा</string>
+    <string name="faq_lag_chip">गेम धीमा है</string>
+    <string name="faq_what_chip">यह ऐप क्या है</string>
+    <string name="faq_internet_chip">इंटरनेट चाहिए?</string>
+    <string name="faq_free_chip">क्या यह मुफ़्त है?</string>
+    <string name="faq_ads_chip">विज्ञापन क्यों</string>
+    <string name="faq_fresh_chip">नया कंटेंट</string>
+    <string name="faq_safe_chip">क्या यह सुरक्षित है</string>
 </resources>

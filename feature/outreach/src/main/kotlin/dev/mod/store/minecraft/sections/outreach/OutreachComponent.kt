@@ -17,10 +17,12 @@ interface OutreachComponent {
     val state: StateFlow<OutreachStore.State>
     val labels: Flow<OutreachStore.Label>
     fun onIntent(intent: OutreachStore.Intent)
+    fun back()
 }
 
 class DefaultOutreachComponent(
     componentContext: ComponentContext,
+    private val onBack: () -> Unit,
 ) : OutreachComponent, ComponentContext by componentContext, KoinComponent {
 
     private val storeFactory: StoreFactory by inject()
@@ -37,5 +39,9 @@ class DefaultOutreachComponent(
 
     override fun onIntent(intent: OutreachStore.Intent) {
         store.accept(intent)
+    }
+
+    override fun back() {
+        onBack()
     }
 }

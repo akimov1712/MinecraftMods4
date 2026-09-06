@@ -10,4 +10,16 @@
     <string name="spotlight_report_send">보내기</string>
     <string name="spotlight_report_cancel">취소</string>
     <string name="spotlight_report_sent">감사합니다! 신고가 전송되었습니다.</string>
+    <string name="spotlight_tab_about">개요</string>
+    <string name="spotlight_tab_files">파일</string>
+    <string name="spotlight_tab_images">스크린샷</string>
+    <string name="spotlight_tab_versions">버전</string>
+    <string name="spotlight_download">받기</string>
+    <string name="spotlight_files_hint">다운로드가 끝나면 파일이 Minecraft에서 열립니다.</string>
+    <string name="spotlight_published">등록</string>
+    <string name="spotlight_versions_empty">작성자가 게임 버전을 표기하지 않았습니다.</string>
+    <string name="spotlight_read_more">더 보기</string>
+    <string name="spotlight_read_less">접기</string>
+    <string name="spotlight_files_count">파일 · %1$d</string>
+    <string name="spotlight_suggest">모드 제안</string>
 </resources>

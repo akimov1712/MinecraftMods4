@@ -5,6 +5,7 @@ import com.arkivanov.decompose.value.Value
 import dev.mod.store.minecraft.feature.hub.HubComponent
 import dev.mod.store.minecraft.feature.ignition.IgnitionComponent
 import dev.mod.store.minecraft.feature.loadout.LoadoutComponent
+import dev.mod.store.minecraft.feature.outreach.OutreachComponent
 import dev.mod.store.minecraft.feature.search.SearchComponent
 import dev.mod.store.minecraft.feature.spotlight.SpotlightComponent
 import dev.mod.store.minecraft.feature.walkthrough.WalkthroughComponent
@@ -21,6 +22,7 @@ interface RootComponent {
         data class Ignition(val component: IgnitionComponent) : Child
         data class Hub(val component: HubComponent) : Child
         data class Search(val component: SearchComponent) : Child
+        data class Outreach(val component: OutreachComponent) : Child
         data class Spotlight(val component: SpotlightComponent) : Child
         data class Loadout(val component: LoadoutComponent) : Child
         data class Walkthrough(val component: WalkthroughComponent) : Child

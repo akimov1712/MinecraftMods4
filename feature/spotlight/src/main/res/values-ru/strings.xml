@@ -2,7 +2,7 @@
 <resources>
     <string name="spotlight_versions_title">Поддерживаемые версии</string>
     <string name="spotlight_get_files">Скачать файлы</string>
-    <string name="spotlight_how_to_install">Как установить</string>
+    <string name="spotlight_how_to_install">Установка</string>
     <string name="spotlight_report">Сообщить о проблеме</string>
     <string name="spotlight_report_title">Сообщить о проблеме</string>
     <string name="spotlight_report_email_hint">Ваш email</string>
@@ -10,4 +10,16 @@
     <string name="spotlight_report_send">Отправить</string>
     <string name="spotlight_report_cancel">Отмена</string>
     <string name="spotlight_report_sent">Спасибо! Отчёт отправлен.</string>
+    <string name="spotlight_tab_about">Обзор</string>
+    <string name="spotlight_tab_files">Файлы</string>
+    <string name="spotlight_tab_images">Скрины</string>
+    <string name="spotlight_tab_versions">Версии</string>
+    <string name="spotlight_download">Взять</string>
+    <string name="spotlight_files_hint">Файл откроется в Minecraft сразу после загрузки.</string>
+    <string name="spotlight_published">Добавлен</string>
+    <string name="spotlight_versions_empty">Автор не указал версии игры.</string>
+    <string name="spotlight_read_more">Читать дальше</string>
+    <string name="spotlight_read_less">Свернуть</string>
+    <string name="spotlight_files_count">Файлы · %1$d</string>
+    <string name="spotlight_suggest">Предложить мод</string>
 </resources>

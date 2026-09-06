@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CloudOff
 import androidx.compose.material3.Icon
@@ -26,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.mod.store.minecraft.core.ui.R
+import dev.mod.store.minecraft.core.ui.effect.card
 import dev.mod.store.minecraft.core.ui.theme.Palette
 
 /** Failure panel with an optional retry action. */
@@ -41,8 +41,7 @@ fun ErrorState(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(28.dp))
-            .background(Palette.Surface)
+            .card(fill = Palette.Surface)
             .padding(horizontal = 24.dp, vertical = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -51,7 +50,7 @@ fun ErrorState(
             modifier = Modifier
                 .size(72.dp)
                 .clip(CircleShape)
-                .background(accent.copy(alpha = 0.14f)),
+                .background(accent.copy(alpha = 0.16f)),
             contentAlignment = Alignment.Center,
         ) {
             Icon(

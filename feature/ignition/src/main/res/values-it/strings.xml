@@ -5,15 +5,5 @@
     <string name="ignition_ready_badge">PRONTO</string>
     <string name="ignition_ready_body">Il catalogo è caricato</string>
     <string name="ignition_enter">Entra nell\'app</string>
-    <string-array name="ignition_hints">
-        <item>Sveglio il catalogo…</item>
-        <item>Scelgo la mod del giorno…</item>
-        <item>Controllo le versioni del gioco…</item>
-        <item>Ci siamo quasi…</item>
-    </string-array>
-    <string-array name="ignition_steps">
-        <item>Catalogo</item>
-        <item>Mod del giorno</item>
-        <item>Sezioni</item>
-    </string-array>
+    <string name="ignition_loading">Caricamento…</string>
 </resources>

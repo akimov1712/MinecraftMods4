@@ -2,7 +2,7 @@
 <resources>
     <string name="spotlight_versions_title">対応バージョン</string>
     <string name="spotlight_get_files">ファイルを取得</string>
-    <string name="spotlight_how_to_install">インストール方法</string>
+    <string name="spotlight_how_to_install">導入方法</string>
     <string name="spotlight_report">問題を報告</string>
     <string name="spotlight_report_title">問題を報告</string>
     <string name="spotlight_report_email_hint">メールアドレス</string>
@@ -10,4 +10,16 @@
     <string name="spotlight_report_send">送信</string>
     <string name="spotlight_report_cancel">キャンセル</string>
     <string name="spotlight_report_sent">ありがとうございます。報告を送信しました。</string>
+    <string name="spotlight_tab_about">概要</string>
+    <string name="spotlight_tab_files">ファイル</string>
+    <string name="spotlight_tab_images">画像</string>
+    <string name="spotlight_tab_versions">バージョン</string>
+    <string name="spotlight_download">入手</string>
+    <string name="spotlight_files_hint">ダウンロードが終わるとファイルはMinecraftで開きます。</string>
+    <string name="spotlight_published">追加日</string>
+    <string name="spotlight_versions_empty">作者は対応バージョンを記載していません。</string>
+    <string name="spotlight_read_more">続きを読む</string>
+    <string name="spotlight_read_less">閉じる</string>
+    <string name="spotlight_files_count">ファイル · %1$d</string>
+    <string name="spotlight_suggest">MODを提案</string>
 </resources>

@@ -18,15 +18,12 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.TrendingUp
-import androidx.compose.material.icons.rounded.Bookmark
+import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.EmojiEvents
-import androidx.compose.material.icons.rounded.Inventory2
 import androidx.compose.material.icons.rounded.NewReleases
-import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.WorkspacePremium
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -37,9 +34,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mod.store.minecraft.core.ads.NativeSlot
@@ -53,12 +51,11 @@ import dev.mod.store.minecraft.core.ui.component.PillButton
 import dev.mod.store.minecraft.core.ui.component.SectionHeader
 import dev.mod.store.minecraft.core.ui.component.ShimmerBox
 import dev.mod.store.minecraft.core.ui.effect.Appear
-import dev.mod.store.minecraft.core.ui.effect.animatedCount
+import dev.mod.store.minecraft.core.ui.effect.CardShape
+import dev.mod.store.minecraft.core.ui.effect.SmallShape
 import dev.mod.store.minecraft.core.ui.state.ScreenStage
 import dev.mod.store.minecraft.core.ui.theme.Palette
-import dev.mod.store.minecraft.core.ui.util.formatCompact
 import dev.mod.store.minecraft.core.ui.util.formatCount
-import dev.mod.store.minecraft.core.ui.util.formatRating
 import dev.mod.store.minecraft.domain.creation.CreationEntity
 import dev.mod.store.minecraft.domain.creation.CreationFeed
 import dev.mod.store.minecraft.domain.creation.HomeDigest
@@ -66,15 +63,12 @@ import dev.mod.store.minecraft.feature.showcase.ShowcaseStore.Browse
 import dev.mod.store.minecraft.feature.showcase.ShowcaseStore.Intent
 
 private const val CHART_SIZE = 5
-private const val GRID_SIZE = 4
-private const val VERSIONS_SHOWN = 12
 private const val PRELOAD_DISTANCE = 3
 private val SIDE_PADDING = 16.dp
 
 /**
- * Home opens straight on the mod of the day — no greeting, no search field, no filters. Below it
- * the editorial sections follow one another; opening one in full swaps the whole feed for an
- * endless list over that section.
+ * Home: the daily banner, a live strip of what is climbing, then tight rails and a chart. Rows
+ * are sized so several sections are visible at once rather than one card per screenful.
  */
 @Composable
 fun HomeFeed(
@@ -97,8 +91,8 @@ fun HomeFeed(
     LazyColumn(
         state = listState,
         modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(top = 8.dp, bottom = 28.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp),
+        contentPadding = PaddingValues(top = 10.dp, bottom = 24.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         when {
             browse != null -> browseContent(browse, nativeAdInterval, onIntent, onOpenCreation)
@@ -107,18 +101,17 @@ fun HomeFeed(
                 ErrorState(
                     message = stage.message,
                     onRetry = { onIntent(Intent.Refresh) },
-                    modifier = Modifier.padding(horizontal = SIDE_PADDING, vertical = 40.dp),
+                    modifier = Modifier.padding(horizontal = SIDE_PADDING, vertical = 32.dp),
                 )
             }
 
             state.digest.isEmpty && stage.isLoading -> digestSkeleton()
 
-            else -> digestContent(state.digest, state, onIntent, onOpenCreation)
+            else -> digestContent(state.digest, onIntent, onOpenCreation)
         }
     }
 }
 
-/** Loads the next page as the end of the browsing list comes into view. */
 @Composable
 private fun PagingTrigger(
     listState: LazyListState,
@@ -139,55 +132,39 @@ private fun PagingTrigger(
     }
 }
 
-// region digest
+// region sections
 
 private fun LazyListScope.digestContent(
     digest: HomeDigest,
-    state: ShowcaseStore.State,
     onIntent: (Intent) -> Unit,
     onOpenCreation: (Int) -> Unit,
 ) {
-    digest.pickOfDay?.let { pick ->
-        item(key = "pick") {
+    if (digest.trending.isNotEmpty()) {
+        item(key = "ticker") {
             Appear(index = 0) {
-                PickOfDayCard(
-                    creation = pick,
-                    onClick = { onOpenCreation(pick.id) },
+                HighlightTicker(
+                    creations = digest.trending.take(5),
+                    onOpenCreation = onOpenCreation,
                     modifier = Modifier.padding(horizontal = SIDE_PADDING),
                 )
             }
         }
     }
 
-    item(key = "stats") {
-        Appear(index = 1) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = SIDE_PADDING),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
-                StatTile(
-                    value = formatCompact(animatedCount(digest.catalogTotal)),
-                    label = stringResource(R.string.showcase_stat_catalog),
-                    icon = Icons.Rounded.Inventory2,
-                    accent = Palette.Sky,
-                    modifier = Modifier.weight(1f),
-                )
-                StatTile(
-                    value = formatCount(animatedCount(state.bookmarkCount)),
-                    label = stringResource(R.string.showcase_stat_saved),
-                    icon = Icons.Rounded.Bookmark,
-                    accent = Palette.Accent,
-                    modifier = Modifier.weight(1f),
-                )
-                StatTile(
-                    value = formatRating(digest.topRated.averageRating()),
-                    label = stringResource(R.string.showcase_stat_rating),
-                    icon = Icons.Rounded.Star,
-                    accent = Palette.Gold,
-                    modifier = Modifier.weight(1f),
-                )
+    digest.pickOfDay?.let { pick ->
+        item(key = "pick") {
+            Appear(index = 1) {
+                Column(
+                    modifier = Modifier.padding(horizontal = SIDE_PADDING),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    SectionHeader(
+                        title = stringResource(R.string.showcase_section_pick),
+                        icon = Icons.Rounded.AutoAwesome,
+                        accent = Palette.Gold,
+                    )
+                    PickOfDayBanner(creation = pick, onClick = { onOpenCreation(pick.id) })
+                }
             }
         }
     }
@@ -195,30 +172,15 @@ private fun LazyListScope.digestContent(
     if (digest.trending.isNotEmpty()) {
         item(key = "trending") {
             Appear(index = 2) {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    SectionHeader(
-                        title = stringResource(R.string.showcase_section_trending),
-                        subtitle = stringResource(R.string.showcase_section_trending_subtitle),
-                        icon = Icons.AutoMirrored.Rounded.TrendingUp,
-                        accent = Palette.Accent,
-                        actionLabel = stringResource(R.string.showcase_see_all),
-                        onAction = { onIntent(Intent.OpenFeed(CreationFeed.Trending)) },
-                        modifier = Modifier.padding(horizontal = SIDE_PADDING),
-                    )
-                    LazyRow(
-                        contentPadding = PaddingValues(horizontal = SIDE_PADDING),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    ) {
-                        itemsIndexed(digest.trending, key = { _, creation -> creation.id }) { index, creation ->
-                            CreationPoster(
-                                creation = creation,
-                                onClick = { onOpenCreation(creation.id) },
-                                rank = index + 1,
-                                accent = Palette.Accent,
-                            )
-                        }
-                    }
-                }
+                Rail(
+                    title = stringResource(R.string.showcase_section_trending),
+                    icon = Icons.AutoMirrored.Rounded.TrendingUp,
+                    accent = Palette.Accent,
+                    creations = digest.trending,
+                    ranked = true,
+                    onSeeAll = { onIntent(Intent.OpenFeed(CreationFeed.Trending)) },
+                    onOpenCreation = onOpenCreation,
+                )
             }
         }
     }
@@ -237,22 +199,25 @@ private fun LazyListScope.digestContent(
             Appear(index = 0) {
                 Column(
                     modifier = Modifier.padding(horizontal = SIDE_PADDING),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(2.dp),
                 ) {
                     SectionHeader(
                         title = stringResource(R.string.showcase_section_popular),
-                        subtitle = stringResource(R.string.showcase_section_popular_subtitle),
                         icon = Icons.Rounded.EmojiEvents,
                         accent = Palette.Gold,
                         actionLabel = stringResource(R.string.showcase_see_all),
                         onAction = { onIntent(Intent.OpenFeed(CreationFeed.Popular)) },
+                        modifier = Modifier.padding(bottom = 6.dp),
                     )
                     digest.popular.take(CHART_SIZE).forEachIndexed { index, creation ->
                         CreationRow(
                             creation = creation,
                             onClick = { onOpenCreation(creation.id) },
                             rank = index + 1,
-                            trailing = { ChartMoveBadge(chartMove(creation, index, digest.trending)) },
+                            trailing = {
+                                val move = chartMove(creation, index, digest.trending)
+                                ChartMoveTag(move = move.first, delta = move.second)
+                            },
                         )
                     }
                 }
@@ -263,10 +228,9 @@ private fun LazyListScope.digestContent(
     if (digest.fresh.isNotEmpty()) {
         item(key = "fresh") {
             Appear(index = 0) {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     SectionHeader(
                         title = stringResource(R.string.showcase_section_fresh),
-                        subtitle = stringResource(R.string.showcase_section_fresh_subtitle),
                         icon = Icons.Rounded.NewReleases,
                         accent = Palette.Positive,
                         actionLabel = stringResource(R.string.showcase_see_all),
@@ -275,7 +239,7 @@ private fun LazyListScope.digestContent(
                     )
                     LazyRow(
                         contentPadding = PaddingValues(horizontal = SIDE_PADDING),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
                         items(digest.fresh, key = { it.id }) { creation ->
                             FreshCard(creation = creation, onClick = { onOpenCreation(creation.id) })
@@ -289,34 +253,15 @@ private fun LazyListScope.digestContent(
     if (digest.topRated.isNotEmpty()) {
         item(key = "top_rated") {
             Appear(index = 0) {
-                Column(
-                    modifier = Modifier.padding(horizontal = SIDE_PADDING),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    SectionHeader(
-                        title = stringResource(R.string.showcase_section_top_rated),
-                        subtitle = stringResource(R.string.showcase_section_top_rated_subtitle),
-                        icon = Icons.Rounded.WorkspacePremium,
-                        accent = Palette.Sky,
-                        actionLabel = stringResource(R.string.showcase_see_all),
-                        onAction = { onIntent(Intent.OpenFeed(CreationFeed.TopRated)) },
-                    )
-                    digest.topRated.take(GRID_SIZE).chunked(2).forEach { pair ->
-                        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                            pair.forEach { creation ->
-                                CreationPoster(
-                                    creation = creation,
-                                    onClick = { onOpenCreation(creation.id) },
-                                    modifier = Modifier.weight(1f),
-                                    width = null,
-                                    aspectRatio = 0.86f,
-                                    accent = Palette.Sky,
-                                )
-                            }
-                            if (pair.size == 1) Box(Modifier.weight(1f))
-                        }
-                    }
-                }
+                Rail(
+                    title = stringResource(R.string.showcase_section_top_rated),
+                    icon = Icons.Rounded.WorkspacePremium,
+                    accent = Palette.Sky,
+                    creations = digest.topRated,
+                    ranked = false,
+                    onSeeAll = { onIntent(Intent.OpenFeed(CreationFeed.TopRated)) },
+                    onOpenCreation = onOpenCreation,
+                )
             }
         }
     }
@@ -329,66 +274,66 @@ private fun LazyListScope.digestContent(
                 .padding(horizontal = SIDE_PADDING),
         )
     }
+}
 
-    val versions = digest.everything.topVersions()
-    if (versions.isNotEmpty()) {
-        item(key = "versions") {
-            VersionsStrip(versions = versions, modifier = Modifier.padding(horizontal = SIDE_PADDING))
-        }
-    }
-
-    item(key = "tip") {
-        TipCard(modifier = Modifier.padding(horizontal = SIDE_PADDING))
-    }
-
-    item(key = "footer") {
-        FeedFooter(
-            total = formatCount(digest.catalogTotal),
-            modifier = Modifier.padding(horizontal = SIDE_PADDING, vertical = 8.dp),
+/** A titled row of tiles — the shape every rail shares. */
+@Composable
+private fun Rail(
+    title: String,
+    icon: ImageVector,
+    accent: Color,
+    creations: List<CreationEntity>,
+    ranked: Boolean,
+    onSeeAll: () -> Unit,
+    onOpenCreation: (Int) -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        SectionHeader(
+            title = title,
+            icon = icon,
+            accent = accent,
+            actionLabel = stringResource(R.string.showcase_see_all),
+            onAction = onSeeAll,
+            modifier = Modifier.padding(horizontal = SIDE_PADDING),
         )
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = SIDE_PADDING),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            itemsIndexed(creations, key = { _, creation -> creation.id }) { index, creation ->
+                CreationPoster(
+                    creation = creation,
+                    onClick = { onOpenCreation(creation.id) },
+                    rank = if (ranked) index + 1 else null,
+                    accent = accent,
+                )
+            }
+        }
     }
 }
 
-/** Placeholder version of the digest, shown while the very first load is in flight. */
 private fun LazyListScope.digestSkeleton() {
     item(key = "skeleton_hero") {
         ShimmerBox(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = SIDE_PADDING)
-                .aspectRatio(0.94f),
-            shape = RoundedCornerShape(30.dp),
+                .aspectRatio(1.72f),
+            shape = CardShape,
         )
-    }
-    item(key = "skeleton_stats") {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = SIDE_PADDING),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            repeat(3) {
-                ShimmerBox(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(92.dp),
-                    shape = RoundedCornerShape(20.dp),
-                )
-            }
-        }
     }
     repeat(2) { index ->
         item(key = "skeleton_rail_$index") {
             Row(
                 modifier = Modifier.padding(horizontal = SIDE_PADDING),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 repeat(3) {
                     ShimmerBox(
                         modifier = Modifier
                             .weight(1f)
-                            .aspectRatio(0.72f),
-                        shape = RoundedCornerShape(24.dp),
+                            .aspectRatio(0.8f),
+                        shape = SmallShape,
                     )
                 }
             }
@@ -412,23 +357,20 @@ private fun LazyListScope.browseContent(
                 .fillMaxWidth()
                 .padding(horizontal = SIDE_PADDING),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = stringResource(browse.feed.titleRes()),
                     color = Palette.TextPrimary,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
+                    fontSize = 19.sp,
+                    fontWeight = FontWeight.Bold,
                 )
                 if (browse.total > 0) {
                     Text(
                         text = stringResource(R.string.showcase_browse_count, formatCount(browse.total)),
-                        color = Palette.TextMuted,
+                        color = Palette.TextFaint,
                         fontSize = 12.sp,
-                        fontWeight = FontWeight.Medium,
                     )
                 }
             }
@@ -436,6 +378,7 @@ private fun LazyListScope.browseContent(
                 icon = Icons.Rounded.Close,
                 contentDescription = stringResource(R.string.showcase_browse_back),
                 onClick = { onIntent(Intent.CloseBrowse) },
+                size = 36.dp,
             )
         }
     }
@@ -446,8 +389,8 @@ private fun LazyListScope.browseContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = SIDE_PADDING)
-                    .aspectRatio(1.15f),
-                shape = RoundedCornerShape(30.dp),
+                    .height(96.dp),
+                shape = SmallShape,
             )
         }
         return
@@ -515,25 +458,17 @@ internal fun CreationFeed.titleRes(): Int = when (this) {
 
 // endregion
 
-private fun List<CreationEntity>.averageRating(): Double =
-    filter { it.rating > 0.0 }.map { it.rating }.average().takeIf { !it.isNaN() } ?: 0.0
-
-private fun List<CreationEntity>.topVersions(): List<String> =
-    flatMap { it.supportedVersions }
-        .groupingBy { it }
-        .eachCount()
-        .entries
-        .sortedWith(compareByDescending<Map.Entry<String, Int>> { it.value }.thenByDescending { it.key })
-        .take(VERSIONS_SHOWN)
-        .map { it.key }
-
-/** Where a chart entry sits compared to the editorial order — the little arrow on its right. */
-private fun chartMove(creation: CreationEntity, index: Int, trending: List<CreationEntity>): ChartMove {
+/** How far a mod sits from its editorial position — the delta shown next to a chart place. */
+private fun chartMove(
+    creation: CreationEntity,
+    index: Int,
+    trending: List<CreationEntity>,
+): Pair<ChartMove, Int> {
     val trendingIndex = trending.indexOfFirst { it.id == creation.id }
     return when {
-        trendingIndex < 0 -> ChartMove.New
-        trendingIndex < index -> ChartMove.Up
-        trendingIndex > index -> ChartMove.Down
-        else -> ChartMove.Flat
+        trendingIndex < 0 -> ChartMove.New to 0
+        trendingIndex < index -> ChartMove.Down to (index - trendingIndex)
+        trendingIndex > index -> ChartMove.Up to (trendingIndex - index)
+        else -> ChartMove.Flat to 0
     }
 }

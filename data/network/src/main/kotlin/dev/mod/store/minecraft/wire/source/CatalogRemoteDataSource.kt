@@ -39,13 +39,9 @@ internal class CatalogRemoteDataSource(private val client: HttpClient) {
 
     /** The backend's daily pick — the same creation for every user until the date rolls over. */
     suspend fun fetchPickOfDay(): CreationDto =
-        client.get("$appCatalog/inactived") {
+        client.get("$appCatalog/day") {
             header("Language", currentLanguageTag())
-            parameter("skip", 3)
-            parameter("take", 1)
-            parameter("sort_key", "rating")
-            parameter("sort_value", "desc")
-        }.body<CreationListResponseDto>().items.first()
+        }.body()
 
     /** Content-Length probe via HEAD; null when the server omits the header. */
     suspend fun fetchFileSize(url: String): Long? =
@@ -59,13 +55,13 @@ internal class CatalogRemoteDataSource(private val client: HttpClient) {
  */
 private val CreationFeed.pathSegment: String
     get() = when (this) {
-        CreationFeed.Fresh -> "inactived"
-        else -> "inactived"
+        CreationFeed.Fresh -> "new"
+        else -> "actived"
     }
 
 private val CreationFeed.sortKey: String?
     get() = when (this) {
-        CreationFeed.Trending -> "rating"
+        CreationFeed.Trending -> "order"
         CreationFeed.Popular -> "usedCount"
         CreationFeed.TopRated -> "rating"
         CreationFeed.Fresh -> null

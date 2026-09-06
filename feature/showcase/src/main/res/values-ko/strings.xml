@@ -36,4 +36,6 @@
     <string name="search_empty_title">결과가 없어요</string>
     <string name="search_empty_body">더 짧거나 다른 단어로 검색해 보세요.</string>
     <string name="search_suggestions_hint">고민되면 — 지금 많이 설치되는 모드</string>
+    <string name="showcase_ticker_line">%1$s — 카탈로그 %2$d위</string>
+    <string name="showcase_chart_new">신규</string>
 </resources>

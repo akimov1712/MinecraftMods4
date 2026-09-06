@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="compendium_title">FAQ</string>
-    <string name="compendium_search_hint">Pesquisar na FAQ</string>
-    <string name="compendium_empty">Nenhuma resposta corresponde à sua busca</string>
-    <string name="faq_group_start">Primeiros passos</string>
-    <string name="faq_group_install">Instalação</string>
-    <string name="faq_group_ingame">No jogo</string>
-    <string name="faq_group_app">Sobre o app</string>
-    <string name="faq_group_content">Conteúdo e segurança</string>
+    <string name="compendium_title">Assistente</string>
     <string name="faq_what_q">O que este app faz?</string>
     <string name="faq_what_a">Ele permite explorar e instalar conteúdo gratuito — addons, mapas, texturas e skins — para Minecraft.</string>
     <string name="faq_internet_q">Preciso de conexão com a internet?</string>
@@ -30,4 +23,20 @@
     <string name="faq_fresh_a">O catálogo é atualizado regularmente com novos conteúdos.</string>
     <string name="faq_safe_q">Os arquivos são seguros para meus mundos?</string>
     <string name="faq_safe_a">Os conteúdos usam os formatos do próprio Minecraft. Faça backup dos mundos importantes antes de adicionar addons grandes.</string>
+    <string name="compendium_subtitle">Respostas às dúvidas mais comuns</string>
+    <string name="compendium_greeting">Oi! Escolha uma pergunta abaixo e eu respondo aqui.</string>
+    <string name="compendium_prompt">Toque numa pergunta</string>
+    <string name="compendium_restart">Recomeçar</string>
+    <string name="compendium_done">É tudo o que sei. Toque acima para recomeçar.</string>
+    <string name="faq_how_chip">Como instalar</string>
+    <string name="faq_fail_chip">Não instalou</string>
+    <string name="faq_stuck_chip">Download travado</string>
+    <string name="faq_hidden_chip">Não aparece no jogo</string>
+    <string name="faq_lag_chip">O jogo trava</string>
+    <string name="faq_what_chip">O que é este app</string>
+    <string name="faq_internet_chip">Precisa de internet?</string>
+    <string name="faq_free_chip">É grátis?</string>
+    <string name="faq_ads_chip">Por que anúncios</string>
+    <string name="faq_fresh_chip">Novidades</string>
+    <string name="faq_safe_chip">É seguro</string>
 </resources>

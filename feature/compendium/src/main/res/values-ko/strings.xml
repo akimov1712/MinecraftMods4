@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="compendium_title">FAQ</string>
-    <string name="compendium_search_hint">FAQ 검색</string>
-    <string name="compendium_empty">검색과 일치하는 답변이 없습니다</string>
-    <string name="faq_group_start">시작하기</string>
-    <string name="faq_group_install">설치</string>
-    <string name="faq_group_ingame">게임 내</string>
-    <string name="faq_group_app">앱 정보</string>
-    <string name="faq_group_content">콘텐츠 및 안전</string>
+    <string name="compendium_title">도우미</string>
     <string name="faq_what_q">이 앱은 무엇을 하나요?</string>
     <string name="faq_what_a">Minecraft용 무료 콘텐츠(애드온, 맵, 텍스처, 스킨)를 둘러보고 설치할 수 있습니다.</string>
     <string name="faq_internet_q">인터넷 연결이 필요한가요?</string>
@@ -30,4 +23,20 @@
     <string name="faq_fresh_a">카탈로그는 새로운 콘텐츠로 정기적으로 업데이트됩니다.</string>
     <string name="faq_safe_q">파일이 제 월드에 안전한가요?</string>
     <string name="faq_safe_a">콘텐츠는 Minecraft 자체 형식으로 패키징됩니다. 큰 애드온을 추가하기 전에 중요한 월드를 백업하세요.</string>
+    <string name="compendium_subtitle">자주 묻는 질문의 답</string>
+    <string name="compendium_greeting">안녕하세요! 아래에서 질문을 고르면 여기서 답해 드려요.</string>
+    <string name="compendium_prompt">질문을 눌러 보세요</string>
+    <string name="compendium_restart">처음부터</string>
+    <string name="compendium_done">제가 아는 건 여기까지예요. 위 버튼으로 다시 시작하세요.</string>
+    <string name="faq_how_chip">설치 방법</string>
+    <string name="faq_fail_chip">설치가 안 돼요</string>
+    <string name="faq_stuck_chip">다운로드가 멈춰요</string>
+    <string name="faq_hidden_chip">게임에 안 보여요</string>
+    <string name="faq_lag_chip">게임이 느려요</string>
+    <string name="faq_what_chip">이 앱은 뭔가요</string>
+    <string name="faq_internet_chip">인터넷 필요?</string>
+    <string name="faq_free_chip">무료인가요?</string>
+    <string name="faq_ads_chip">광고 이유</string>
+    <string name="faq_fresh_chip">새 콘텐츠</string>
+    <string name="faq_safe_chip">안전한가요</string>
 </resources>

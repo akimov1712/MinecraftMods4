@@ -26,18 +26,17 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlin.math.roundToInt
+import kotlin.math.sin
 
-/**
- * Tap handling with physical feedback: the surface dips under the finger and springs back,
- * instead of flashing a ripple. Used for every card-sized target in the app.
- */
+/** Tap handling with a springy dip — every card and button in the app uses it. */
 @Composable
 fun Modifier.tappable(
     enabled: Boolean = true,
-    pressedScale: Float = 0.965f,
+    pressedScale: Float = 0.96f,
     onClick: () -> Unit,
 ): Modifier {
     val interaction = remember { MutableInteractionSource() }
@@ -57,31 +56,24 @@ fun Modifier.tappable(
         )
 }
 
-/**
- * Entrance choreography: content slides up and fades in, each [index] a beat later than the one
- * before it, so a screen assembles itself rather than appearing all at once.
- */
+/** Content slides up and fades in, each [index] a beat after the one before it. */
 @Composable
 fun Appear(
     index: Int = 0,
     modifier: Modifier = Modifier,
-    stepMillis: Int = 55,
+    stepMillis: Int = 60,
     durationMillis: Int = 420,
-    travel: Dp = 24.dp,
+    travel: Dp = 26.dp,
     content: @Composable () -> Unit,
 ) {
     val progress = remember { Animatable(0f) }
     LaunchedEffect(Unit) {
         progress.animateTo(
             targetValue = 1f,
-            animationSpec = tween(
-                durationMillis = durationMillis,
-                delayMillis = index * stepMillis,
-                easing = EaseOutCubic,
-            ),
+            animationSpec = tween(durationMillis, delayMillis = index * stepMillis, easing = EaseOutCubic),
         )
     }
-    val travelPx = with(androidx.compose.ui.platform.LocalDensity.current) { travel.toPx() }
+    val travelPx = with(LocalDensity.current) { travel.toPx() }
     Box(
         modifier = modifier.graphicsLayer {
             alpha = progress.value
@@ -92,28 +84,63 @@ fun Appear(
     }
 }
 
-/**
- * A light sweep that crosses the surface every few seconds — the highlight that makes a hero
- * card look lit rather than printed.
- */
+/** Pops in with a bounce — badges, medals, anything that should feel like it landed. */
+@Composable
+fun Modifier.popIn(delayMillis: Int = 0): Modifier {
+    val scale = remember { Animatable(0.4f) }
+    LaunchedEffect(Unit) {
+        if (delayMillis > 0) kotlinx.coroutines.delay(delayMillis.toLong())
+        scale.animateTo(
+            targetValue = 1f,
+            animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow),
+        )
+    }
+    return this.scale(scale.value)
+}
+
+/** A slow up-and-down float, for badges and icons that should look alive. */
+@Composable
+fun Modifier.bob(distance: Dp = 3.dp, periodMillis: Int = 2200): Modifier {
+    val transition = rememberInfiniteTransition(label = "bob")
+    val phase by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = (2 * Math.PI).toFloat(),
+        animationSpec = infiniteRepeatable(tween(periodMillis, easing = LinearEasing), RepeatMode.Restart),
+        label = "bob-phase",
+    )
+    val offsetPx = with(LocalDensity.current) { distance.toPx() }
+    return this.graphicsLayer { translationY = sin(phase) * offsetPx }
+}
+
+/** A small friendly tilt back and forth — used on section icons. */
+@Composable
+fun Modifier.wiggle(degrees: Float = 7f, periodMillis: Int = 2600): Modifier {
+    val transition = rememberInfiniteTransition(label = "wiggle")
+    val phase by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = (2 * Math.PI).toFloat(),
+        animationSpec = infiniteRepeatable(tween(periodMillis, easing = LinearEasing), RepeatMode.Restart),
+        label = "wiggle-phase",
+    )
+    return this.graphicsLayer { rotationZ = sin(phase) * degrees }
+}
+
+/** A soft light sweeping across a picture, so cards do not look like flat prints. */
 @Composable
 fun Modifier.shine(
-    periodMillis: Int = 4200,
-    strength: Float = 0.16f,
+    periodMillis: Int = 5200,
+    strength: Float = 0.14f,
 ): Modifier {
     val transition = rememberInfiniteTransition(label = "shine")
     val progress by transition.animateFloat(
         initialValue = 0f,
         targetValue = 1f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(periodMillis, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart,
-        ),
+        animationSpec = infiniteRepeatable(tween(periodMillis, easing = LinearEasing), RepeatMode.Restart),
         label = "shine-progress",
     )
     return drawWithContent {
         drawContent()
-        val span = size.width * 0.6f
+        val span = size.width * 0.55f
         val start = -span + progress * (size.width + 2 * span)
         drawRect(
             brush = Brush.linearGradient(
@@ -125,7 +152,7 @@ fun Modifier.shine(
     }
 }
 
-/** Slow breathing between two alphas — for glows that should feel alive but never blink. */
+/** Slow breathing between two values — for gentle glows. */
 @Composable
 fun pulse(from: Float = 0.35f, to: Float = 0.9f, periodMillis: Int = 2600): Float {
     val transition = rememberInfiniteTransition(label = "pulse")
@@ -138,7 +165,7 @@ fun pulse(from: Float = 0.35f, to: Float = 0.9f, periodMillis: Int = 2600): Floa
     return value
 }
 
-/** Counts up to [value] instead of snapping to it, for the numbers on the stat tiles. */
+/** Counts up to [value] instead of snapping to it. */
 @Composable
 fun animatedCount(value: Int, durationMillis: Int = 900): Int {
     val progress by animateFloatAsState(

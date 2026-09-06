@@ -3,12 +3,11 @@ package dev.mod.store.minecraft.core.ui.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
@@ -26,10 +25,7 @@ import androidx.compose.ui.unit.sp
 import dev.mod.store.minecraft.core.ui.effect.tappable
 import dev.mod.store.minecraft.core.ui.theme.Palette
 
-/**
- * Title strip above a home section: a tinted glyph tile, the section name with its subtitle and
- * an optional "see everything" affordance on the right.
- */
+/** A slim section title: a tinted glyph, the name, and a text link to the full list. */
 @Composable
 fun SectionHeader(
     title: String,
@@ -43,60 +39,50 @@ fun SectionHeader(
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Box(
             modifier = Modifier
-                .size(34.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .background(accent.copy(alpha = 0.16f)),
+                .size(24.dp)
+                .clip(RoundedCornerShape(7.dp))
+                .background(accent.copy(alpha = 0.18f)),
             contentAlignment = Alignment.Center,
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
                 tint = accent,
-                modifier = Modifier.size(19.dp),
+                modifier = Modifier.size(15.dp),
             )
         }
 
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = title,
-                color = Palette.TextPrimary,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.ExtraBold,
-            )
-            if (subtitle != null) {
-                Text(
-                    text = subtitle,
-                    color = Palette.TextMuted,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium,
-                )
-            }
-        }
+        Text(
+            text = title,
+            color = Palette.TextPrimary,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.weight(1f),
+        )
 
         if (actionLabel != null && onAction != null) {
             Row(
                 modifier = Modifier
-                    .clip(CircleShape)
-                    .background(Palette.Glass)
+                    .clip(RoundedCornerShape(8.dp))
                     .tappable(onClick = onAction)
-                    .padding(start = 12.dp, end = 6.dp, top = 6.dp, bottom = 6.dp),
+                    .padding(start = 8.dp, end = 2.dp, top = 4.dp, bottom = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = actionLabel,
-                    color = accent,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold,
+                    color = Palette.TextMuted,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.SemiBold,
                 )
                 Icon(
                     imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
                     contentDescription = null,
-                    tint = accent,
-                    modifier = Modifier.size(18.dp),
+                    tint = Palette.TextMuted,
+                    modifier = Modifier.size(16.dp),
                 )
             }
         }

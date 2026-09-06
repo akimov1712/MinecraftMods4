@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="compendium_title">FAQ</string>
-    <string name="compendium_search_hint">FAQ を検索</string>
-    <string name="compendium_empty">検索に一致する回答がありません</string>
-    <string name="faq_group_start">はじめに</string>
-    <string name="faq_group_install">インストール</string>
-    <string name="faq_group_ingame">ゲーム内</string>
-    <string name="faq_group_app">アプリについて</string>
-    <string name="faq_group_content">コンテンツと安全性</string>
+    <string name="compendium_title">アシスタント</string>
     <string name="faq_what_q">このアプリは何をしますか？</string>
     <string name="faq_what_a">Minecraft 向けの無料コンテンツ（アドオン、マップ、テクスチャ、スキン）を閲覧してインストールできます。</string>
     <string name="faq_internet_q">インターネット接続は必要ですか？</string>
@@ -30,4 +23,20 @@
     <string name="faq_fresh_a">カタログは定期的に新しいコンテンツで更新されます。</string>
     <string name="faq_safe_q">ファイルはワールドにとって安全ですか？</string>
     <string name="faq_safe_a">コンテンツは Minecraft 独自の形式です。大きなアドオンを追加する前に大切なワールドをバックアップしてください。</string>
+    <string name="compendium_subtitle">よくある質問への回答</string>
+    <string name="compendium_greeting">こんにちは！下から質問を選んでください。ここで答えます。</string>
+    <string name="compendium_prompt">質問をタップ</string>
+    <string name="compendium_restart">最初から</string>
+    <string name="compendium_done">知っているのはここまでです。上のボタンで最初からどうぞ。</string>
+    <string name="faq_how_chip">導入方法</string>
+    <string name="faq_fail_chip">導入できない</string>
+    <string name="faq_stuck_chip">ダウンロードが進まない</string>
+    <string name="faq_hidden_chip">ゲームに出てこない</string>
+    <string name="faq_lag_chip">動作が重い</string>
+    <string name="faq_what_chip">このアプリは何</string>
+    <string name="faq_internet_chip">通信は必要？</string>
+    <string name="faq_free_chip">無料？</string>
+    <string name="faq_ads_chip">広告について</string>
+    <string name="faq_fresh_chip">新着について</string>
+    <string name="faq_safe_chip">安全？</string>
 </resources>

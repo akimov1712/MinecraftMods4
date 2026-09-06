@@ -2,7 +2,7 @@
 <resources>
     <string name="spotlight_versions_title">Versions prises en charge</string>
     <string name="spotlight_get_files">Obtenir les fichiers</string>
-    <string name="spotlight_how_to_install">Comment installer</string>
+    <string name="spotlight_how_to_install">Installer</string>
     <string name="spotlight_report">Signaler un problème</string>
     <string name="spotlight_report_title">Signaler un problème</string>
     <string name="spotlight_report_email_hint">Ton e-mail</string>
@@ -10,4 +10,16 @@
     <string name="spotlight_report_send">Envoyer</string>
     <string name="spotlight_report_cancel">Annuler</string>
     <string name="spotlight_report_sent">Merci ! Ton signalement a été envoyé.</string>
+    <string name="spotlight_tab_about">Aperçu</string>
+    <string name="spotlight_tab_files">Fichiers</string>
+    <string name="spotlight_tab_images">Images</string>
+    <string name="spotlight_tab_versions">Versions</string>
+    <string name="spotlight_download">Obtenir</string>
+    <string name="spotlight_files_hint">Le fichier s\'ouvre dans Minecraft dès la fin du téléchargement.</string>
+    <string name="spotlight_published">Ajouté</string>
+    <string name="spotlight_versions_empty">L\'auteur n\'a pas indiqué de versions.</string>
+    <string name="spotlight_read_more">Lire la suite</string>
+    <string name="spotlight_read_less">Réduire</string>
+    <string name="spotlight_files_count">Fichiers · %1$d</string>
+    <string name="spotlight_suggest">Proposer un mod</string>
 </resources>

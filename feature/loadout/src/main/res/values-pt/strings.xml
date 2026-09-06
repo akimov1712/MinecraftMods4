@@ -10,4 +10,5 @@
     <string name="loadout_download_failed">Falha no download. Tente novamente.</string>
     <string name="loadout_open_failed">Não foi possível abrir o arquivo. O Minecraft está instalado?</string>
     <string name="loadout_unknown_size">Tamanho desconhecido</string>
+    <string name="loadout_progress_summary">%1$d de %2$d prontos</string>
 </resources>

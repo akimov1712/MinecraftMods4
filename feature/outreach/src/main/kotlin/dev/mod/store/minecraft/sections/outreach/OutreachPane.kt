@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
@@ -20,6 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import dev.mod.store.minecraft.core.ui.component.GlassIconButton
 import dev.mod.store.minecraft.core.ui.component.NoticeHost
 import dev.mod.store.minecraft.core.ui.component.OutlineField
 import dev.mod.store.minecraft.core.ui.component.PillButton
@@ -50,15 +55,29 @@ fun OutreachPane(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 16.dp),
+                .statusBarsPadding()
+                .padding(top = 10.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Text(
-                text = stringResource(R.string.outreach_title),
-                style = MaterialTheme.typography.headlineMedium,
-                color = Palette.TextPrimary,
-                modifier = Modifier.padding(horizontal = 20.dp),
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                GlassIconButton(
+                    icon = Icons.AutoMirrored.Rounded.ArrowBack,
+                    contentDescription = null,
+                    onClick = component::back,
+                    size = 38.dp,
+                )
+                Text(
+                    text = stringResource(R.string.outreach_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Palette.TextPrimary,
+                )
+            }
 
             SegmentedTabs(
                 labels = modes.map { stringResource(it.labelRes()) },
