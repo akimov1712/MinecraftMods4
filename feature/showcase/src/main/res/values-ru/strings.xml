@@ -36,6 +36,6 @@
     <string name="search_empty_title">Ничего не нашлось</string>
     <string name="search_empty_body">Попробуй короче или другое слово.</string>
     <string name="search_suggestions_hint">Пока думаешь — что ставят сейчас</string>
-    <string name="showcase_ticker_line">%1$s — #%2$d в каталоге</string>
     <string name="showcase_chart_new">нов.</string>
+    <string name="search_title">Поиск</string>
 </resources>

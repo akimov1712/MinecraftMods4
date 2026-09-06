@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mod.store.minecraft.core.ui.effect.CardBox
-import dev.mod.store.minecraft.core.ui.effect.SmallShape
+import androidx.compose.foundation.shape.CircleShape
 import dev.mod.store.minecraft.core.ui.theme.Palette
 
 /** A big, obvious button. Tall enough for small fingers, with a plain sentence-case label. */
@@ -33,12 +33,12 @@ fun PillButton(
     leading: @Composable (() -> Unit)? = null,
 ) {
     CardBox(
-        modifier = modifier.defaultMinSize(minHeight = 44.dp),
+        modifier = modifier.defaultMinSize(minHeight = 56.dp),
         fill = if (enabled) container else container.copy(alpha = 0.4f),
-        shape = SmallShape,
+        shape = CircleShape,
         enabled = enabled && !busy,
         onClick = onClick,
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 11.dp),
+        contentPadding = PaddingValues(horizontal = 18.dp, vertical = 14.dp),
     ) {
         if (busy) {
             CircularProgressIndicator(
@@ -58,7 +58,7 @@ fun PillButton(
                 Text(
                     text = text,
                     color = content,
-                    fontSize = 14.sp,
+                    fontSize = 17.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     maxLines = 1,

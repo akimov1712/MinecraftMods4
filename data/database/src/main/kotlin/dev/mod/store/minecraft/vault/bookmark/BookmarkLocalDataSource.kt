@@ -17,6 +17,8 @@ internal class BookmarkLocalDataSource(database: VaultDatabase) {
 
     suspend fun isBookmarked(creationId: Int): Boolean = dao.countFor(creationId) > 0
 
+    suspend fun clear() = dao.deleteAll()
+
     /** Inserts when absent, deletes when present. Returns the new bookmarked state. */
     suspend fun toggle(creationId: Int): Boolean {
         val present = dao.countFor(creationId) > 0

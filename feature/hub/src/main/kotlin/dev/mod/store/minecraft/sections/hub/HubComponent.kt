@@ -8,6 +8,8 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import dev.mod.store.minecraft.feature.compendium.CompendiumComponent
 import dev.mod.store.minecraft.feature.compendium.DefaultCompendiumComponent
+import dev.mod.store.minecraft.feature.settings.DefaultSettingsComponent
+import dev.mod.store.minecraft.feature.settings.SettingsComponent
 import dev.mod.store.minecraft.feature.showcase.DefaultShowcaseComponent
 import dev.mod.store.minecraft.feature.showcase.ShowcaseComponent
 import dev.mod.store.minecraft.feature.stash.DefaultStashComponent
@@ -41,6 +43,10 @@ interface HubComponent {
         data class Compendium(val component: CompendiumComponent) : Child {
             override val tab: HubTab get() = HubTab.Compendium
         }
+
+        data class Settings(val component: SettingsComponent) : Child {
+            override val tab: HubTab get() = HubTab.Settings
+        }
     }
 }
 
@@ -48,6 +54,8 @@ class DefaultHubComponent(
     componentContext: ComponentContext,
     private val onOpenCreation: (Int) -> Unit,
     private val onOpenSearch: () -> Unit,
+    private val onOpenWalkthrough: () -> Unit,
+    private val onOpenOutreach: () -> Unit,
 ) : HubComponent, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<Config>()
@@ -73,6 +81,14 @@ class DefaultHubComponent(
 
             Config.Compendium -> HubComponent.Child.Compendium(
                 DefaultCompendiumComponent(context),
+            )
+
+            Config.Settings -> HubComponent.Child.Settings(
+                DefaultSettingsComponent(
+                    componentContext = context,
+                    onOpenWalkthrough = onOpenWalkthrough,
+                    onOpenOutreach = onOpenOutreach,
+                ),
             )
         }
 
@@ -102,11 +118,17 @@ class DefaultHubComponent(
         data object Compendium : Config {
             override val tab: HubTab get() = HubTab.Compendium
         }
+
+        @Serializable
+        data object Settings : Config {
+            override val tab: HubTab get() = HubTab.Settings
+        }
     }
 
     private fun HubTab.toConfig(): Config = when (this) {
         HubTab.Showcase -> Config.Showcase
         HubTab.Stash -> Config.Stash
         HubTab.Compendium -> Config.Compendium
+        HubTab.Settings -> Config.Settings
     }
 }

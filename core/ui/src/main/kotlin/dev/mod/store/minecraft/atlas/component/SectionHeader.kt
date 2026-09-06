@@ -43,7 +43,7 @@ fun SectionHeader(
     ) {
         Box(
             modifier = Modifier
-                .size(24.dp)
+                .size(34.dp)
                 .clip(RoundedCornerShape(7.dp))
                 .background(accent.copy(alpha = 0.18f)),
             contentAlignment = Alignment.Center,
@@ -52,14 +52,14 @@ fun SectionHeader(
                 imageVector = icon,
                 contentDescription = null,
                 tint = accent,
-                modifier = Modifier.size(15.dp),
+                modifier = Modifier.size(20.dp),
             )
         }
 
         Text(
             text = title,
             color = Palette.TextPrimary,
-            fontSize = 16.sp,
+            fontSize = 21.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.weight(1f),
         )
@@ -75,14 +75,14 @@ fun SectionHeader(
                 Text(
                     text = actionLabel,
                     color = Palette.TextMuted,
-                    fontSize = 13.sp,
+                    fontSize = 15.sp,
                     fontWeight = FontWeight.SemiBold,
                 )
                 Icon(
                     imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
                     contentDescription = null,
                     tint = Palette.TextMuted,
-                    modifier = Modifier.size(16.dp),
+                    modifier = Modifier.size(20.dp),
                 )
             }
         }

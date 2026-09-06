@@ -36,6 +36,6 @@
     <string name="search_empty_title">見つかりませんでした</string>
     <string name="search_empty_body">短い言葉や別の言葉で試してください。</string>
     <string name="search_suggestions_hint">迷ったら — いま入れられている作品</string>
-    <string name="showcase_ticker_line">%1$s — カタログ %2$d 位</string>
     <string name="showcase_chart_new">新着</string>
+    <string name="search_title">検索</string>
 </resources>

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -226,7 +227,8 @@ private fun ReadyAct(promoReady: Boolean, onEnter: () -> Unit) {
             text = stringResource(R.string.ignition_enter),
             onClick = onEnter,
             modifier = Modifier
-                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+                .defaultMinSize(minWidth = 250.dp)
                 .halo(Palette.Accent, SmallShape, radius = 20.dp, alpha = 0.5f)
                 .heightIn(min = 64.dp),
             leading = {

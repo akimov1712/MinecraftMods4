@@ -44,16 +44,16 @@ fun CreationRow(
             .fillMaxWidth()
             .clip(SmallShape)
             .tappable(onClick = onClick)
-            .padding(vertical = 7.dp),
+            .padding(vertical = 9.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         if (rank != null) {
             Text(
                 text = rank.toString(),
-                modifier = Modifier.width(18.dp),
+                modifier = Modifier.width(26.dp),
                 color = if (rank <= 3) Palette.Accent else Palette.TextFaint,
-                fontSize = 15.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
             )
@@ -63,11 +63,11 @@ fun CreationRow(
 
         Box(
             modifier = Modifier
-                .size(46.dp)
+                .size(64.dp)
                 .clip(SmallShape)
                 .background(Palette.SurfaceHigh),
         ) {
-            RemoteImage(url = creation.imageUrl, modifier = Modifier.size(46.dp))
+            RemoteImage(url = creation.imageUrl, modifier = Modifier.size(64.dp))
         }
 
         Column(
@@ -77,8 +77,8 @@ fun CreationRow(
             Text(
                 text = creation.title,
                 color = Palette.TextPrimary,
-                fontSize = 14.sp,
-                lineHeight = 18.sp,
+                fontSize = 17.sp,
+                lineHeight = 22.sp,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -90,7 +90,7 @@ fun CreationRow(
                 Text(
                     text = creationCategoryLabel(creation.category),
                     color = Palette.TextFaint,
-                    fontSize = 12.sp,
+                    fontSize = 13.sp,
                 )
                 if (creation.rating > 0.0) {
                     MetaChip(

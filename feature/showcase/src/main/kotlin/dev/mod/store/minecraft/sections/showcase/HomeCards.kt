@@ -56,10 +56,6 @@ import dev.mod.store.minecraft.core.ui.util.formatCompact
 import dev.mod.store.minecraft.core.ui.util.formatRating
 import dev.mod.store.minecraft.core.ui.util.formatShortDate
 import dev.mod.store.minecraft.domain.creation.CreationEntity
-import kotlinx.coroutines.delay
-
-private const val TICKER_INTERVAL_MS = 3_600L
-
 /**
  * The daily pick, presented as a wide banner: up to three frames of the mod's own artwork side
  * by side, the date stamped in the corner and the name reading across the bottom.
@@ -120,7 +116,7 @@ fun PickOfDayBanner(
         Text(
             text = formatShortDate(System.currentTimeMillis()).uppercase(),
             color = Palette.TextPrimary,
-            fontSize = 11.sp,
+            fontSize = 13.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -136,7 +132,7 @@ fun PickOfDayBanner(
                     .align(Alignment.TopEnd)
                     .padding(10.dp)
                     .popIn()
-                    .size(24.dp)
+                    .size(28.dp)
                     .clip(CircleShape)
                     .background(Palette.Accent),
                 contentAlignment = Alignment.Center,
@@ -145,7 +141,7 @@ fun PickOfDayBanner(
                     imageVector = Icons.Rounded.Bookmark,
                     contentDescription = null,
                     tint = Palette.OnAccentDark,
-                    modifier = Modifier.size(14.dp),
+                    modifier = Modifier.size(16.dp),
                 )
             }
         }
@@ -159,8 +155,8 @@ fun PickOfDayBanner(
             Text(
                 text = creation.title,
                 color = Palette.TextPrimary,
-                fontSize = 20.sp,
-                lineHeight = 24.sp,
+                fontSize = 23.sp,
+                lineHeight = 28.sp,
                 fontWeight = FontWeight.Bold,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
@@ -169,7 +165,7 @@ fun PickOfDayBanner(
                 Text(
                     text = creationCategoryLabel(creation.category),
                     color = Palette.TextMuted,
-                    fontSize = 13.sp,
+                    fontSize = 14.sp,
                 )
                 if (creation.rating > 0.0) {
                     MetaChip(
@@ -190,67 +186,6 @@ fun PickOfDayBanner(
     }
 }
 
-/**
- * A one-line strip that cycles through what is climbing the catalog right now — the screen's
- * heartbeat, and the only thing on the home page that moves on its own.
- */
-@Composable
-fun HighlightTicker(
-    creations: List<CreationEntity>,
-    onOpenCreation: (Int) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    if (creations.isEmpty()) return
-    var index by remember(creations) { mutableIntStateOf(0) }
-
-    LaunchedEffect(creations) {
-        while (true) {
-            delay(TICKER_INTERVAL_MS)
-            index = (index + 1) % creations.size
-        }
-    }
-
-    val current = creations[index % creations.size]
-
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(38.dp)
-            .clip(SmallShape)
-            .background(Palette.Surface)
-            .tappable { onOpenCreation(current.id) }
-            .padding(horizontal = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        Icon(
-            imageVector = Icons.Rounded.TrendingUp,
-            contentDescription = null,
-            tint = Palette.Accent,
-            modifier = Modifier.size(16.dp),
-        )
-        AnimatedContent(
-            targetState = current,
-            transitionSpec = {
-                (slideInVertically { it } + fadeIn()) togetherWith (slideOutVertically { -it } + fadeOut())
-            },
-            label = "ticker",
-        ) { creation ->
-            Text(
-                text = stringResource(
-                    R.string.showcase_ticker_line,
-                    creation.title,
-                    creations.indexOf(creation).coerceAtLeast(0) + 1,
-                ),
-                color = Palette.TextMuted,
-                fontSize = 13.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        }
-    }
-}
-
 /** Tile for the "just added" rail: artwork with a corner ribbon and the name below. */
 @Composable
 fun FreshCard(
@@ -260,7 +195,7 @@ fun FreshCard(
 ) {
     Column(
         modifier = modifier
-            .width(146.dp)
+            .width(158.dp)
             .tappable(onClick = onClick),
         verticalArrangement = Arrangement.spacedBy(7.dp),
     ) {
@@ -279,7 +214,7 @@ fun FreshCard(
             Text(
                 text = stringResource(R.string.showcase_fresh_badge),
                 color = Palette.OnAccentDark,
-                fontSize = 11.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .align(Alignment.TopStart)
@@ -293,7 +228,7 @@ fun FreshCard(
         Text(
             text = creation.title,
             color = Palette.TextPrimary,
-            fontSize = 13.sp,
+            fontSize = 14.sp,
             lineHeight = 17.sp,
             fontWeight = FontWeight.SemiBold,
             maxLines = 2,
@@ -324,7 +259,7 @@ fun ChartMoveTag(move: ChartMove, delta: Int, modifier: Modifier = Modifier) {
     Text(
         text = text,
         color = tint,
-        fontSize = 11.sp,
+        fontSize = 12.sp,
         fontWeight = FontWeight.Bold,
         modifier = modifier
             .clip(SmallShape)

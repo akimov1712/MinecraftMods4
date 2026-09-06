@@ -20,7 +20,7 @@ fun GlassIconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
-    size: Dp = 40.dp,
+    size: Dp = 46.dp,
     tint: Color = Palette.TextPrimary,
     container: Color = Palette.SurfaceHigh,
 ) {

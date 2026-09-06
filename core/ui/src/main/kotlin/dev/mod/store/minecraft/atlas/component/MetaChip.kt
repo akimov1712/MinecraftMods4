@@ -45,13 +45,13 @@ fun MetaChip(
                 imageVector = icon,
                 contentDescription = null,
                 tint = tint,
-                modifier = Modifier.size(13.dp),
+                modifier = Modifier.size(16.dp),
             )
         }
         Text(
             text = text,
             color = tint,
-            fontSize = 12.sp,
+            fontSize = 15.sp,
             fontWeight = FontWeight.SemiBold,
             maxLines = 1,
         )
@@ -69,7 +69,7 @@ fun CategoryChip(
         modifier = modifier
             .clip(CHIP_SHAPE)
             .background(accent.copy(alpha = 0.16f))
-            .padding(horizontal = 7.dp, vertical = 3.dp),
+            .padding(horizontal = 8.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
@@ -77,12 +77,12 @@ fun CategoryChip(
             imageVector = creationCategoryIcon(category),
             contentDescription = null,
             tint = accent,
-            modifier = Modifier.size(12.dp),
+            modifier = Modifier.size(15.dp),
         )
         Text(
             text = creationCategoryLabel(category),
             color = accent,
-            fontSize = 12.sp,
+            fontSize = 15.sp,
             fontWeight = FontWeight.SemiBold,
             maxLines = 1,
         )

@@ -17,6 +17,7 @@ dependencies {
     implementation(project(":feature:stash"))
     implementation(project(":feature:outreach"))
     implementation(project(":feature:compendium"))
+    implementation(project(":feature:settings"))
 
     implementation(libs.bundles.koin)
     implementation(libs.bundles.decompose)

@@ -12,4 +12,7 @@ interface BookmarkRepository {
     suspend fun isBookmarked(creationId: Int): Boolean
     suspend fun bookmarkedIds(): List<Int>
     suspend fun bookmarkedPage(limit: Int, offset: Int): List<Int>
+
+    /** Forgets every bookmark — the "clear saved" action in settings. */
+    suspend fun clear()
 }

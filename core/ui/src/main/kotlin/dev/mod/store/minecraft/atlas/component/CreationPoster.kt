@@ -44,7 +44,7 @@ fun CreationPoster(
     creation: CreationEntity,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    width: Dp? = 146.dp,
+    width: Dp? = 184.dp,
     aspectRatio: Float = 1f,
     rank: Int? = null,
     accent: Color = Palette.Accent,
@@ -82,7 +82,7 @@ fun CreationPoster(
                         .align(Alignment.TopEnd)
                         .padding(6.dp)
                         .popIn()
-                        .size(20.dp)
+                        .size(26.dp)
                         .clip(CircleShape)
                         .background(Palette.Accent),
                     contentAlignment = Alignment.Center,
@@ -91,7 +91,7 @@ fun CreationPoster(
                         imageVector = Icons.Rounded.Bookmark,
                         contentDescription = null,
                         tint = Palette.OnAccentDark,
-                        modifier = Modifier.size(12.dp),
+                        modifier = Modifier.size(14.dp),
                     )
                 }
             }
@@ -100,8 +100,8 @@ fun CreationPoster(
         Text(
             text = creation.title,
             color = Palette.TextPrimary,
-            fontSize = 13.sp,
-            lineHeight = 17.sp,
+            fontSize = 16.sp,
+            lineHeight = 21.sp,
             fontWeight = FontWeight.SemiBold,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
@@ -115,7 +115,7 @@ fun CreationPoster(
                 Text(
                     text = "v$version+",
                     color = Palette.TextFaint,
-                    fontSize = 12.sp,
+                    fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
                     maxLines = 1,
                 )
@@ -141,12 +141,12 @@ fun RankMedal(
     Text(
         text = rank.toString(),
         color = Palette.OnAccentDark,
-        fontSize = 12.sp,
+        fontSize = 15.sp,
         fontWeight = FontWeight.Bold,
         modifier = modifier
             .popIn()
             .clip(SmallShape)
             .background(accent)
-            .padding(horizontal = 7.dp, vertical = 2.dp),
+            .padding(horizontal = 9.dp, vertical = 3.dp),
     )
 }

@@ -36,3 +36,10 @@ class FetchBookmarkedIdsUseCase(
 ) {
     suspend operator fun invoke(): Set<Int> = bookmarkRepository.bookmarkedIds().toHashSet()
 }
+
+/** Empties the whole saved list. */
+class ClearBookmarksUseCase(
+    private val bookmarkRepository: BookmarkRepository,
+) {
+    suspend operator fun invoke() = bookmarkRepository.clear()
+}

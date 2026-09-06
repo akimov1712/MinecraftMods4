@@ -36,6 +36,6 @@
     <string name="search_empty_title">Nothing matched</string>
     <string name="search_empty_body">Try a shorter or different word.</string>
     <string name="search_suggestions_hint">While you think — what everyone is installing</string>
-    <string name="showcase_ticker_line">%1$s — #%2$d in the catalog</string>
     <string name="showcase_chart_new">new</string>
+    <string name="search_title">Search</string>
 </resources>

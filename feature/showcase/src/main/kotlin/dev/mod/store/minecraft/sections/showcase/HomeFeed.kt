@@ -139,18 +139,6 @@ private fun LazyListScope.digestContent(
     onIntent: (Intent) -> Unit,
     onOpenCreation: (Int) -> Unit,
 ) {
-    if (digest.trending.isNotEmpty()) {
-        item(key = "ticker") {
-            Appear(index = 0) {
-                HighlightTicker(
-                    creations = digest.trending.take(5),
-                    onOpenCreation = onOpenCreation,
-                    modifier = Modifier.padding(horizontal = SIDE_PADDING),
-                )
-            }
-        }
-    }
-
     digest.pickOfDay?.let { pick ->
         item(key = "pick") {
             Appear(index = 1) {

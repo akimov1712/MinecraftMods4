@@ -17,4 +17,6 @@ internal class BookmarkRepositoryImpl(
 
     override suspend fun bookmarkedPage(limit: Int, offset: Int): List<Int> =
         local.page(limit, offset)
+
+    override suspend fun clear() = local.clear()
 }

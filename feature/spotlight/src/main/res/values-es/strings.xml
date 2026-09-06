@@ -22,4 +22,6 @@
     <string name="spotlight_read_less">Menos</string>
     <string name="spotlight_files_count">Archivos · %1$d</string>
     <string name="spotlight_suggest">Sugerir un mod</string>
+    <string name="spotlight_dock_version">Para la versión %1$s+</string>
+    <string name="spotlight_dock_ready">Listo para descargar</string>
 </resources>

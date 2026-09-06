@@ -22,4 +22,6 @@
     <string name="spotlight_read_less">Свернуть</string>
     <string name="spotlight_files_count">Файлы · %1$d</string>
     <string name="spotlight_suggest">Предложить мод</string>
+    <string name="spotlight_dock_version">Для версии %1$s+</string>
+    <string name="spotlight_dock_ready">Готово к скачиванию</string>
 </resources>

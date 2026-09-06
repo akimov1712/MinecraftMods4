@@ -6,4 +6,5 @@
     <string name="hub_tab_compendium">الأسئلة الشائعة</string>
     <string name="hub_tab_placeholder">%1$s — قريبًا</string>
     <string name="hub_search">بحث</string>
+    <string name="hub_tab_settings">الإعدادات</string>
 </resources>

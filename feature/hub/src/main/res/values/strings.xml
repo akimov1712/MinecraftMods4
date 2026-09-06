@@ -6,4 +6,5 @@
     <string name="hub_tab_compendium">FAQ</string>
     <string name="hub_tab_placeholder">%1$s — coming soon</string>
     <string name="hub_search">Search</string>
+    <string name="hub_tab_settings">Settings</string>
 </resources>

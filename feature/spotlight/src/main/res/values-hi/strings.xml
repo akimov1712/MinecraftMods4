@@ -22,4 +22,6 @@
     <string name="spotlight_read_less">कम दिखाएँ</string>
     <string name="spotlight_files_count">फ़ाइलें · %1$d</string>
     <string name="spotlight_suggest">मॉड सुझाएँ</string>
+    <string name="spotlight_dock_version">वर्शन %1$s+ के लिए</string>
+    <string name="spotlight_dock_ready">डाउनलोड के लिए तैयार</string>
 </resources>

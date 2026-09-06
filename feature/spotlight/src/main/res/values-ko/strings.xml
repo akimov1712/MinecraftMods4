@@ -22,4 +22,6 @@
     <string name="spotlight_read_less">접기</string>
     <string name="spotlight_files_count">파일 · %1$d</string>
     <string name="spotlight_suggest">모드 제안</string>
+    <string name="spotlight_dock_version">버전 %1$s+ 지원</string>
+    <string name="spotlight_dock_ready">다운로드 준비 완료</string>
 </resources>

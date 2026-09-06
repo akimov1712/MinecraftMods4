@@ -46,6 +46,8 @@ class DefaultRootComponent(
                     componentContext = context,
                     onOpenCreation = { creationId -> navigation.pushNew(Config.Spotlight(creationId)) },
                     onOpenSearch = { navigation.pushNew(Config.Search) },
+                    onOpenWalkthrough = { navigation.pushNew(Config.Walkthrough) },
+                    onOpenOutreach = { navigation.pushNew(Config.Outreach) },
                 ),
             )
 

@@ -1,5 +1,6 @@
 package dev.mod.store.minecraft.di
 
+import dev.mod.store.minecraft.domain.bookmark.ClearBookmarksUseCase
 import dev.mod.store.minecraft.domain.bookmark.FetchBookmarkedCreationsUseCase
 import dev.mod.store.minecraft.domain.bookmark.FetchBookmarkedIdsUseCase
 import dev.mod.store.minecraft.domain.bookmark.ObserveBookmarkCountUseCase
@@ -26,6 +27,7 @@ val domainModule = module {
     single { ObserveBookmarkCountUseCase(get()) }
     single { FetchBookmarkedCreationsUseCase(get(), get()) }
     single { FetchBookmarkedIdsUseCase(get()) }
+    single { ClearBookmarksUseCase(get()) }
     single { SubmitReportUseCase(get()) }
     single { SubmitRecommendationUseCase(get()) }
     single { FetchConfigUseCase(get(), get()) }

@@ -22,4 +22,6 @@
     <string name="spotlight_read_less">閉じる</string>
     <string name="spotlight_files_count">ファイル · %1$d</string>
     <string name="spotlight_suggest">MODを提案</string>
+    <string name="spotlight_dock_version">バージョン %1$s+ 対応</string>
+    <string name="spotlight_dock_ready">ダウンロード可能</string>
 </resources>

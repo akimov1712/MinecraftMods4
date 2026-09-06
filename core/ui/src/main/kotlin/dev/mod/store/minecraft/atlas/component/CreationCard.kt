@@ -52,12 +52,12 @@ fun CreationCard(
             .fillMaxWidth()
             .clip(SmallShape)
             .tappable(onClick = onClick)
-            .padding(vertical = 6.dp),
+            .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Box(
             modifier = Modifier
-                .width(116.dp)
+                .width(150.dp)
                 .aspectRatio(1.35f)
                 .clip(SmallShape)
                 .background(Palette.SurfaceHigh),
@@ -73,7 +73,7 @@ fun CreationCard(
                         .align(Alignment.TopEnd)
                         .padding(5.dp)
                         .popIn()
-                        .size(20.dp)
+                        .size(24.dp)
                         .clip(CircleShape)
                         .background(Palette.Accent),
                     contentAlignment = Alignment.Center,
@@ -82,7 +82,7 @@ fun CreationCard(
                         imageVector = Icons.Rounded.Bookmark,
                         contentDescription = null,
                         tint = Palette.OnAccentDark,
-                        modifier = Modifier.size(12.dp),
+                        modifier = Modifier.size(14.dp),
                     )
                 }
             }
@@ -95,8 +95,8 @@ fun CreationCard(
             Text(
                 text = creation.title,
                 color = Palette.TextPrimary,
-                fontSize = 15.sp,
-                lineHeight = 19.sp,
+                fontSize = 18.sp,
+                lineHeight = 23.sp,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,

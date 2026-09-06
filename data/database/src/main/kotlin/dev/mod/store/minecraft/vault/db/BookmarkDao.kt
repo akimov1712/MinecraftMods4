@@ -26,4 +26,7 @@ internal interface BookmarkDao {
 
     @Query("DELETE FROM bookmark WHERE creationId = :creationId")
     suspend fun delete(creationId: Int)
+
+    @Query("DELETE FROM bookmark")
+    suspend fun deleteAll()
 }

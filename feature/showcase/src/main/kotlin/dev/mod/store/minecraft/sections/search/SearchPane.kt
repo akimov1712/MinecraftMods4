@@ -5,6 +5,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -30,6 +33,7 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.TrendingUp
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.NewReleases
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.SnackbarHostState
@@ -114,7 +118,7 @@ fun SearchPane(
                 modifier = Modifier
                     .fillMaxWidth()
                     .statusBarsPadding()
-                    .padding(horizontal = SIDE_PADDING, vertical = 12.dp),
+                    .padding(horizontal = SIDE_PADDING, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
@@ -122,33 +126,23 @@ fun SearchPane(
                     icon = Icons.AutoMirrored.Rounded.ArrowBack,
                     contentDescription = stringResource(R.string.search_back),
                     onClick = component::back,
+                    size = 42.dp,
                 )
-                OutlineField(
-                    value = state.query,
-                    onValueChange = { component.onIntent(Intent.SetQuery(it)) },
-                    modifier = Modifier
-                        .weight(1f)
-                        .graphicsLayer {
-                            // Unfolds from the round button that opened the screen.
-                            scaleX = 0.25f + 0.75f * unfold
-                            transformOrigin = androidx.compose.ui.graphics.TransformOrigin(0f, 0.5f)
-                            alpha = fade
-                        }
-                        .focusRequester(focusRequester),
-                    placeholder = stringResource(R.string.search_hint),
-                    leading = Icons.Rounded.Search,
-                    trailing = if (state.query.isNotEmpty()) Icons.Rounded.Close else null,
-                    onTrailingClick = { component.onIntent(Intent.Clear) },
-                    minHeight = 52.dp,
+                Text(
+                    text = stringResource(R.string.search_title),
+                    color = Palette.TextPrimary,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
                 )
             }
 
             LazyColumn(
                 state = listState,
                 modifier = Modifier
-                    .fillMaxSize()
+                    .weight(1f)
+                    .fillMaxWidth()
                     .graphicsLayer { alpha = fade },
-                contentPadding = PaddingValues(bottom = 32.dp),
+                contentPadding = PaddingValues(bottom = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 if (state.query.isBlank()) {
@@ -156,6 +150,36 @@ fun SearchPane(
                 } else {
                     results(state, component.nativeAdInterval, component::onIntent, component::openCreation)
                 }
+            }
+
+            // The field lives at the bottom, next to the thumb and to the key that opened it.
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Palette.Canvas)
+                    .navigationBarsPadding()
+                    .imePadding()
+                    .padding(horizontal = SIDE_PADDING, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                OutlineField(
+                    value = state.query,
+                    onValueChange = { component.onIntent(Intent.SetQuery(it)) },
+                    modifier = Modifier
+                        .weight(1f)
+                        .graphicsLayer {
+                            // Unfolds from the round key that opened the screen.
+                            scaleX = 0.35f + 0.65f * unfold
+                            transformOrigin = androidx.compose.ui.graphics.TransformOrigin(0.5f, 1f)
+                            alpha = fade
+                        }
+                        .focusRequester(focusRequester),
+                    placeholder = stringResource(R.string.search_hint),
+                    leading = Icons.Filled.Search,
+                    trailing = if (state.query.isNotEmpty()) Icons.Rounded.Close else null,
+                    onTrailingClick = { component.onIntent(Intent.Clear) },
+                    minHeight = 54.dp,
+                )
             }
         }
 
