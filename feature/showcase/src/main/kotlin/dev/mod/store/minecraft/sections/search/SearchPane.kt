@@ -53,8 +53,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.mod.store.minecraft.core.ads.AdCadence
 import dev.mod.store.minecraft.core.ads.NativeSlot
+import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.component.CreationCard
+import dev.mod.store.minecraft.core.ui.component.CreationCardSkeleton
 import dev.mod.store.minecraft.core.ui.component.CreationPoster
 import dev.mod.store.minecraft.core.ui.component.EmptyState
 import dev.mod.store.minecraft.core.ui.component.ErrorState
@@ -68,7 +71,6 @@ import dev.mod.store.minecraft.core.ui.state.ScreenStage
 import dev.mod.store.minecraft.core.ui.theme.Palette
 import dev.mod.store.minecraft.core.ui.util.ObserveSignals
 import dev.mod.store.minecraft.core.ui.util.formatCount
-import dev.mod.store.minecraft.feature.showcase.R
 import dev.mod.store.minecraft.feature.search.SearchStore.Intent
 
 private const val PRELOAD_DISTANCE = 3
@@ -76,8 +78,8 @@ private val SIDE_PADDING = 16.dp
 
 /**
  * The search screen. The field unfolds from the round button that opened it, takes focus on its
- * own, and until something is typed the screen keeps offering the editorial sections instead of
- * an empty page.
+ * own, and until something is typed it offers a single list of what is trending instead of an
+ * empty page.
  */
 @Composable
 fun SearchPane(
@@ -146,7 +148,7 @@ fun SearchPane(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 if (state.query.isBlank()) {
-                    suggestions(state, component::openCreation)
+                    suggestions(state, component.nativeAdInterval, component::openCreation)
                 } else {
                     results(state, component.nativeAdInterval, component::onIntent, component::openCreation)
                 }
@@ -212,131 +214,60 @@ private fun PagingTrigger(
     }
 }
 
-/** What the screen shows before anything is typed: the same sections as home. */
+/**
+ * What the screen shows before anything is typed: a plain list of what is trending, with nothing
+ * announcing it. An empty search field is a place to start tapping, not a second home screen, and
+ * the reader does not need to be told where the suggestions came from.
+ */
 private fun LazyListScope.suggestions(
     state: SearchStore.State,
+    nativeAdInterval: Int,
     onOpenCreation: (Int) -> Unit,
 ) {
-    val digest = state.suggestions
+    val trending = state.suggestions.trending
 
-    if (digest.isEmpty && !state.suggestionsLoading) {
-        item(key = "suggestions_empty") {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = SIDE_PADDING, vertical = 40.dp),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = stringResource(R.string.search_hint),
-                    color = Palette.TextFaint,
-                    fontSize = 13.sp,
-                )
+    if (trending.isEmpty()) {
+        if (state.suggestionsLoading) {
+            items(4, key = { index -> "suggestion_skeleton_$index" }) {
+                CreationCardSkeleton(modifier = Modifier.padding(horizontal = SIDE_PADDING))
+            }
+        } else {
+            item(key = "suggestions_empty") {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = SIDE_PADDING, vertical = 40.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = stringResource(R.string.search_hint),
+                        color = Palette.TextFaint,
+                        fontSize = 13.sp,
+                    )
+                }
             }
         }
         return
     }
 
-    if (digest.isEmpty && state.suggestionsLoading) {
-        item(key = "suggestions_skeleton") {
-            Row(
+    val cadence = AdCadence.of(nativeAdInterval)
+    trending.forEachIndexed { index, creation ->
+        item(key = "suggest_${creation.id}") {
+            CreationCard(
+                creation = creation,
+                onClick = { onOpenCreation(creation.id) },
                 modifier = Modifier.padding(horizontal = SIDE_PADDING),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                repeat(3) {
-                    ShimmerBox(
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(0.72f),
-                        shape = RoundedCornerShape(24.dp),
-                    )
-                }
-            }
+                rank = index + 1,
+            )
         }
-        return
-    }
-
-    if (digest.trending.isNotEmpty()) {
-        item(key = "suggest_trending") {
-            Appear(index = 0) {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    SectionHeader(
-                        title = stringResource(R.string.showcase_section_trending),
-                        subtitle = stringResource(R.string.search_suggestions_hint),
-                        icon = Icons.AutoMirrored.Rounded.TrendingUp,
-                        accent = Palette.Accent,
-                        modifier = Modifier.padding(horizontal = SIDE_PADDING),
-                    )
-                    LazyRow(
-                        contentPadding = PaddingValues(horizontal = SIDE_PADDING),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    ) {
-                        itemsIndexed(digest.trending, key = { _, creation -> creation.id }) { index, creation ->
-                            CreationPoster(
-                                creation = creation,
-                                onClick = { onOpenCreation(creation.id) },
-                                rank = index + 1,
-                                accent = Palette.Accent,
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    if (digest.fresh.isNotEmpty()) {
-        item(key = "suggest_fresh") {
-            Appear(index = 1) {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    SectionHeader(
-                        title = stringResource(R.string.showcase_section_fresh),
-                        subtitle = stringResource(R.string.showcase_section_fresh_subtitle),
-                        icon = Icons.Rounded.NewReleases,
-                        accent = Palette.Positive,
-                        modifier = Modifier.padding(horizontal = SIDE_PADDING),
-                    )
-                    LazyRow(
-                        contentPadding = PaddingValues(horizontal = SIDE_PADDING),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    ) {
-                        items(digest.fresh, key = { it.id }) { creation ->
-                            CreationPoster(
-                                creation = creation,
-                                onClick = { onOpenCreation(creation.id) },
-                                accent = Palette.Positive,
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    if (digest.topRated.isNotEmpty()) {
-        item(key = "suggest_top") {
-            Appear(index = 2) {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    SectionHeader(
-                        title = stringResource(R.string.showcase_section_top_rated),
-                        subtitle = stringResource(R.string.showcase_section_top_rated_subtitle),
-                        icon = Icons.Rounded.NewReleases,
-                        accent = Palette.Sky,
-                        modifier = Modifier.padding(horizontal = SIDE_PADDING),
-                    )
-                    LazyRow(
-                        contentPadding = PaddingValues(horizontal = SIDE_PADDING),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    ) {
-                        items(digest.topRated, key = { it.id }) { creation ->
-                            CreationPoster(
-                                creation = creation,
-                                onClick = { onOpenCreation(creation.id) },
-                                accent = Palette.Sky,
-                            )
-                        }
-                    }
-                }
+        if (AdCadence.breaksAfter(index, cadence)) {
+            item(key = "suggest_ad_$index") {
+                NativeSlot(
+                    slotKey = "search_suggest_$index",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = SIDE_PADDING),
+                )
             }
         }
     }
@@ -362,17 +293,12 @@ private fun LazyListScope.results(
 
     if (state.results.isEmpty() && state.stage.isLoading) {
         items(3, key = { index -> "result_skeleton_$index" }) {
-            ShimmerBox(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = SIDE_PADDING)
-                    .aspectRatio(1.15f),
-                shape = RoundedCornerShape(30.dp),
-            )
+            CreationCardSkeleton(modifier = Modifier.padding(horizontal = SIDE_PADDING))
         }
         return
     }
 
+    val cadence = AdCadence.of(nativeAdInterval)
     state.results.forEachIndexed { index, creation ->
         item(key = "result_${creation.id}") {
             CreationCard(
@@ -381,7 +307,7 @@ private fun LazyListScope.results(
                 modifier = Modifier.padding(horizontal = SIDE_PADDING),
             )
         }
-        if (nativeAdInterval > 0 && (index + 1) % nativeAdInterval == 0) {
+        if (AdCadence.breaksAfter(index, cadence)) {
             item(key = "result_ad_$index") {
                 NativeSlot(
                     slotKey = "search_$index",

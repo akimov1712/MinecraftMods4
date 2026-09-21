@@ -37,8 +37,9 @@ internal class LoadoutLocalDataSource(
 
     fun download(url: String, fileName: String): Flow<DownloadStatus> = flow {
         var target: SaveTarget? = null
+        var connection: HttpURLConnection? = null
         try {
-            val connection = (URL(url).openConnection() as HttpURLConnection).apply {
+            connection = (URL(url).openConnection() as HttpURLConnection).apply {
                 connectTimeout = CONNECT_TIMEOUT_MS
                 readTimeout = READ_TIMEOUT_MS
                 instanceFollowRedirects = true
@@ -64,7 +65,7 @@ internal class LoadoutLocalDataSource(
                     streamWithProgress(input, output, totalBytes) { status -> emit(status) }
                 }
             }
-            createdTarget.finalize()
+            createdTarget.commit()
             emit(DownloadStatus.Finished)
         } catch (cancellation: CancellationException) {
             target?.delete()
@@ -73,6 +74,9 @@ internal class LoadoutLocalDataSource(
             Napier.e(message = "Download failed for $fileName", throwable = error, tag = "vault")
             target?.delete()
             emit(DownloadStatus.Failed)
+        } finally {
+            // Every early return above left the socket to the garbage collector.
+            runCatching { connection?.disconnect() }
         }
     }.flowOn(dispatchers.io)
 
@@ -174,9 +178,14 @@ internal class LoadoutLocalDataSource(
         return SaveTarget.LegacyTarget(file = file, outputStream = output)
     }
 
+    /**
+     * Where a download is being written. Note the name: `finalize` would override
+     * `Object.finalize`, so the garbage collector would publish a half-written MediaStore row on
+     * the finalizer thread. It is [commit] for that reason and must stay that way.
+     */
     private sealed class SaveTarget {
         abstract val outputStream: OutputStream
-        abstract fun finalize()
+        abstract fun commit()
         abstract fun delete()
 
         class MediaStoreTarget(
@@ -184,7 +193,7 @@ internal class LoadoutLocalDataSource(
             private val onFinalize: () -> Unit,
             private val onDelete: () -> Unit,
         ) : SaveTarget() {
-            override fun finalize() = onFinalize()
+            override fun commit() = onFinalize()
             override fun delete() {
                 runCatching { onDelete() }
             }
@@ -194,7 +203,7 @@ internal class LoadoutLocalDataSource(
             private val file: File,
             override val outputStream: OutputStream,
         ) : SaveTarget() {
-            override fun finalize() = Unit
+            override fun commit() = Unit
             override fun delete() {
                 runCatching { if (file.exists()) file.delete() }
             }

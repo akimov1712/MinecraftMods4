@@ -13,6 +13,7 @@ import dev.mod.store.minecraft.domain.loadout.DownloadCreationUseCase
 import dev.mod.store.minecraft.domain.loadout.DownloadStatus
 import dev.mod.store.minecraft.domain.loadout.IsCreationDownloadedUseCase
 import dev.mod.store.minecraft.domain.loadout.OpenCreationFileUseCase
+import dev.mod.store.minecraft.domain.loadout.RecordDownloadUseCase
 import dev.mod.store.minecraft.core.common.outcome.Outcome
 import dev.mod.store.minecraft.feature.loadout.LoadoutStore.FileItem
 import dev.mod.store.minecraft.feature.loadout.LoadoutStore.FileStatus
@@ -90,6 +91,7 @@ internal class LoadoutStoreFactory(
     private val downloadCreation: DownloadCreationUseCase,
     private val isDownloaded: IsCreationDownloadedUseCase,
     private val openFile: OpenCreationFileUseCase,
+    private val recordDownload: RecordDownloadUseCase,
     private val faults: FaultMessages,
 ) {
 
@@ -227,6 +229,10 @@ internal class LoadoutStoreFactory(
                         DownloadStatus.Finished -> {
                             cancelStall(url)
                             dispatch(Message.StatusSet(url, FileStatus.Ready))
+                            // Counted here and nowhere earlier: a cancelled or stalled download
+                            // never reaches this branch, so only real downloads reach the stats.
+                            // Fire and forget — the reader is not kept waiting on a statistic.
+                            scope.launch { recordDownload(creationId) }
                         }
                         DownloadStatus.Failed -> {
                             cancelStall(url)

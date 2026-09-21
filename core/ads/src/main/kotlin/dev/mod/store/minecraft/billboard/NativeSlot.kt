@@ -79,11 +79,16 @@ fun NativeSlot(slotKey: String, modifier: Modifier = Modifier) {
     AdHost(slotKey = slotKey, fullscreen = false, modifier = modifier)
 }
 
-/** Full-screen native ad. */
+/**
+ * The filling form of a native ad: artwork stretches to whatever height it is given and the panel
+ * of copy keeps its own size. Use it anywhere the slot has a bounded height — the whole screen, or
+ * one box in a column — because unlike [NativeSlot] it can never be taller than its container and
+ * so can never have its bottom clipped off.
+ */
 @Composable
-fun FullscreenNativeSlot(slotKey: String) {
+fun FullscreenNativeSlot(slotKey: String, modifier: Modifier = Modifier.fillMaxSize()) {
     if (!NativeRegistry.enabled) return
-    AdHost(slotKey = slotKey, fullscreen = true, modifier = Modifier.fillMaxSize())
+    AdHost(slotKey = slotKey, fullscreen = true, modifier = modifier)
 }
 
 @Composable

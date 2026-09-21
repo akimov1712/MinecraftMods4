@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Every string in the app lives here, in one file per language. Features do not carry
+  resources of their own: they read these through dev.mod.store.minecraft.core.ui.R.
+-->
 <resources>
+    <!-- Application -->
+    <string name="app_name">마인크래프트 PE용 TNT 모드</string>
+
+    <!-- Shared -->
     <string name="atlas_ad">광고</string>
     <string name="atlas_retry">다시 시도</string>
     <string name="atlas_empty_title">아직 아무것도 없습니다</string>
@@ -17,4 +25,215 @@
     <string name="category_maps">맵</string>
     <string name="category_texture">텍스처</string>
     <string name="category_skin">스킨</string>
+    <string name="creation_version_short">v%1$s+</string>
+
+    <!-- Splash -->
+    <string name="ignition_enter">앱으로 들어가기</string>
+    <string name="ignition_hint_free">여기 있는 건 모두 무료예요</string>
+    <string name="ignition_hint_install">모드를 열고 파일을 받아 Minecraft에서 여세요</string>
+    <string name="ignition_hint_save">북마크를 누르면 모드를 저장할 수 있어요</string>
+    <string name="ignition_hint_vpn">다운로드가 멈췄다면 VPN을 켜 보세요</string>
+    <string name="ignition_hint_search">검색으로 이름을 넣어 모드를 찾아보세요</string>
+    <string name="ignition_percent">%1$d%%</string>
+    <string name="ignition_curtain_close">닫기</string>
+
+    <!-- Navigation -->
+    <string name="hub_tab_showcase">카탈로그</string>
+    <string name="hub_tab_stash">저장됨</string>
+    <string name="hub_tab_compendium">FAQ</string>
+    <string name="hub_search">검색</string>
+    <string name="hub_tab_settings">설정</string>
+
+    <!-- Catalog and search -->
+    <string name="showcase_section_pick">오늘의 모드</string>
+    <string name="showcase_section_trending">인기 급상승</string>
+    <string name="showcase_section_popular">인기</string>
+    <string name="showcase_section_fresh">새로 나온 모드</string>
+    <string name="showcase_section_top_rated">평점 높은 순</string>
+    <string name="showcase_see_all">전체</string>
+    <string name="showcase_fresh_badge">NEW</string>
+    <string name="showcase_browse_back">뒤로</string>
+    <string name="showcase_browse_count">%1$s개 찾음</string>
+    <string name="showcase_browse_retry">다시 시도</string>
+    <string name="search_hint">모드, 맵, 스킨 검색…</string>
+    <string name="search_back">뒤로</string>
+    <string name="search_empty_title">결과가 없어요</string>
+    <string name="search_empty_body">더 짧거나 다른 단어로 검색해 보세요.</string>
+    <string name="showcase_chart_new">신규</string>
+    <string name="search_title">검색</string>
+
+    <!-- Mod page -->
+    <string name="spotlight_versions_title">지원 버전</string>
+    <string name="spotlight_get_files">파일 받기</string>
+    <string name="spotlight_how_to_install">설치 방법</string>
+    <string name="spotlight_report">문제 신고</string>
+    <string name="spotlight_report_title">문제 신고</string>
+    <string name="spotlight_report_email_hint">이메일</string>
+    <string name="spotlight_report_message_hint">문제를 설명해 주세요</string>
+    <string name="spotlight_report_send">보내기</string>
+    <string name="spotlight_report_cancel">취소</string>
+    <string name="spotlight_report_sent">감사합니다! 신고가 전송되었습니다.</string>
+    <string name="spotlight_tab_about">개요</string>
+    <string name="spotlight_tab_files">파일</string>
+    <string name="spotlight_tab_images">스크린샷</string>
+    <string name="spotlight_tab_versions">버전</string>
+    <string name="spotlight_files_hint">다운로드가 끝나면 파일이 Minecraft에서 열립니다.</string>
+    <string name="spotlight_versions_empty">작성자가 게임 버전을 표기하지 않았습니다.</string>
+    <string name="spotlight_read_more">더 보기</string>
+    <string name="spotlight_read_less">접기</string>
+    <string name="spotlight_suggest">모드 제안</string>
+    <string name="spotlight_section_description">설명</string>
+    <string name="spotlight_section_details">세부 정보</string>
+    <string name="spotlight_detail_category">카테고리</string>
+    <string name="spotlight_detail_format">파일 형식</string>
+    <string name="spotlight_detail_files">파일 수</string>
+    <string name="spotlight_detail_versions">버전</string>
+    <string name="spotlight_detail_published">추가일</string>
+    <string name="spotlight_value_none">표기 없음</string>
+    <string name="spotlight_files_empty">제작자가 이 모드에 파일을 첨부하지 않았습니다.</string>
+    <string name="spotlight_images_empty">이 모드에는 아직 스크린샷이 없습니다.</string>
+    <string name="spotlight_image_index">스크린샷 %1$d / %2$d</string>
+    <string name="spotlight_versions_hint">제작자에 따르면 이 모드는 다음 버전에서 작동합니다:</string>
+    <string name="spotlight_install_sub">모드를 게임에 넣는 간단한 안내</string>
+    <string name="spotlight_suggest_sub">여기에서 보고 싶은 모드를 보내주세요</string>
+    <string name="spotlight_report_sub">끊긴 링크, 잘못된 파일, 기타</string>
+    <string name="spotlight_share">공유</string>
+    <string name="spotlight_share_text">%1$s
+%2$s</string>
+    <string name="spotlight_report_body">이 모드의 어떤 점이 문제인지 알려주시면 확인하겠습니다.</string>
+    <string name="spotlight_report_email_label">답장 받을 이메일</string>
+    <string name="spotlight_report_message_label">무엇이 문제인가요?</string>
+
+    <!-- Downloads -->
+    <string name="loadout_title">파일</string>
+    <string name="loadout_download">다운로드</string>
+    <string name="loadout_cancel">취소</string>
+    <string name="loadout_ready">저장됨</string>
+    <string name="loadout_vpn_hint">일부 국가에서는 통신사가 파일이 있는 서버를 차단합니다. VPN을 켜고 다시 내려받아 보세요. 거의 모든 경우 이렇게 해결됩니다.</string>
+    <string name="loadout_download_failed">다운로드에 실패했습니다. 다시 시도해 주세요.</string>
+    <string name="loadout_open_failed">파일을 열 수 없습니다. Minecraft가 설치되어 있나요?</string>
+    <string name="loadout_unknown_size">크기 알 수 없음</string>
+    <string name="loadout_action_open">Minecraft에서 열기</string>
+    <string name="loadout_empty">이 창작물에는 첨부된 파일이 없습니다.</string>
+    <string name="loadout_percent">%1$d%%</string>
+    <string name="loadout_vpn_title">다운로드가 멈췄나요?</string>
+
+    <!-- Saved -->
+    <string name="stash_title">저장됨</string>
+    <string name="stash_count">%1$d개 저장됨</string>
+    <string name="stash_empty">아직 저장된 항목이 없습니다</string>
+    <string name="stash_empty_hint">콘텐츠의 북마크를 누르면 여기에 보관됩니다.</string>
+
+    <!-- FAQ -->
+    <string name="compendium_title">도우미</string>
+    <string name="faq_what_q">이 앱은 무엇을 하나요?</string>
+    <string name="faq_what_a">Minecraft용 무료 콘텐츠(애드온, 맵, 텍스처, 스킨)를 둘러보고 설치할 수 있습니다.</string>
+    <string name="faq_internet_q">인터넷 연결이 필요한가요?</string>
+    <string name="faq_internet_a">둘러보기와 다운로드에는 필요합니다. 저장한 후에는 오프라인으로 설치할 수 있습니다.</string>
+    <string name="faq_how_q">콘텐츠를 어떻게 설치하나요?</string>
+    <string name="faq_how_a">모드를 열고 ‘파일 받기’, 그다음 ‘다운로드’를 누르세요. 저장되면 ‘Minecraft에서 열기’를 누르면 게임이 열리면서 알아서 추가됩니다.</string>
+    <string name="faq_fail_q">설치가 안 됐어요. 어떻게 하죠?</string>
+    <string name="faq_fail_a">Minecraft가 설치돼 있고 최신인지 확인한 뒤 파일을 다시 열어 보세요. 내려받기가 끝나지 않았다면 VPN을 켜고 다시 받으세요.</string>
+    <string name="faq_stuck_q">다운로드가 멈춰요.</string>
+    <string name="faq_stuck_a">보통은 통신사가 서버를 막고 있어요. VPN을 켜고 다시 받아 보세요. 거의 항상 해결됩니다. 무료 VPN이면 되고, 끝나면 꺼도 돼요.</string>
+    <string name="faq_hidden_q">설치했는데 게임에서 안 보여요.</string>
+    <string name="faq_hidden_a">월드 설정에 들어가서 팩을 켜 주세요. 실험 기능을 켜야 하는 모드도 있어요.</string>
+    <string name="faq_lag_q">설치 후 게임이 느려요.</string>
+    <string name="faq_lag_a">큰 모드는 휴대폰에 부담이 돼요. 렌더 거리를 줄이거나 월드에서 다른 팩을 빼 보세요.</string>
+    <string name="faq_ads_q">왜 광고가 있나요?</string>
+    <string name="faq_ads_a">광고 덕분에 앱과 모든 콘텐츠가 완전히 무료입니다.</string>
+    <string name="faq_free_q">전부 무료인가요?</string>
+    <string name="faq_free_a">네 — 카탈로그의 모든 콘텐츠는 무료로 다운로드하고 설치할 수 있습니다.</string>
+    <string name="faq_fresh_q">새 콘텐츠는 얼마나 자주 추가되나요?</string>
+    <string name="faq_fresh_a">카탈로그는 새로운 콘텐츠로 정기적으로 업데이트됩니다.</string>
+    <string name="faq_safe_q">파일이 제 월드에 안전한가요?</string>
+    <string name="faq_safe_a">네. Minecraft 자체 파일 형식이에요. 그래도 큰 모드를 넣기 전에는 아끼는 월드를 백업해 두세요.</string>
+    <string name="compendium_subtitle">자주 묻는 질문의 답</string>
+    <string name="compendium_greeting">안녕하세요! 질문을 고르면 여기서 답해 드릴게요.</string>
+    <string name="compendium_prompt">질문을 눌러 보세요</string>
+    <string name="compendium_restart">처음부터</string>
+    <string name="compendium_done">제가 아는 건 여기까지예요. 위의 화살표를 누르면 처음부터 다시 시작해요.</string>
+    <string name="faq_how_chip">설치 방법</string>
+    <string name="faq_fail_chip">설치가 안 돼요</string>
+    <string name="faq_stuck_chip">다운로드가 멈춰요</string>
+    <string name="faq_hidden_chip">게임에 안 보여요</string>
+    <string name="faq_lag_chip">게임이 느려요</string>
+    <string name="faq_what_chip">이 앱은 뭔가요</string>
+    <string name="faq_internet_chip">인터넷 필요?</string>
+    <string name="faq_free_chip">무료인가요?</string>
+    <string name="faq_ads_chip">광고 이유</string>
+    <string name="faq_fresh_chip">새 콘텐츠</string>
+    <string name="faq_safe_chip">안전한가요</string>
+    <string name="compendium_show_all">모든 질문 · %1$d</string>
+    <string name="compendium_collapse">질문 숨기기</string>
+    <string name="compendium_expand">질문 보기</string>
+
+    <!-- How to install -->
+    <string name="walkthrough_title">설치 방법</string>
+    <string name="walkthrough_s1_title">콘텐츠 선택</string>
+    <string name="walkthrough_s1_text">카탈로그에서 아무 콘텐츠나 열고 ‘파일 받기’를 누르세요.</string>
+    <string name="walkthrough_s2_title">파일 다운로드</string>
+    <string name="walkthrough_s2_text">‘다운로드’를 누르고 파일 저장이 끝날 때까지 기다리세요.</string>
+    <string name="walkthrough_s3_title">‘설치’ 누르기</string>
+    <string name="walkthrough_s3_text">저장된 후 ‘설치’를 누르면 어떤 앱으로 열지 묻습니다.</string>
+    <string name="walkthrough_s4_title">Minecraft 선택</string>
+    <string name="walkthrough_s4_text">목록에서 Minecraft를 선택하세요. 게임이 열리고 콘텐츠를 가져옵니다.</string>
+    <string name="walkthrough_s5_title">가져오기 대기</string>
+    <string name="walkthrough_s5_text">Minecraft가 가져오기 진행률을 표시합니다. 끝날 때까지 기다리세요.</string>
+    <string name="walkthrough_s6_title">월드에서 활성화</string>
+    <string name="walkthrough_s6_text">월드 설정에서 리소스 팩 또는 비헤이비어 팩으로 추가하세요.</string>
+    <string name="walkthrough_s7_title">즐기세요!</string>
+    <string name="walkthrough_s7_text">월드를 시작하고 새 콘텐츠를 즐기세요. 먼저 중요한 월드를 백업하세요.</string>
+
+    <!-- Get in touch -->
+    <string name="outreach_title">문의하기</string>
+    <string name="outreach_mode_recommend">콘텐츠 제안</string>
+    <string name="outreach_mode_report">피드백 보내기</string>
+    <string name="outreach_email_hint">이메일</string>
+    <string name="outreach_message_recommend_hint">어떤 콘텐츠를 추가할까요?</string>
+    <string name="outreach_message_report_hint">무슨 일이 있었는지 알려주세요</string>
+    <string name="outreach_submit">보내기</string>
+    <string name="outreach_sent">감사합니다! 메시지를 받았습니다.</string>
+    <string name="outreach_intro_title">모든 메시지를 읽습니다</string>
+    <string name="outreach_intro_body">무엇을 추가할지, 무엇이 잘못됐는지 알려주세요. 로봇이 아니라 사람이 읽습니다.</string>
+    <string name="outreach_purpose">어떤 내용인가요?</string>
+    <string name="outreach_mode_recommend_body">카탈로그에 넣고 싶은 모드, 맵, 스킨, 텍스처 팩</string>
+    <string name="outreach_mode_report_body">무언가 고장났거나 사라졌거나 이상하게 동작합니다</string>
+    <string name="outreach_form">메시지</string>
+    <string name="outreach_email_label">답장 받을 이메일</string>
+    <string name="outreach_email_help">답장에만 사용합니다. 그 외에는 쓰지 않습니다.</string>
+    <string name="outreach_counter">%1$d / %2$d</string>
+    <string name="outreach_sent_title">메시지를 보냈습니다</string>
+    <string name="outreach_sent_body">감사합니다! 들어오는 내용은 모두 읽고, 답이 필요한 경우 이메일로 회신합니다.</string>
+    <string name="outreach_sent_again">하나 더 쓰기</string>
+
+    <!-- Settings -->
+    <string name="settings_title">설정</string>
+    <string name="settings_version">버전 %1$s</string>
+    <string name="settings_group_data">내 데이터</string>
+    <string name="settings_saved">저장한 모드</string>
+    <string name="settings_clear">저장 목록 비우기</string>
+    <string name="settings_cleared">목록을 비웠어요</string>
+    <string name="settings_clear_title">저장 목록을 비울까요?</string>
+    <string name="settings_clear_body">북마크가 모두 삭제됩니다. 모드는 카탈로그에 그대로 있어요.</string>
+    <string name="settings_clear_cancel">취소</string>
+    <string name="settings_clear_confirm">비우기</string>
+    <string name="settings_group_help">도움말</string>
+    <string name="settings_walkthrough">모드 설치 방법</string>
+    <string name="settings_write">문의하기</string>
+    <string name="settings_group_app">앱</string>
+    <string name="settings_rate">앱 평가하기</string>
+    <string name="settings_share">앱 공유하기</string>
+    <string name="settings_system">시스템 설정</string>
+
+    <!-- Reactions, trending, similar -->
+    <string name="spotlight_trending_badge">인기 %1$d위</string>
+    <string name="spotlight_reactions_title">이 모드 어때요?</string>
+    <string name="spotlight_section_similar">비슷한 모드</string>
+    <string name="spotlight_detail_downloads">다운로드</string>
+    <string name="reaction_like">좋아요</string>
+    <string name="reaction_fire">불타요</string>
+    <string name="reaction_love">사랑해요</string>
+    <string name="reaction_funny">웃겨요</string>
+    <string name="reaction_wow">놀라워요</string>
 </resources>

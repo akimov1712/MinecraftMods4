@@ -50,6 +50,11 @@ object Palette {
     val ShimmerBase = Color(0xFF191C29)
     val ShimmerHighlight = Color(0xFF232839)
 
+    // Chart places — the top three wear metal, everything below is plain
+    val Podium1 = Color(0xFFFFD54A)
+    val Podium2 = Color(0xFFCBD3E1)
+    val Podium3 = Color(0xFFD08A4F)
+
     // Category colours
     val CategoryLagoon = Sky
     val CategoryLime = Color(0xFFB4F04A)

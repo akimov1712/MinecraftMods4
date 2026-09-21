@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
@@ -40,14 +41,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.mod.store.minecraft.core.ads.AdCadence
 import dev.mod.store.minecraft.core.ads.NativeSlot
+import dev.mod.store.minecraft.core.ui.R
+import dev.mod.store.minecraft.core.ui.component.BannerSkeleton
 import dev.mod.store.minecraft.core.ui.component.CreationCard
+import dev.mod.store.minecraft.core.ui.component.CreationCardSkeleton
 import dev.mod.store.minecraft.core.ui.component.CreationPoster
 import dev.mod.store.minecraft.core.ui.component.CreationRow
+import dev.mod.store.minecraft.core.ui.component.CreationRowSkeleton
 import dev.mod.store.minecraft.core.ui.component.EmptyState
 import dev.mod.store.minecraft.core.ui.component.ErrorState
 import dev.mod.store.minecraft.core.ui.component.GlassIconButton
 import dev.mod.store.minecraft.core.ui.component.PillButton
+import dev.mod.store.minecraft.core.ui.component.RailSkeleton
 import dev.mod.store.minecraft.core.ui.component.SectionHeader
 import dev.mod.store.minecraft.core.ui.component.ShimmerBox
 import dev.mod.store.minecraft.core.ui.effect.Appear
@@ -213,6 +220,15 @@ private fun LazyListScope.digestContent(
         }
     }
 
+    item(key = "ad_middle") {
+        NativeSlot(
+            slotKey = "home_middle",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = SIDE_PADDING),
+        )
+    }
+
     if (digest.fresh.isNotEmpty()) {
         item(key = "fresh") {
             Appear(index = 0) {
@@ -301,30 +317,38 @@ private fun Rail(
 }
 
 private fun LazyListScope.digestSkeleton() {
-    item(key = "skeleton_hero") {
-        ShimmerBox(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = SIDE_PADDING)
-                .aspectRatio(1.72f),
-            shape = CardShape,
-        )
+    item(key = "skeleton_banner") {
+        Column(
+            modifier = Modifier.padding(horizontal = SIDE_PADDING),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            ShimmerBox(
+                modifier = Modifier
+                    .width(160.dp)
+                    .height(26.dp),
+                shape = SmallShape,
+            )
+            BannerSkeleton()
+        }
     }
-    repeat(2) { index ->
-        item(key = "skeleton_rail_$index") {
-            Row(
-                modifier = Modifier.padding(horizontal = SIDE_PADDING),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
-                repeat(3) {
-                    ShimmerBox(
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(0.8f),
-                        shape = SmallShape,
-                    )
-                }
-            }
+
+    item(key = "skeleton_rail") {
+        RailSkeleton(modifier = Modifier.padding(horizontal = SIDE_PADDING))
+    }
+
+    item(key = "skeleton_chart") {
+        Column(
+            modifier = Modifier.padding(horizontal = SIDE_PADDING),
+            verticalArrangement = Arrangement.spacedBy(2.dp),
+        ) {
+            ShimmerBox(
+                modifier = Modifier
+                    .width(140.dp)
+                    .height(26.dp)
+                    .padding(bottom = 6.dp),
+                shape = SmallShape,
+            )
+            repeat(CHART_SIZE) { CreationRowSkeleton() }
         }
     }
 }
@@ -373,26 +397,22 @@ private fun LazyListScope.browseContent(
 
     if (browse.items.isEmpty() && browse.stage.isLoading) {
         items(4, key = { index -> "browse_skeleton_$index" }) {
-            ShimmerBox(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = SIDE_PADDING)
-                    .height(96.dp),
-                shape = SmallShape,
-            )
+            CreationCardSkeleton(modifier = Modifier.padding(horizontal = SIDE_PADDING))
         }
         return
     }
 
+    val cadence = AdCadence.of(nativeAdInterval)
     browse.items.forEachIndexed { index, creation ->
         item(key = "browse_${creation.id}") {
             CreationCard(
                 creation = creation,
                 onClick = { onOpenCreation(creation.id) },
                 modifier = Modifier.padding(horizontal = SIDE_PADDING),
+                rank = index + 1,
             )
         }
-        if (nativeAdInterval > 0 && (index + 1) % nativeAdInterval == 0) {
+        if (AdCadence.breaksAfter(index, cadence)) {
             item(key = "browse_ad_$index") {
                 NativeSlot(
                     slotKey = "browse_$index",

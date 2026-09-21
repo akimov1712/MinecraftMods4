@@ -24,10 +24,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.effect.SmallShape
 import dev.mod.store.minecraft.core.ui.effect.popIn
 import dev.mod.store.minecraft.core.ui.effect.tappable
@@ -39,13 +41,14 @@ import dev.mod.store.minecraft.domain.creation.CreationEntity
 /**
  * The list row used by search results and "see all" lists: a wide cover on the left, the name
  * and its numbers on the right. Landscape rather than a full-width poster, so several fit on a
- * screen at once.
+ * screen at once. An ordered list passes [rank] and the place is stamped on the cover.
  */
 @Composable
 fun CreationCard(
     creation: CreationEntity,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    rank: Int? = null,
 ) {
     Row(
         modifier = modifier
@@ -67,6 +70,17 @@ fun CreationCard(
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
             )
+            if (rank != null) {
+                RankBadge(
+                    rank = rank,
+                    size = 26.dp,
+                    // Flush with the top edge, the way a ribbon hangs off a corner.
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(start = 8.dp),
+                )
+            }
+
             if (creation.isBookmarked) {
                 Box(
                     modifier = Modifier
@@ -104,7 +118,10 @@ fun CreationCard(
             CategoryChip(creation.category)
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 creation.supportedVersions.firstOrNull()?.let { version ->
-                    MetaChip(text = "v$version+", tint = Palette.TextFaint)
+                    MetaChip(
+                        text = stringResource(R.string.creation_version_short, version),
+                        tint = Palette.TextFaint,
+                    )
                 }
                 if (creation.rating > 0.0) {
                     MetaChip(

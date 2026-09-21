@@ -23,7 +23,8 @@ interface IgnitionComponent {
 
 class DefaultIgnitionComponent(
     componentContext: ComponentContext,
-    private val onProceed: () -> Unit,
+    /** [showPromo] is true when another native ad is loaded and should be shown on the way out. */
+    private val onProceed: (showPromo: Boolean) -> Unit,
 ) : IgnitionComponent, ComponentContext by componentContext, KoinComponent {
 
     private val storeFactory: StoreFactory by inject()
@@ -40,7 +41,7 @@ class DefaultIgnitionComponent(
         lifecycle.doOnDestroy { scope.cancel() }
         scope.launch {
             store.labels.collect { label ->
-                if (label is IgnitionStore.Label.Proceed) onProceed()
+                if (label is IgnitionStore.Label.Proceed) onProceed(label.showPromo)
             }
         }
     }

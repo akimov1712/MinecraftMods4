@@ -6,6 +6,10 @@ package dev.mod.store.minecraft.domain.creation
  *
  * [rating], [commentCount], [reactionCount] and [publishedAtEpochMs] are the "social" numbers the
  * home screen decorates its cards with; they are absent from older payloads, hence the defaults.
+ *
+ * [trendingPosition], [similar] and [downloadsCount] only come with the single-mod request:
+ * [trendingPosition] is this mod's 1-based place in the trending selection, or null when it is not
+ * in it; [similar] is a handful of other mods from the same app, never this one.
  */
 data class CreationEntity(
     val id: Int,
@@ -21,4 +25,7 @@ data class CreationEntity(
     val reactionCount: Int = 0,
     val publishedAtEpochMs: Long? = null,
     val isBookmarked: Boolean = false,
+    val trendingPosition: Int? = null,
+    val downloadsCount: Int = 0,
+    val similar: List<CreationEntity> = emptyList(),
 )

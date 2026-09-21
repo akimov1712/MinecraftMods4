@@ -7,9 +7,12 @@ import dev.mod.store.minecraft.domain.config.NativeKind
 import dev.mod.store.minecraft.domain.creation.CreationCategory
 import dev.mod.store.minecraft.domain.creation.CreationEntity
 import dev.mod.store.minecraft.domain.outreach.RecommendationEntity
+import dev.mod.store.minecraft.domain.reaction.ReactionSummary
+import dev.mod.store.minecraft.domain.reaction.ReactionType
 import dev.mod.store.minecraft.domain.outreach.ReportEntity
 import dev.mod.store.minecraft.data.network.dto.ConfigDto
 import dev.mod.store.minecraft.data.network.dto.CreationDto
+import dev.mod.store.minecraft.data.network.dto.ReactionsDto
 import dev.mod.store.minecraft.data.network.dto.RecommendationDto
 import dev.mod.store.minecraft.data.network.dto.ReportDto
 import java.time.Instant
@@ -28,7 +31,23 @@ internal fun CreationDto.toEntity(isBookmarked: Boolean = false): CreationEntity
     reactionCount = reactionCount,
     publishedAtEpochMs = createdAt.toEpochMillisOrNull(),
     isBookmarked = isBookmarked,
+    // Positions arrive 1-based; anything else is the server saying "not in the selection".
+    trendingPosition = trendingPosition?.takeIf { it > 0 },
+    downloadsCount = downloadsCount.coerceAtLeast(0),
+    similar = similar.filter { it.id != id }.map { it.toEntity() },
 )
+
+/** Reaction names this build does not know are dropped rather than failing the whole summary. */
+internal fun ReactionsDto.toEntity(): ReactionSummary = ReactionSummary(
+    selected = selected?.toReactionType(),
+    counts = counts.mapNotNull { (name, count) ->
+        name.toReactionType()?.let { it to count.coerceAtLeast(0) }
+    }.toMap(),
+    total = total.coerceAtLeast(0),
+)
+
+private fun String.toReactionType(): ReactionType? =
+    ReactionType.entries.firstOrNull { it.name.equals(this, ignoreCase = true) }
 
 /**
  * Descriptions are pasted from web pages, so they arrive as fragments of HTML. Dropping the tags

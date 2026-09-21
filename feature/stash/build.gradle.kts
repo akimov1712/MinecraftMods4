@@ -11,6 +11,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":domain"))
     implementation(project(":core:ui"))
+    implementation(project(":core:ads"))
 
     implementation(libs.bundles.koin)
     implementation(libs.bundles.decompose)

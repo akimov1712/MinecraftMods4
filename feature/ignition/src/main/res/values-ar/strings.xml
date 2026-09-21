@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="ignition_title">Mods Studio</string>
-    <string name="ignition_tagline">مودات وخرائط وسكينات لـ Minecraft PE</string>
-    <string name="ignition_ready_badge">جاهز</string>
-    <string name="ignition_ready_body">تم تحميل الكتالوج</string>
-    <string name="ignition_enter">ادخل إلى التطبيق</string>
-    <string name="ignition_loading">جارٍ التحميل…</string>
-</resources>

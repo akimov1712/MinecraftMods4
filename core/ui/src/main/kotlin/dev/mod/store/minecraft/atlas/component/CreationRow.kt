@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,14 +48,12 @@ fun CreationRow(
         horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         if (rank != null) {
-            Text(
-                text = rank.toString(),
-                modifier = Modifier.width(26.dp),
-                color = if (rank <= 3) Palette.Accent else Palette.TextFaint,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-            )
+            Box(
+                modifier = Modifier.width(38.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                RankBadge(rank = rank, size = 28.dp)
+            }
         }
 
         trailing?.invoke(this)

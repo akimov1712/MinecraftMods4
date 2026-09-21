@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Every string in the app lives here, in one file per language. Features do not carry
+  resources of their own: they read these through dev.mod.store.minecraft.core.ui.R.
+-->
 <resources>
+    <!-- Application -->
+    <string name="app_name">تعديل TNT للعبة ماينكرافت PE</string>
+
+    <!-- Shared -->
     <string name="atlas_ad">إعلان</string>
     <string name="atlas_retry">إعادة المحاولة</string>
     <string name="atlas_empty_title">لا يوجد شيء هنا بعد</string>
@@ -17,4 +25,215 @@
     <string name="category_maps">خرائط</string>
     <string name="category_texture">قوام</string>
     <string name="category_skin">سكنات</string>
+    <string name="creation_version_short">v%1$s+</string>
+
+    <!-- Splash -->
+    <string name="ignition_enter">ادخل إلى التطبيق</string>
+    <string name="ignition_hint_free">كل شيء هنا مجاني</string>
+    <string name="ignition_hint_install">افتح مودًا، نزّل الملف، ثم افتحه في Minecraft</string>
+    <string name="ignition_hint_save">اضغط العلامة لحفظ المود</string>
+    <string name="ignition_hint_vpn">هل توقّف التنزيل؟ شغّل VPN</string>
+    <string name="ignition_hint_search">استخدم البحث للعثور على مود بالاسم</string>
+    <string name="ignition_percent">%1$d%%</string>
+    <string name="ignition_curtain_close">إغلاق</string>
+
+    <!-- Navigation -->
+    <string name="hub_tab_showcase">الكتالوج</string>
+    <string name="hub_tab_stash">المحفوظة</string>
+    <string name="hub_tab_compendium">الأسئلة الشائعة</string>
+    <string name="hub_search">بحث</string>
+    <string name="hub_tab_settings">الإعدادات</string>
+
+    <!-- Catalog and search -->
+    <string name="showcase_section_pick">مود اليوم</string>
+    <string name="showcase_section_trending">الأكثر رواجًا</string>
+    <string name="showcase_section_popular">الأكثر شيوعًا</string>
+    <string name="showcase_section_fresh">الجديد</string>
+    <string name="showcase_section_top_rated">الأعلى تقييمًا</string>
+    <string name="showcase_see_all">الكل</string>
+    <string name="showcase_fresh_badge">جديد</string>
+    <string name="showcase_browse_back">رجوع</string>
+    <string name="showcase_browse_count">تم العثور على %1$s</string>
+    <string name="showcase_browse_retry">إعادة المحاولة</string>
+    <string name="search_hint">مودات، خرائط، سكينات…</string>
+    <string name="search_back">رجوع</string>
+    <string name="search_empty_title">لا توجد نتائج</string>
+    <string name="search_empty_body">جرّب كلمة أقصر أو مختلفة.</string>
+    <string name="showcase_chart_new">جديد</string>
+    <string name="search_title">بحث</string>
+
+    <!-- Mod page -->
+    <string name="spotlight_versions_title">الإصدارات المدعومة</string>
+    <string name="spotlight_get_files">الحصول على الملفات</string>
+    <string name="spotlight_how_to_install">التثبيت</string>
+    <string name="spotlight_report">الإبلاغ عن مشكلة</string>
+    <string name="spotlight_report_title">الإبلاغ عن مشكلة</string>
+    <string name="spotlight_report_email_hint">بريدك الإلكتروني</string>
+    <string name="spotlight_report_message_hint">صف المشكلة</string>
+    <string name="spotlight_report_send">إرسال</string>
+    <string name="spotlight_report_cancel">إلغاء</string>
+    <string name="spotlight_report_sent">شكرًا! تم إرسال بلاغك.</string>
+    <string name="spotlight_tab_about">نظرة عامة</string>
+    <string name="spotlight_tab_files">الملفات</string>
+    <string name="spotlight_tab_images">الصور</string>
+    <string name="spotlight_tab_versions">الإصدارات</string>
+    <string name="spotlight_files_hint">يُفتح الملف في Minecraft فور انتهاء التنزيل.</string>
+    <string name="spotlight_versions_empty">لم يحدد المؤلف إصدارات اللعبة.</string>
+    <string name="spotlight_read_more">اقرأ المزيد</string>
+    <string name="spotlight_read_less">إخفاء</string>
+    <string name="spotlight_suggest">اقترح مودًا</string>
+    <string name="spotlight_section_description">الوصف</string>
+    <string name="spotlight_section_details">التفاصيل</string>
+    <string name="spotlight_detail_category">الفئة</string>
+    <string name="spotlight_detail_format">نوع الملف</string>
+    <string name="spotlight_detail_files">الملفات</string>
+    <string name="spotlight_detail_versions">الإصدارات</string>
+    <string name="spotlight_detail_published">أُضيف</string>
+    <string name="spotlight_value_none">غير محدد</string>
+    <string name="spotlight_files_empty">لم يرفق المؤلف أي ملف بهذا المود.</string>
+    <string name="spotlight_images_empty">لا توجد صور لهذا المود بعد.</string>
+    <string name="spotlight_image_index">صورة %1$d من %2$d</string>
+    <string name="spotlight_versions_hint">يذكر المؤلف أن المود يعمل على إصدارات اللعبة هذه:</string>
+    <string name="spotlight_install_sub">دليل قصير لتركيب المود داخل اللعبة</string>
+    <string name="spotlight_suggest_sub">أرسل لنا مودًا تود رؤيته هنا</string>
+    <string name="spotlight_report_sub">رابط معطّل، ملفات خاطئة، أو غير ذلك</string>
+    <string name="spotlight_share">مشاركة</string>
+    <string name="spotlight_share_text">%1$s
+%2$s</string>
+    <string name="spotlight_report_body">أخبرنا بما لا يعمل في هذا المود وسنتحقق منه.</string>
+    <string name="spotlight_report_email_label">بريد للرد</string>
+    <string name="spotlight_report_message_label">ما المشكلة؟</string>
+
+    <!-- Downloads -->
+    <string name="loadout_title">الملفات</string>
+    <string name="loadout_download">تنزيل</string>
+    <string name="loadout_cancel">إلغاء</string>
+    <string name="loadout_ready">تم الحفظ</string>
+    <string name="loadout_vpn_hint">في بعض الدول يحجب مزوّدو الإنترنت الخادم الذي توجد عليه الملفات. شغّل VPN وأعد بدء التنزيل — هذا يحل المشكلة في أغلب الحالات.</string>
+    <string name="loadout_download_failed">فشل التنزيل. يرجى إعادة المحاولة.</string>
+    <string name="loadout_open_failed">تعذّر فتح الملف. هل Minecraft مثبّت؟</string>
+    <string name="loadout_unknown_size">حجم غير معروف</string>
+    <string name="loadout_action_open">الفتح في Minecraft</string>
+    <string name="loadout_empty">لا توجد ملفات مرفقة بهذا العمل.</string>
+    <string name="loadout_percent">%1$d%%</string>
+    <string name="loadout_vpn_title">هل توقّف التنزيل؟</string>
+
+    <!-- Saved -->
+    <string name="stash_title">المحفوظة</string>
+    <string name="stash_count">%1$d محفوظ</string>
+    <string name="stash_empty">لا يوجد شيء محفوظ بعد</string>
+    <string name="stash_empty_hint">انقر على إشارة المحتوى مرجعية لحفظه هنا.</string>
+
+    <!-- FAQ -->
+    <string name="compendium_title">المساعد</string>
+    <string name="faq_what_q">ماذا يفعل هذا التطبيق؟</string>
+    <string name="faq_what_a">يتيح لك تصفّح وتثبيت محتوى مجاني — إضافات وخرائط وقوام وسكنات — لـ Minecraft.</string>
+    <string name="faq_internet_q">هل أحتاج إلى اتصال بالإنترنت؟</string>
+    <string name="faq_internet_a">نعم، للتصفّح والتنزيل. بعد حفظ الملف يمكنك تثبيته دون اتصال.</string>
+    <string name="faq_how_q">كيف أثبّت محتوى؟</string>
+    <string name="faq_how_a">افتح مودًا، اضغط «الحصول على الملفات» ثم «تنزيل». وبعد الحفظ اضغط «الفتح في Minecraft» — ستفتح اللعبة وتضيفه بنفسها.</string>
+    <string name="faq_fail_q">لم ينجح التثبيت. ماذا الآن؟</string>
+    <string name="faq_fail_a">تأكد أن Minecraft مثبّت ومحدّث، ثم افتح الملف مرة أخرى. وإن لم يكتمل التنزيل، شغّل VPN ونزّله من جديد.</string>
+    <string name="faq_stuck_q">التنزيل متوقف.</string>
+    <string name="faq_stuck_a">غالبًا يحجب مزوّد الإنترنت الخادم. شغّل VPN ونزّل من جديد — ينجح ذلك في الغالب. أي VPN مجاني يكفي، ويمكنك إيقافه بعدها.</string>
+    <string name="faq_hidden_q">ثبّته لكنني لا أجده في اللعبة.</string>
+    <string name="faq_hidden_a">ادخل إعدادات عالمك وفعّل الحزمة هناك. بعض المودات تحتاج أيضًا تفعيل الخيارات التجريبية.</string>
+    <string name="faq_lag_q">اللعبة تتقطّع بعد التثبيت.</string>
+    <string name="faq_lag_a">المودات الكبيرة ثقيلة على الهاتف. قلّل مسافة الرؤية أو أزل حزمًا أخرى من العالم.</string>
+    <string name="faq_ads_q">لماذا توجد إعلانات؟</string>
+    <string name="faq_ads_a">الإعلانات تبقي التطبيق وكل المحتوى مجانيًا بالكامل.</string>
+    <string name="faq_free_q">هل كل شيء مجاني؟</string>
+    <string name="faq_free_a">نعم — كل محتوى في الكتالوج مجاني للتنزيل والتثبيت.</string>
+    <string name="faq_fresh_q">كم مرة يُضاف محتوى جديد؟</string>
+    <string name="faq_fresh_a">يُحدَّث الكتالوج بانتظام بمحتوى جديد.</string>
+    <string name="faq_safe_q">هل الملفات آمنة على عوالمي؟</string>
+    <string name="faq_safe_a">نعم. هي بصيغ Minecraft نفسها. لكن احفظ نسخة من عالم مهم قبل إضافة مود كبير.</string>
+    <string name="compendium_subtitle">إجابات عن الأسئلة الشائعة</string>
+    <string name="compendium_greeting">أهلًا! اختر سؤالًا وسأجيب هنا.</string>
+    <string name="compendium_prompt">اضغط على سؤال</string>
+    <string name="compendium_restart">البدء من جديد</string>
+    <string name="compendium_done">هذا كل ما أعرفه. اضغط السهم في الأعلى للبدء من جديد.</string>
+    <string name="faq_how_chip">كيفية التثبيت</string>
+    <string name="faq_fail_chip">لم يُثبَّت</string>
+    <string name="faq_stuck_chip">التنزيل متوقف</string>
+    <string name="faq_hidden_chip">لا أجده في اللعبة</string>
+    <string name="faq_lag_chip">اللعبة تتقطع</string>
+    <string name="faq_what_chip">ما هذا التطبيق</string>
+    <string name="faq_internet_chip">هل يلزم الإنترنت؟</string>
+    <string name="faq_free_chip">هل هو مجاني؟</string>
+    <string name="faq_ads_chip">لماذا الإعلانات</string>
+    <string name="faq_fresh_chip">محتوى جديد</string>
+    <string name="faq_safe_chip">هل هو آمن</string>
+    <string name="compendium_show_all">كل الأسئلة · %1$d</string>
+    <string name="compendium_collapse">إخفاء الأسئلة</string>
+    <string name="compendium_expand">عرض الأسئلة</string>
+
+    <!-- How to install -->
+    <string name="walkthrough_title">كيفية التثبيت</string>
+    <string name="walkthrough_s1_title">اختر محتوى</string>
+    <string name="walkthrough_s1_text">افتح أي محتوى من الكتالوج واضغط «الحصول على الملفات».</string>
+    <string name="walkthrough_s2_title">نزّل الملف</string>
+    <string name="walkthrough_s2_text">اضغط «تنزيل» وانتظر حتى ينتهي حفظ الملف.</string>
+    <string name="walkthrough_s3_title">اضغط «تثبيت»</string>
+    <string name="walkthrough_s3_text">بعد الحفظ اضغط «تثبيت» — يسألك النظام عن التطبيق الذي يفتح الملف.</string>
+    <string name="walkthrough_s4_title">اختر Minecraft</string>
+    <string name="walkthrough_s4_text">اختر Minecraft من القائمة. تفتح اللعبة وتستورد المحتوى.</string>
+    <string name="walkthrough_s5_title">انتظر الاستيراد</string>
+    <string name="walkthrough_s5_text">يعرض Minecraft شريط تقدّم الاستيراد. اتركه حتى ينتهي.</string>
+    <string name="walkthrough_s6_title">فعّله في عالمك</string>
+    <string name="walkthrough_s6_text">في إعدادات العالم، أضف الحزمة ضمن حزم الموارد أو السلوك.</string>
+    <string name="walkthrough_s7_title">استمتع!</string>
+    <string name="walkthrough_s7_text">ابدأ العالم واستمتع بمحتواك الجديد. خذ نسخة احتياطية من العوالم المهمة أولًا.</string>
+
+    <!-- Get in touch -->
+    <string name="outreach_title">تواصل معنا</string>
+    <string name="outreach_mode_recommend">اقترح محتوى</string>
+    <string name="outreach_mode_report">إرسال ملاحظات</string>
+    <string name="outreach_email_hint">بريدك الإلكتروني</string>
+    <string name="outreach_message_recommend_hint">ما المحتوى الذي يجب أن نضيفه؟</string>
+    <string name="outreach_message_report_hint">أخبرنا بما حدث</string>
+    <string name="outreach_submit">إرسال</string>
+    <string name="outreach_sent">شكرًا! لقد استلمنا رسالتك.</string>
+    <string name="outreach_intro_title">نقرأ كل رسالة</string>
+    <string name="outreach_intro_body">أخبرنا بما نضيفه أو بما تعطّل. يقرأ هذا شخص حقيقي لا روبوت.</string>
+    <string name="outreach_purpose">عمّ تدور الرسالة؟</string>
+    <string name="outreach_mode_recommend_body">مود أو خريطة أو سكين أو حزمة أنسجة تريدها في الكتالوج</string>
+    <string name="outreach_mode_report_body">شيء معطّل أو مفقود أو يتصرف بشكل غريب</string>
+    <string name="outreach_form">رسالتك</string>
+    <string name="outreach_email_label">بريد للرد عليك</string>
+    <string name="outreach_email_help">نستخدمه للرد عليك فقط. لا شيء غير ذلك.</string>
+    <string name="outreach_counter">%1$d / %2$d</string>
+    <string name="outreach_sent_title">أُرسلت الرسالة</string>
+    <string name="outreach_sent_body">شكرًا! نقرأ كل ما يصلنا وسنرد على بريدك إذا كانت رسالتك تحتاج ردًا.</string>
+    <string name="outreach_sent_again">اكتب رسالة أخرى</string>
+
+    <!-- Settings -->
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_version">الإصدار %1$s</string>
+    <string name="settings_group_data">بياناتك</string>
+    <string name="settings_saved">المودات المحفوظة</string>
+    <string name="settings_clear">مسح المحفوظات</string>
+    <string name="settings_cleared">تم مسح القائمة</string>
+    <string name="settings_clear_title">مسح المحفوظات؟</string>
+    <string name="settings_clear_body">ستُحذف كل العلامات المرجعية. تبقى المودات في الكتالوج.</string>
+    <string name="settings_clear_cancel">إلغاء</string>
+    <string name="settings_clear_confirm">مسح</string>
+    <string name="settings_group_help">المساعدة</string>
+    <string name="settings_walkthrough">كيفية تثبيت المودات</string>
+    <string name="settings_write">راسلنا</string>
+    <string name="settings_group_app">التطبيق</string>
+    <string name="settings_rate">قيّم التطبيق</string>
+    <string name="settings_share">شارك التطبيق</string>
+    <string name="settings_system">إعدادات النظام</string>
+
+    <!-- Reactions, trending, similar -->
+    <string name="spotlight_trending_badge">#%1$d في الرائج</string>
+    <string name="spotlight_reactions_title">ما رأيك؟</string>
+    <string name="spotlight_section_similar">مودات مشابهة</string>
+    <string name="spotlight_detail_downloads">التنزيلات</string>
+    <string name="reaction_like">إعجاب</string>
+    <string name="reaction_fire">نار</string>
+    <string name="reaction_love">حب</string>
+    <string name="reaction_funny">مضحك</string>
+    <string name="reaction_wow">واو</string>
 </resources>

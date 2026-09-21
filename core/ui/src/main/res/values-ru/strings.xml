@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Every string in the app lives here, in one file per language. Features do not carry
+  resources of their own: they read these through dev.mod.store.minecraft.core.ui.R.
+-->
 <resources>
+    <!-- Application -->
+    <string name="app_name">ТНТ мод для Майнкрафт ПЕ</string>
+
+    <!-- Shared -->
     <string name="atlas_ad">Реклама</string>
     <string name="atlas_retry">Повторить</string>
     <string name="atlas_empty_title">Здесь пока пусто</string>
     <string name="atlas_error_title">Что-то пошло не так</string>
     <string name="atlas_error_body">Проверьте соединение и попробуйте снова.</string>
-
-    <!-- Fault messages -->
     <string name="fault_timeout">Время ожидания истекло. Попробуйте снова.</string>
     <string name="fault_no_connection">Нет подключения к интернету.</string>
     <string name="fault_server">Сервер сейчас недоступен.</string>
@@ -15,10 +21,219 @@
     <string name="fault_not_found">Ничего не найдено.</string>
     <string name="fault_unknown">Произошла непредвиденная ошибка.</string>
     <string name="fault_validation">Проверьте введённые данные.</string>
-
-    <!-- Creation categories -->
     <string name="category_addon">Аддоны</string>
     <string name="category_maps">Карты</string>
     <string name="category_texture">Текстуры</string>
     <string name="category_skin">Скины</string>
+    <string name="creation_version_short">v%1$s+</string>
+
+    <!-- Splash -->
+    <string name="ignition_enter">Перейти в приложение</string>
+    <string name="ignition_hint_free">Здесь всё можно скачать бесплатно</string>
+    <string name="ignition_hint_install">Открой мод, скачай файл и открой его в Minecraft</string>
+    <string name="ignition_hint_save">Нажми на закладку, чтобы сохранить мод</string>
+    <string name="ignition_hint_vpn">Загрузка застряла? Включи VPN и попробуй снова</string>
+    <string name="ignition_hint_search">Ищи мод по названию через поиск</string>
+    <string name="ignition_percent">%1$d%%</string>
+    <string name="ignition_curtain_close">Закрыть</string>
+
+    <!-- Navigation -->
+    <string name="hub_tab_showcase">Каталог</string>
+    <string name="hub_tab_stash">Закладки</string>
+    <string name="hub_tab_compendium">FAQ</string>
+    <string name="hub_search">Поиск</string>
+    <string name="hub_tab_settings">Настройки</string>
+
+    <!-- Catalog and search -->
+    <string name="showcase_section_pick">Мод дня</string>
+    <string name="showcase_section_trending">В тренде</string>
+    <string name="showcase_section_popular">Популярные</string>
+    <string name="showcase_section_fresh">Новинки</string>
+    <string name="showcase_section_top_rated">Высокий рейтинг</string>
+    <string name="showcase_see_all">Все</string>
+    <string name="showcase_fresh_badge">НОВОЕ</string>
+    <string name="showcase_browse_back">Назад</string>
+    <string name="showcase_browse_count">Найдено: %1$s</string>
+    <string name="showcase_browse_retry">Повторить</string>
+    <string name="search_hint">Моды, карты, скины…</string>
+    <string name="search_back">Назад</string>
+    <string name="search_empty_title">Ничего не нашлось</string>
+    <string name="search_empty_body">Попробуй короче или другое слово.</string>
+    <string name="showcase_chart_new">нов.</string>
+    <string name="search_title">Поиск</string>
+
+    <!-- Mod page -->
+    <string name="spotlight_versions_title">Поддерживаемые версии</string>
+    <string name="spotlight_get_files">Скачать файлы</string>
+    <string name="spotlight_how_to_install">Установка</string>
+    <string name="spotlight_report">Сообщить о проблеме</string>
+    <string name="spotlight_report_title">Сообщить о проблеме</string>
+    <string name="spotlight_report_email_hint">Ваш email</string>
+    <string name="spotlight_report_message_hint">Опишите проблему</string>
+    <string name="spotlight_report_send">Отправить</string>
+    <string name="spotlight_report_cancel">Отмена</string>
+    <string name="spotlight_report_sent">Спасибо! Отчёт отправлен.</string>
+    <string name="spotlight_tab_about">Обзор</string>
+    <string name="spotlight_tab_files">Файлы</string>
+    <string name="spotlight_tab_images">Скрины</string>
+    <string name="spotlight_tab_versions">Версии</string>
+    <string name="spotlight_files_hint">Файл откроется в Minecraft сразу после загрузки.</string>
+    <string name="spotlight_versions_empty">Автор не указал версии игры.</string>
+    <string name="spotlight_read_more">Читать дальше</string>
+    <string name="spotlight_read_less">Свернуть</string>
+    <string name="spotlight_suggest">Предложить мод</string>
+    <string name="spotlight_section_description">Описание</string>
+    <string name="spotlight_section_details">Характеристики</string>
+    <string name="spotlight_detail_category">Категория</string>
+    <string name="spotlight_detail_format">Тип файла</string>
+    <string name="spotlight_detail_files">Файлов</string>
+    <string name="spotlight_detail_versions">Версии</string>
+    <string name="spotlight_detail_published">Добавлен</string>
+    <string name="spotlight_value_none">Не указано</string>
+    <string name="spotlight_files_empty">Автор не приложил к моду ни одного файла.</string>
+    <string name="spotlight_images_empty">У этого мода пока нет скриншотов.</string>
+    <string name="spotlight_image_index">Скриншот %1$d из %2$d</string>
+    <string name="spotlight_versions_hint">Автор указал, что мод работает на этих версиях игры:</string>
+    <string name="spotlight_install_sub">Короткая инструкция, как поставить мод в игру</string>
+    <string name="spotlight_suggest_sub">Пришлите мод, который хотите здесь увидеть</string>
+    <string name="spotlight_report_sub">Битая ссылка, не те файлы, другое</string>
+    <string name="spotlight_share">Поделиться</string>
+    <string name="spotlight_share_text">%1$s
+%2$s</string>
+    <string name="spotlight_report_body">Расскажите, что не так с этим модом, и мы разберёмся.</string>
+    <string name="spotlight_report_email_label">Email для ответа</string>
+    <string name="spotlight_report_message_label">Что не так?</string>
+
+    <!-- Downloads -->
+    <string name="loadout_title">Файлы</string>
+    <string name="loadout_download">Скачать</string>
+    <string name="loadout_cancel">Отмена</string>
+    <string name="loadout_ready">Сохранено</string>
+    <string name="loadout_vpn_hint">В некоторых странах провайдеры блокируют сервер, на котором лежат файлы. Включите VPN и начните загрузку заново — почти всегда это решает проблему.</string>
+    <string name="loadout_download_failed">Не удалось скачать. Попробуйте снова.</string>
+    <string name="loadout_open_failed">Не удалось открыть файл. Установлен ли Minecraft?</string>
+    <string name="loadout_unknown_size">Размер неизвестен</string>
+    <string name="loadout_action_open">Открыть в Minecraft</string>
+    <string name="loadout_empty">К этой сборке не приложено файлов.</string>
+    <string name="loadout_percent">%1$d%%</string>
+    <string name="loadout_vpn_title">Загрузка застряла?</string>
+
+    <!-- Saved -->
+    <string name="stash_title">Закладки</string>
+    <string name="stash_count">Сохранено: %1$d</string>
+    <string name="stash_empty">Пока нет сохранённого</string>
+    <string name="stash_empty_hint">Нажмите на закладку у дополнения, чтобы сохранить его сюда.</string>
+
+    <!-- FAQ -->
+    <string name="compendium_title">Помощник</string>
+    <string name="faq_what_q">Что делает это приложение?</string>
+    <string name="faq_what_a">Позволяет просматривать и устанавливать бесплатные дополнения — аддоны, карты, текстуры и скины — для Minecraft.</string>
+    <string name="faq_internet_q">Нужен ли интернет?</string>
+    <string name="faq_internet_a">Да, для просмотра и скачивания. После сохранения файла его можно установить офлайн.</string>
+    <string name="faq_how_q">Как установить дополнение?</string>
+    <string name="faq_how_a">Открой мод, нажми «Скачать файлы», потом «Скачать». Когда файл сохранится, нажми «Открыть в Minecraft» — игра запустится и добавит его сама.</string>
+    <string name="faq_fail_q">Установка не сработала. Что делать?</string>
+    <string name="faq_fail_a">Проверь, что Minecraft установлен и обновлён, и открой файл ещё раз. Если файл не докачался — включи VPN и скачай заново.</string>
+    <string name="faq_stuck_q">Загрузка зависла.</string>
+    <string name="faq_stuck_a">Обычно провайдер блокирует сервер. Включи VPN и скачай заново — почти всегда помогает. Подойдёт любой бесплатный, потом его можно выключить.</string>
+    <string name="faq_hidden_q">Установил, но не вижу в игре.</string>
+    <string name="faq_hidden_a">Зайди в настройки своего мира и включи пак там. Некоторым модам ещё нужно включить экспериментальные режимы.</string>
+    <string name="faq_lag_q">После установки игра тормозит.</string>
+    <string name="faq_lag_a">Большие моды тяжёлые для телефона. Уменьши дальность прорисовки или убери из мира другие паки.</string>
+    <string name="faq_ads_q">Почему есть реклама?</string>
+    <string name="faq_ads_a">Реклама позволяет приложению и всем дополнениям оставаться полностью бесплатными.</string>
+    <string name="faq_free_q">Всё бесплатно?</string>
+    <string name="faq_free_a">Да — каждое дополнение в каталоге можно скачать и установить бесплатно.</string>
+    <string name="faq_fresh_q">Как часто добавляется новый контент?</string>
+    <string name="faq_fresh_a">Каталог регулярно пополняется новыми дополнениями.</string>
+    <string name="faq_safe_q">Безопасны ли файлы для моих миров?</string>
+    <string name="faq_safe_a">Да. Это обычные файлы самого Minecraft. Но перед большим модом лучше сделать копию важного мира.</string>
+    <string name="compendium_subtitle">Ответы на частые вопросы</string>
+    <string name="compendium_greeting">Привет! Выбери вопрос — отвечу прямо здесь.</string>
+    <string name="compendium_prompt">Нажми на вопрос</string>
+    <string name="compendium_restart">Начать заново</string>
+    <string name="compendium_done">Это всё, что я знаю. Нажми стрелку сверху, чтобы начать заново.</string>
+    <string name="faq_how_chip">Как установить</string>
+    <string name="faq_fail_chip">Не установилось</string>
+    <string name="faq_stuck_chip">Не качается</string>
+    <string name="faq_hidden_chip">Не вижу в игре</string>
+    <string name="faq_lag_chip">Игра тормозит</string>
+    <string name="faq_what_chip">Что это за приложение</string>
+    <string name="faq_internet_chip">Нужен интернет?</string>
+    <string name="faq_free_chip">Это бесплатно?</string>
+    <string name="faq_ads_chip">Почему реклама</string>
+    <string name="faq_fresh_chip">Новые моды</string>
+    <string name="faq_safe_chip">Это безопасно</string>
+    <string name="compendium_show_all">Все вопросы · %1$d</string>
+    <string name="compendium_collapse">Скрыть вопросы</string>
+    <string name="compendium_expand">Показать вопросы</string>
+
+    <!-- How to install -->
+    <string name="walkthrough_title">Как установить</string>
+    <string name="walkthrough_s1_title">Выберите дополнение</string>
+    <string name="walkthrough_s1_text">Откройте любое дополнение из каталога и нажмите «Скачать файлы».</string>
+    <string name="walkthrough_s2_title">Скачайте файл</string>
+    <string name="walkthrough_s2_text">Нажмите «Скачать» и дождитесь завершения сохранения файла.</string>
+    <string name="walkthrough_s3_title">Нажмите «Установить»</string>
+    <string name="walkthrough_s3_text">После сохранения нажмите «Установить» — система спросит, каким приложением открыть файл.</string>
+    <string name="walkthrough_s4_title">Выберите Minecraft</string>
+    <string name="walkthrough_s4_text">Выберите Minecraft из списка. Игра откроется и импортирует контент.</string>
+    <string name="walkthrough_s5_title">Дождитесь импорта</string>
+    <string name="walkthrough_s5_text">Minecraft покажет прогресс импорта. Дайте ему завершиться.</string>
+    <string name="walkthrough_s6_title">Включите в мире</string>
+    <string name="walkthrough_s6_text">В настройках мира добавьте пакет в раздел ресурс- или бихевиор-паков.</string>
+    <string name="walkthrough_s7_title">Готово!</string>
+    <string name="walkthrough_s7_text">Запустите мир и наслаждайтесь новым дополнением. Сначала сделайте резервную копию важных миров.</string>
+
+    <!-- Get in touch -->
+    <string name="outreach_title">Связаться с нами</string>
+    <string name="outreach_mode_recommend">Предложить дополнение</string>
+    <string name="outreach_mode_report">Отзыв</string>
+    <string name="outreach_email_hint">Ваш email</string>
+    <string name="outreach_message_recommend_hint">Какое дополнение добавить?</string>
+    <string name="outreach_message_report_hint">Расскажите, что случилось</string>
+    <string name="outreach_submit">Отправить</string>
+    <string name="outreach_sent">Спасибо! Мы получили ваше сообщение.</string>
+    <string name="outreach_intro_title">Мы читаем каждое сообщение</string>
+    <string name="outreach_intro_body">Напишите, что добавить или что сломалось. Это читает человек, а не робот.</string>
+    <string name="outreach_purpose">О чём сообщение?</string>
+    <string name="outreach_mode_recommend_body">Мод, карта, скин или текстур-пак, который хотите увидеть в каталоге</string>
+    <string name="outreach_mode_report_body">Что-то не работает, пропало или ведёт себя странно</string>
+    <string name="outreach_form">Ваше сообщение</string>
+    <string name="outreach_email_label">Email для ответа</string>
+    <string name="outreach_email_help">Нужен только чтобы ответить вам. Больше ни для чего.</string>
+    <string name="outreach_counter">%1$d / %2$d</string>
+    <string name="outreach_sent_title">Сообщение отправлено</string>
+    <string name="outreach_sent_body">Спасибо! Мы читаем всё, что приходит, и ответим на почту, если вопрос требует ответа.</string>
+    <string name="outreach_sent_again">Написать ещё</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_version">Версия %1$s</string>
+    <string name="settings_group_data">Твои данные</string>
+    <string name="settings_saved">Сохранённые моды</string>
+    <string name="settings_clear">Очистить сохранённые</string>
+    <string name="settings_cleared">Список очищен</string>
+    <string name="settings_clear_title">Очистить сохранённые?</string>
+    <string name="settings_clear_body">Все моды из закладок будут удалены. Сами моды останутся в каталоге.</string>
+    <string name="settings_clear_cancel">Отмена</string>
+    <string name="settings_clear_confirm">Очистить</string>
+    <string name="settings_group_help">Помощь</string>
+    <string name="settings_walkthrough">Как установить моды</string>
+    <string name="settings_write">Написать нам</string>
+    <string name="settings_group_app">Приложение</string>
+    <string name="settings_rate">Оценить приложение</string>
+    <string name="settings_share">Поделиться приложением</string>
+    <string name="settings_system">Системные настройки</string>
+
+    <!-- Reactions, trending, similar -->
+    <string name="spotlight_trending_badge">#%1$d в тренде</string>
+    <string name="spotlight_reactions_title">Как вам мод?</string>
+    <string name="spotlight_section_similar">Похожие моды</string>
+    <string name="spotlight_detail_downloads">Скачиваний</string>
+    <string name="reaction_like">Нравится</string>
+    <string name="reaction_fire">Огонь</string>
+    <string name="reaction_love">Люблю</string>
+    <string name="reaction_funny">Смешно</string>
+    <string name="reaction_wow">Вау</string>
 </resources>

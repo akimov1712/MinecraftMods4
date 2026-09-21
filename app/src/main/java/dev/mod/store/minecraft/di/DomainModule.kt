@@ -13,8 +13,11 @@ import dev.mod.store.minecraft.domain.creation.FetchShowcaseUseCase
 import dev.mod.store.minecraft.domain.loadout.DownloadCreationUseCase
 import dev.mod.store.minecraft.domain.loadout.IsCreationDownloadedUseCase
 import dev.mod.store.minecraft.domain.loadout.OpenCreationFileUseCase
+import dev.mod.store.minecraft.domain.loadout.RecordDownloadUseCase
 import dev.mod.store.minecraft.domain.outreach.SubmitRecommendationUseCase
 import dev.mod.store.minecraft.domain.outreach.SubmitReportUseCase
+import dev.mod.store.minecraft.domain.reaction.FetchReactionsUseCase
+import dev.mod.store.minecraft.domain.reaction.SetReactionUseCase
 import org.koin.dsl.module
 
 /** Use cases — pure-Kotlin orchestration over the repositories bound in :wire / :vault. */
@@ -34,4 +37,7 @@ val domainModule = module {
     single { DownloadCreationUseCase(get()) }
     single { IsCreationDownloadedUseCase(get()) }
     single { OpenCreationFileUseCase(get()) }
+    single { RecordDownloadUseCase(get(), get()) }
+    single { FetchReactionsUseCase(get(), get()) }
+    single { SetReactionUseCase(get(), get()) }
 }

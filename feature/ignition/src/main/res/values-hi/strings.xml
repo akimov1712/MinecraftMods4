@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="ignition_title">Mods Studio</string>
-    <string name="ignition_tagline">Minecraft PE के लिए मॉड, मैप और स्किन</string>
-    <string name="ignition_ready_badge">तैयार</string>
-    <string name="ignition_ready_body">आपका कैटलॉग लोड हो गया</string>
-    <string name="ignition_enter">ऐप में जाएँ</string>
-    <string name="ignition_loading">लोड हो रहा है…</string>
-</resources>

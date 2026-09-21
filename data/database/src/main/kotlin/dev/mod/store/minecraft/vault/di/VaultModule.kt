@@ -5,15 +5,21 @@ import com.russhwolf.settings.Settings
 import com.russhwolf.settings.SharedPreferencesSettings
 import dev.mod.store.minecraft.domain.bookmark.BookmarkRepository
 import dev.mod.store.minecraft.domain.config.ConfigCache
+import dev.mod.store.minecraft.domain.identity.ClientIdentity
+import dev.mod.store.minecraft.domain.loadout.DownloadLedger
 import dev.mod.store.minecraft.domain.loadout.LoadoutRepository
+import dev.mod.store.minecraft.domain.reaction.ReactionLedger
 import dev.mod.store.minecraft.domain.review.ReviewTracker
 import dev.mod.store.minecraft.data.database.bookmark.BookmarkLocalDataSource
 import dev.mod.store.minecraft.data.database.bookmark.BookmarkRepositoryImpl
 import dev.mod.store.minecraft.data.database.config.ConfigCacheDataSource
 import dev.mod.store.minecraft.data.database.db.VaultDatabase
 import dev.mod.store.minecraft.data.database.db.createVaultDatabase
+import dev.mod.store.minecraft.data.database.identity.ClientIdentityImpl
+import dev.mod.store.minecraft.data.database.loadout.DownloadLedgerImpl
 import dev.mod.store.minecraft.data.database.loadout.LoadoutLocalDataSource
 import dev.mod.store.minecraft.data.database.loadout.LoadoutRepositoryImpl
+import dev.mod.store.minecraft.data.database.reaction.ReactionLedgerImpl
 import dev.mod.store.minecraft.data.database.review.ReviewTrackerImpl
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -36,4 +42,8 @@ val vaultModule = module {
     single<LoadoutRepository> { LoadoutRepositoryImpl(get()) }
     single<ConfigCache> { ConfigCacheDataSource(get()) }
     single<ReviewTracker> { ReviewTrackerImpl(get()) }
+
+    single<ClientIdentity> { ClientIdentityImpl(androidContext(), get()) }
+    single<ReactionLedger> { ReactionLedgerImpl(get()) }
+    single<DownloadLedger> { DownloadLedgerImpl(get()) }
 }

@@ -23,11 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.effect.SmallShape
 import dev.mod.store.minecraft.core.ui.effect.popIn
 import dev.mod.store.minecraft.core.ui.effect.tappable
@@ -113,7 +115,7 @@ fun CreationPoster(
         ) {
             creation.supportedVersions.firstOrNull()?.let { version ->
                 Text(
-                    text = "v$version+",
+                    text = stringResource(R.string.creation_version_short, version),
                     color = Palette.TextFaint,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,

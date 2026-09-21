@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Every string in the app lives here, in one file per language. Features do not carry
+  resources of their own: they read these through dev.mod.store.minecraft.core.ui.R.
+-->
 <resources>
+    <!-- Shared -->
     <string name="atlas_ad">विज्ञापन</string>
     <string name="atlas_retry">पुनः प्रयास करें</string>
     <string name="atlas_empty_title">अभी यहाँ कुछ नहीं है</string>
@@ -17,4 +22,215 @@
     <string name="category_maps">मानचित्र</string>
     <string name="category_texture">टेक्सचर</string>
     <string name="category_skin">स्किन</string>
+    <string name="creation_version_short">v%1$s+</string>
+
+    <!-- Splash -->
+    <string name="ignition_enter">ऐप में जाएँ</string>
+    <string name="ignition_hint_free">यहाँ सब कुछ मुफ़्त है</string>
+    <string name="ignition_hint_install">मॉड खोलो, फ़ाइल लो, Minecraft में खोलो</string>
+    <string name="ignition_hint_save">मॉड सेव करने के लिए बुकमार्क दबाओ</string>
+    <string name="ignition_hint_vpn">डाउनलोड अटक गया? VPN चालू करो</string>
+    <string name="ignition_hint_search">नाम से मॉड ढूँढने के लिए सर्च करो</string>
+    <string name="ignition_percent">%1$d%%</string>
+    <string name="ignition_curtain_close">बंद करें</string>
+
+    <!-- Navigation -->
+    <string name="hub_tab_showcase">कैटलॉग</string>
+    <string name="hub_tab_stash">सहेजे गए</string>
+    <string name="hub_tab_compendium">FAQ</string>
+    <string name="hub_search">खोज</string>
+    <string name="hub_tab_settings">सेटिंग्स</string>
+
+    <!-- Catalog and search -->
+    <string name="showcase_section_pick">आज का मॉड</string>
+    <string name="showcase_section_trending">ट्रेंडिंग</string>
+    <string name="showcase_section_popular">लोकप्रिय</string>
+    <string name="showcase_section_fresh">नए मॉड</string>
+    <string name="showcase_section_top_rated">टॉप रेटेड</string>
+    <string name="showcase_see_all">सभी</string>
+    <string name="showcase_fresh_badge">नया</string>
+    <string name="showcase_browse_back">वापस</string>
+    <string name="showcase_browse_count">%1$s मिले</string>
+    <string name="showcase_browse_retry">फिर से कोशिश करें</string>
+    <string name="search_hint">मॉड, मैप, स्किन…</string>
+    <string name="search_back">वापस</string>
+    <string name="search_empty_title">कुछ नहीं मिला</string>
+    <string name="search_empty_body">छोटा या दूसरा शब्द आज़माएँ।</string>
+    <string name="showcase_chart_new">नया</string>
+    <string name="search_title">खोज</string>
+
+    <!-- Mod page -->
+    <string name="spotlight_versions_title">समर्थित संस्करण</string>
+    <string name="spotlight_get_files">फ़ाइलें प्राप्त करें</string>
+    <string name="spotlight_how_to_install">इंस्टॉल</string>
+    <string name="spotlight_report">समस्या की रिपोर्ट करें</string>
+    <string name="spotlight_report_title">समस्या की रिपोर्ट करें</string>
+    <string name="spotlight_report_email_hint">आपका ईमेल</string>
+    <string name="spotlight_report_message_hint">समस्या का वर्णन करें</string>
+    <string name="spotlight_report_send">भेजें</string>
+    <string name="spotlight_report_cancel">रद्द करें</string>
+    <string name="spotlight_report_sent">धन्यवाद! आपकी रिपोर्ट भेज दी गई।</string>
+    <string name="spotlight_tab_about">परिचय</string>
+    <string name="spotlight_tab_files">फ़ाइलें</string>
+    <string name="spotlight_tab_images">स्क्रीनशॉट</string>
+    <string name="spotlight_tab_versions">वर्शन</string>
+    <string name="spotlight_files_hint">डाउनलोड पूरा होते ही फ़ाइल Minecraft में खुल जाती है।</string>
+    <string name="spotlight_versions_empty">लेखक ने गेम वर्शन नहीं बताए।</string>
+    <string name="spotlight_read_more">और पढ़ें</string>
+    <string name="spotlight_read_less">कम दिखाएँ</string>
+    <string name="spotlight_suggest">मॉड सुझाएँ</string>
+    <string name="spotlight_section_description">विवरण</string>
+    <string name="spotlight_section_details">विवरण-सूची</string>
+    <string name="spotlight_detail_category">श्रेणी</string>
+    <string name="spotlight_detail_format">फ़ाइल प्रकार</string>
+    <string name="spotlight_detail_files">फ़ाइलें</string>
+    <string name="spotlight_detail_versions">संस्करण</string>
+    <string name="spotlight_detail_published">जोड़ा गया</string>
+    <string name="spotlight_value_none">नहीं बताया गया</string>
+    <string name="spotlight_files_empty">लेखक ने इस मॉड के साथ कोई फ़ाइल नहीं जोड़ी।</string>
+    <string name="spotlight_images_empty">इस मॉड के स्क्रीनशॉट अभी नहीं हैं।</string>
+    <string name="spotlight_image_index">स्क्रीनशॉट %1$d / %2$d</string>
+    <string name="spotlight_versions_hint">लेखक के अनुसार मॉड खेल के इन संस्करणों पर चलता है:</string>
+    <string name="spotlight_install_sub">मॉड को खेल में डालने की छोटी गाइड</string>
+    <string name="spotlight_suggest_sub">जो मॉड यहाँ देखना चाहते हैं, हमें भेजें</string>
+    <string name="spotlight_report_sub">टूटा लिंक, ग़लत फ़ाइलें, कुछ और</string>
+    <string name="spotlight_share">शेयर करें</string>
+    <string name="spotlight_share_text">%1$s
+%2$s</string>
+    <string name="spotlight_report_body">बताइए इस मॉड में क्या गड़बड़ है, हम देखेंगे।</string>
+    <string name="spotlight_report_email_label">जवाब के लिए ईमेल</string>
+    <string name="spotlight_report_message_label">क्या गड़बड़ है?</string>
+
+    <!-- Downloads -->
+    <string name="loadout_title">फ़ाइलें</string>
+    <string name="loadout_download">डाउनलोड</string>
+    <string name="loadout_cancel">रद्द करें</string>
+    <string name="loadout_ready">सहेजा गया</string>
+    <string name="loadout_vpn_hint">कुछ देशों में प्रोवाइडर उस सर्वर को ब्लॉक कर देते हैं जहाँ फ़ाइलें रखी हैं। VPN चालू करें और डाउनलोड दोबारा शुरू करें — लगभग हमेशा इससे हल हो जाता है।</string>
+    <string name="loadout_download_failed">डाउनलोड विफल। पुनः प्रयास करें।</string>
+    <string name="loadout_open_failed">फ़ाइल नहीं खुल सकी। क्या Minecraft इंस्टॉल है?</string>
+    <string name="loadout_unknown_size">अज्ञात आकार</string>
+    <string name="loadout_action_open">Minecraft में खोलें</string>
+    <string name="loadout_empty">इस क्रिएशन के साथ कोई फ़ाइल नहीं है।</string>
+    <string name="loadout_percent">%1$d%%</string>
+    <string name="loadout_vpn_title">डाउनलोड अटक गया?</string>
+
+    <!-- Saved -->
+    <string name="stash_title">सहेजे गए</string>
+    <string name="stash_count">%1$d सहेजे गए</string>
+    <string name="stash_empty">अभी कुछ सहेजा नहीं गया</string>
+    <string name="stash_empty_hint">किसी कंटेंट के बुकमार्क पर टैप करके उसे यहाँ रखें।</string>
+
+    <!-- FAQ -->
+    <string name="compendium_title">सहायक</string>
+    <string name="faq_what_q">यह ऐप क्या करता है?</string>
+    <string name="faq_what_a">यह आपको Minecraft के लिए मुफ़्त कंटेंट — ऐडऑन, मानचित्र, टेक्सचर और स्किन — ब्राउज़ और इंस्टॉल करने देता है।</string>
+    <string name="faq_internet_q">क्या मुझे इंटरनेट चाहिए?</string>
+    <string name="faq_internet_a">हाँ, ब्राउज़ और डाउनलोड के लिए। फ़ाइल सहेजने के बाद आप उसे ऑफ़लाइन इंस्टॉल कर सकते हैं।</string>
+    <string name="faq_how_q">कंटेंट कैसे इंस्टॉल करें?</string>
+    <string name="faq_how_a">कोई मॉड खोलो, «फ़ाइलें लें» दबाओ, फिर «डाउनलोड»। सेव होने पर «Minecraft में खोलें» दबाओ — गेम खुलकर उसे खुद जोड़ लेगा।</string>
+    <string name="faq_fail_q">इंस्टॉल नहीं हुआ। अब क्या करें?</string>
+    <string name="faq_fail_a">देखो कि Minecraft इंस्टॉल और अपडेट है, फिर फ़ाइल दोबारा खोलो। अगर डाउनलोड पूरा नहीं हुआ तो VPN चालू करके फिर से लो।</string>
+    <string name="faq_stuck_q">मेरा डाउनलोड अटक गया है।</string>
+    <string name="faq_stuck_a">आमतौर पर तुम्हारा इंटरनेट प्रोवाइडर सर्वर को ब्लॉक करता है। VPN चालू करो और फिर से डाउनलोड करो — लगभग हमेशा काम करता है। कोई भी मुफ़्त VPN चलेगा, बाद में बंद कर सकते हो।</string>
+    <string name="faq_hidden_q">इंस्टॉल किया पर गेम में नहीं दिखता।</string>
+    <string name="faq_hidden_a">अपनी दुनिया की सेटिंग में जाओ और वहाँ पैक चालू करो। कुछ मॉड को एक्सपेरिमेंट भी ऑन चाहिए।</string>
+    <string name="faq_lag_q">इंस्टॉल के बाद गेम धीमा चलता है।</string>
+    <string name="faq_lag_a">बड़े मॉड फ़ोन पर भारी पड़ते हैं। रेंडर दूरी कम करो या दुनिया से दूसरे पैक हटाओ।</string>
+    <string name="faq_ads_q">विज्ञापन क्यों हैं?</string>
+    <string name="faq_ads_a">विज्ञापन ऐप और सारे कंटेंट को पूरी तरह मुफ़्त रखते हैं।</string>
+    <string name="faq_free_q">क्या सब कुछ मुफ़्त है?</string>
+    <string name="faq_free_a">हाँ — कैटलॉग का हर कंटेंट डाउनलोड और इंस्टॉल करने के लिए मुफ़्त है।</string>
+    <string name="faq_fresh_q">नया कंटेंट कितनी बार जुड़ता है?</string>
+    <string name="faq_fresh_a">कैटलॉग में नियमित रूप से नया कंटेंट जोड़ा जाता है।</string>
+    <string name="faq_safe_q">क्या फ़ाइलें मेरे वर्ल्ड के लिए सुरक्षित हैं?</string>
+    <string name="faq_safe_a">हाँ। ये Minecraft की ही फ़ाइलें हैं। फिर भी बड़े मॉड से पहले ज़रूरी दुनिया की कॉपी बना लो।</string>
+    <string name="compendium_subtitle">आम सवालों के जवाब</string>
+    <string name="compendium_greeting">हाय! कोई सवाल चुनो, जवाब यहीं दूँगा।</string>
+    <string name="compendium_prompt">सवाल पर टैप करें</string>
+    <string name="compendium_restart">फिर से शुरू करें</string>
+    <string name="compendium_done">मुझे बस इतना ही पता है। दोबारा शुरू करने के लिए ऊपर तीर दबाओ।</string>
+    <string name="faq_how_chip">कैसे इंस्टॉल करें</string>
+    <string name="faq_fail_chip">इंस्टॉल नहीं हुआ</string>
+    <string name="faq_stuck_chip">डाउनलोड अटका</string>
+    <string name="faq_hidden_chip">गेम में नहीं दिखा</string>
+    <string name="faq_lag_chip">गेम धीमा है</string>
+    <string name="faq_what_chip">यह ऐप क्या है</string>
+    <string name="faq_internet_chip">इंटरनेट चाहिए?</string>
+    <string name="faq_free_chip">क्या यह मुफ़्त है?</string>
+    <string name="faq_ads_chip">विज्ञापन क्यों</string>
+    <string name="faq_fresh_chip">नया कंटेंट</string>
+    <string name="faq_safe_chip">क्या यह सुरक्षित है</string>
+    <string name="compendium_show_all">सभी सवाल · %1$d</string>
+    <string name="compendium_collapse">सवाल छिपाएँ</string>
+    <string name="compendium_expand">सवाल दिखाएँ</string>
+
+    <!-- How to install -->
+    <string name="walkthrough_title">इंस्टॉल कैसे करें</string>
+    <string name="walkthrough_s1_title">कोई कंटेंट चुनें</string>
+    <string name="walkthrough_s1_text">कैटलॉग से कोई भी कंटेंट खोलें और «फ़ाइलें प्राप्त करें» पर टैप करें।</string>
+    <string name="walkthrough_s2_title">फ़ाइल डाउनलोड करें</string>
+    <string name="walkthrough_s2_text">«डाउनलोड» पर टैप करें और फ़ाइल सहेजे जाने तक प्रतीक्षा करें।</string>
+    <string name="walkthrough_s3_title">«इंस्टॉल» पर टैप करें</string>
+    <string name="walkthrough_s3_text">सहेजने के बाद «इंस्टॉल» पर टैप करें — सिस्टम पूछता है कि फ़ाइल किस ऐप से खोलें।</string>
+    <string name="walkthrough_s4_title">Minecraft चुनें</string>
+    <string name="walkthrough_s4_text">सूची से Minecraft चुनें। गेम खुलकर कंटेंट आयात करता है।</string>
+    <string name="walkthrough_s5_title">आयात की प्रतीक्षा करें</string>
+    <string name="walkthrough_s5_text">Minecraft आयात की प्रगति दिखाता है। इसे पूरा होने दें।</string>
+    <string name="walkthrough_s6_title">अपने वर्ल्ड में सक्षम करें</string>
+    <string name="walkthrough_s6_text">वर्ल्ड सेटिंग्स में पैक को रिसोर्स या बिहेवियर पैक के रूप में जोड़ें।</string>
+    <string name="walkthrough_s7_title">आनंद लें!</string>
+    <string name="walkthrough_s7_text">वर्ल्ड शुरू करें और अपने नए कंटेंट का आनंद लें। पहले महत्वपूर्ण वर्ल्ड का बैकअप लें।</string>
+
+    <!-- Get in touch -->
+    <string name="outreach_title">संपर्क करें</string>
+    <string name="outreach_mode_recommend">कंटेंट सुझाएँ</string>
+    <string name="outreach_mode_report">फ़ीडबैक भेजें</string>
+    <string name="outreach_email_hint">आपका ईमेल</string>
+    <string name="outreach_message_recommend_hint">हमें कौन-सा कंटेंट जोड़ना चाहिए?</string>
+    <string name="outreach_message_report_hint">हमें बताएँ कि क्या हुआ</string>
+    <string name="outreach_submit">भेजें</string>
+    <string name="outreach_sent">धन्यवाद! हमें आपका संदेश मिल गया।</string>
+    <string name="outreach_intro_title">हम हर संदेश पढ़ते हैं</string>
+    <string name="outreach_intro_body">बताइए क्या जोड़ें या क्या ख़राब है। इसे रोबोट नहीं, इंसान पढ़ता है।</string>
+    <string name="outreach_purpose">संदेश किस बारे में है?</string>
+    <string name="outreach_mode_recommend_body">कोई मॉड, मैप, स्किन या टेक्सचर पैक जो आप कैटलॉग में चाहते हैं</string>
+    <string name="outreach_mode_report_body">कुछ टूटा है, गायब है या अजीब चल रहा है</string>
+    <string name="outreach_form">आपका संदेश</string>
+    <string name="outreach_email_label">जवाब के लिए ईमेल</string>
+    <string name="outreach_email_help">इसका इस्तेमाल सिर्फ़ जवाब देने के लिए होता है। और कुछ नहीं।</string>
+    <string name="outreach_counter">%1$d / %2$d</string>
+    <string name="outreach_sent_title">संदेश भेज दिया</string>
+    <string name="outreach_sent_body">धन्यवाद! हम सब कुछ पढ़ते हैं और ज़रूरत होने पर आपके ईमेल पर जवाब देंगे।</string>
+    <string name="outreach_sent_again">एक और लिखें</string>
+
+    <!-- Settings -->
+    <string name="settings_title">सेटिंग्स</string>
+    <string name="settings_version">वर्शन %1$s</string>
+    <string name="settings_group_data">आपका डेटा</string>
+    <string name="settings_saved">सहेजे गए मॉड</string>
+    <string name="settings_clear">सहेजे गए हटाएँ</string>
+    <string name="settings_cleared">सूची साफ़ हो गई</string>
+    <string name="settings_clear_title">सहेजे गए हटाएँ?</string>
+    <string name="settings_clear_body">सभी बुकमार्क हट जाएँगे। मॉड कैटलॉग में बने रहेंगे।</string>
+    <string name="settings_clear_cancel">रद्द करें</string>
+    <string name="settings_clear_confirm">हटाएँ</string>
+    <string name="settings_group_help">मदद</string>
+    <string name="settings_walkthrough">मॉड कैसे इंस्टॉल करें</string>
+    <string name="settings_write">हमें लिखें</string>
+    <string name="settings_group_app">ऐप्लिकेशन</string>
+    <string name="settings_rate">ऐप को रेट करें</string>
+    <string name="settings_share">ऐप शेयर करें</string>
+    <string name="settings_system">सिस्टम सेटिंग्स</string>
+
+    <!-- Reactions, trending, similar -->
+    <string name="spotlight_trending_badge">ट्रेंड में #%1$d</string>
+    <string name="spotlight_reactions_title">कैसा लगा?</string>
+    <string name="spotlight_section_similar">मिलते-जुलते मॉड</string>
+    <string name="spotlight_detail_downloads">डाउनलोड</string>
+    <string name="reaction_like">पसंद</string>
+    <string name="reaction_fire">आग</string>
+    <string name="reaction_love">प्यार</string>
+    <string name="reaction_funny">मज़ेदार</string>
+    <string name="reaction_wow">वाह</string>
 </resources>

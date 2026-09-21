@@ -3,28 +3,35 @@ package dev.mod.store.minecraft.feature.loadout
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Bolt
+import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Download
+import androidx.compose.material.icons.rounded.Downloading
+import androidx.compose.material.icons.rounded.FolderOff
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -34,16 +41,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.mod.store.minecraft.core.ads.NativeSlot
+import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.component.ErrorState
 import dev.mod.store.minecraft.core.ui.component.GlassIconButton
 import dev.mod.store.minecraft.core.ui.component.NoticeHost
-import dev.mod.store.minecraft.core.ui.effect.SmallShape
-import dev.mod.store.minecraft.core.ui.effect.popIn
+import dev.mod.store.minecraft.core.ui.component.ShimmerBox
 import dev.mod.store.minecraft.core.ui.effect.tappable
 import dev.mod.store.minecraft.core.ui.state.ScreenStage
 import dev.mod.store.minecraft.core.ui.theme.Palette
@@ -53,12 +61,15 @@ import dev.mod.store.minecraft.feature.loadout.LoadoutStore.FileStatus
 import dev.mod.store.minecraft.feature.loadout.LoadoutStore.Intent
 import dev.mod.store.minecraft.feature.loadout.LoadoutStore.Notice
 
-private val SIDE_PADDING = 16.dp
+private val GUTTER = 20.dp
+private val GAP = 12.dp
+private val CARD_SHAPE = RoundedCornerShape(18.dp)
 
 /**
- * The download queue. Each file is a single strip that fills with colour as it arrives — the row
- * itself is the progress bar — and carries one round key that changes meaning as the file moves
- * from "not here" to "downloading" to "ready to open".
+ * Getting the files, kept to the one thing that matters: for each file there is a button, and the
+ * button says what it does right now — download it, stop, or open it in the game. Above the list,
+ * permanently, sits the VPN note, because a blocked server is what goes wrong here and a reader who
+ * has to work that out alone has usually given up first.
  */
 @Composable
 fun LoadoutPane(
@@ -66,7 +77,7 @@ fun LoadoutPane(
     modifier: Modifier = Modifier,
 ) {
     val state by component.state.collectAsState()
-    val snackbar = remember { androidx.compose.material3.SnackbarHostState() }
+    val snackbar = remember { SnackbarHostState() }
     val downloadFailed = stringResource(R.string.loadout_download_failed)
     val openFailed = stringResource(R.string.loadout_open_failed)
 
@@ -81,16 +92,18 @@ fun LoadoutPane(
         }
     }
 
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(Palette.Canvas),
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .statusBarsPadding(),
         ) {
-            Header(
+            TopBar(
                 title = state.title.ifBlank { stringResource(R.string.loadout_title) },
-                ready = state.items.count { it.status is FileStatus.Ready },
-                total = state.items.size,
                 onBack = component::back,
             )
 
@@ -99,20 +112,38 @@ fun LoadoutPane(
                     ErrorState(
                         message = (state.stage as ScreenStage.Failed).message,
                         onRetry = { component.onIntent(Intent.Retry) },
-                        modifier = Modifier.padding(SIDE_PADDING),
+                        modifier = Modifier.padding(GUTTER),
                     )
+
+                state.items.isEmpty() && state.stage.isLoading -> LoadingPage()
+
+                state.items.isEmpty() -> EmptyPage()
 
                 else -> LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(horizontal = SIDE_PADDING, vertical = 10.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    contentPadding = PaddingValues(top = 6.dp, bottom = 24.dp),
+                    verticalArrangement = Arrangement.spacedBy(GAP),
                 ) {
+                    // Always on screen: by the time someone works out that a download is not
+                    // moving, they have usually already left. Saying it up front costs one card.
+                    item(key = "vpn") { VpnNote(urgent = state.showVpnHint) }
+
                     items(items = state.items, key = { it.url }) { item ->
-                        FileStrip(item = item, component = component)
+                        FileCard(item = item, component = component)
                     }
-                    if (state.showVpnHint) {
-                        item(key = "vpn") { StalledNote() }
+
+                    if (component.hasNativeAd) {
+                        item(key = "ad") {
+                            NativeSlot(
+                                slotKey = "loadout_files",
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = GUTTER),
+                            )
+                        }
                     }
+
+                    item(key = "bottom") { Spacer(Modifier.navigationBarsPadding()) }
                 }
             }
         }
@@ -127,177 +158,311 @@ fun LoadoutPane(
 }
 
 @Composable
-private fun Header(title: String, ready: Int, total: Int, onBack: () -> Unit) {
+private fun TopBar(title: String, onBack: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 8.dp),
+            .padding(horizontal = 14.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         GlassIconButton(
             icon = Icons.AutoMirrored.Rounded.ArrowBack,
             contentDescription = null,
             onClick = onBack,
-            size = 38.dp,
+            size = 42.dp,
         )
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = title,
-                color = Palette.TextPrimary,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-            if (total > 0) {
-                Text(
-                    text = stringResource(R.string.loadout_progress_summary, ready, total),
-                    color = Palette.TextFaint,
-                    fontSize = 12.sp,
-                )
-            }
-        }
+        Text(
+            text = title,
+            color = Palette.TextPrimary,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
     }
 }
 
-/** One file: the strip fills as it downloads, and the key on the right changes with its state. */
+/**
+ * One file, on one line: a round badge that shows at a glance whether it is waiting, coming or
+ * done, the name beside it, and a short button naming the single thing to do next. Neither the name
+ * nor the status is allowed to wrap — a long file name scrolls past the way a track title does on a
+ * music player — so the row keeps its height however wide the button gets. The progress bar exists
+ * only while it is needed, tucked under the row rather than adding a third block.
+ */
 @Composable
-private fun FileStrip(item: FileItem, component: LoadoutComponent) {
+private fun FileCard(item: FileItem, component: LoadoutComponent) {
     val downloading = item.status as? FileStatus.Downloading
-    val target = when {
-        item.status is FileStatus.Ready -> 1f
-        downloading != null -> downloading.fraction
-        else -> 0f
+    val ready = item.status is FileStatus.Ready
+    val tint = when {
+        ready -> Palette.Positive
+        downloading != null -> Palette.Sky
+        else -> Palette.Accent
     }
-    val fill by animateFloatAsState(
-        targetValue = target,
-        animationSpec = tween(280),
-        label = "file-fill",
-    )
-    val fillColor = if (item.status is FileStatus.Ready) Palette.Positive else Palette.Accent
 
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(66.dp)
-            .clip(SmallShape)
-            .background(Palette.Surface),
+            .padding(horizontal = GUTTER)
+            .clip(CARD_SHAPE)
+            .background(Palette.Surface)
+            .padding(14.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(fill)
-                .fillMaxHeight()
-                .background(fillColor.copy(alpha = if (item.status is FileStatus.Ready) 0.12f else 0.22f)),
-        )
-
         Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 14.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
+            Box(
+                modifier = Modifier
+                    .size(44.dp)
+                    .clip(CircleShape)
+                    .background(tint.copy(alpha = 0.16f)),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = when {
+                        ready -> Icons.Rounded.Check
+                        downloading != null -> Icons.Rounded.Downloading
+                        else -> Icons.Rounded.Download
+                    },
+                    contentDescription = null,
+                    tint = tint,
+                    modifier = Modifier.size(22.dp),
+                )
+            }
+
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(3.dp),
             ) {
+                // A file name is long and a button is wide, so anything that wraps here turns the
+                // card into four ragged lines. Nothing wraps: the name slides past instead.
                 Text(
                     text = item.name,
                     color = Palette.TextPrimary,
-                    fontSize = 14.sp,
+                    fontSize = 15.sp,
                     fontWeight = FontWeight.SemiBold,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
+                    softWrap = false,
+                    modifier = Modifier.basicMarquee(iterations = Int.MAX_VALUE),
                 )
                 Text(
                     text = statusText(item),
-                    color = if (item.status is FileStatus.Ready) Palette.Positive else Palette.TextFaint,
-                    fontSize = 12.sp,
+                    color = if (ready) Palette.Positive else Palette.TextFaint,
+                    fontSize = 13.sp,
+                    maxLines = 1,
+                    softWrap = false,
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
 
-            FileKey(item = item, component = component)
+            when {
+                ready -> ActionButton(
+                    text = stringResource(R.string.loadout_action_open),
+                    container = Palette.Positive,
+                    content = Palette.Canvas,
+                    onClick = { component.onIntent(Intent.Install(item.url)) },
+                )
+
+                downloading != null -> ActionButton(
+                    text = stringResource(R.string.loadout_cancel),
+                    container = Palette.SurfaceHigh,
+                    content = Palette.TextPrimary,
+                    onClick = { component.onIntent(Intent.CancelDownload(item.url)) },
+                )
+
+                else -> ActionButton(
+                    text = stringResource(R.string.loadout_download),
+                    container = Palette.Accent,
+                    content = Palette.OnAccentDark,
+                    onClick = { component.onIntent(Intent.StartDownload(item.url)) },
+                )
+            }
+        }
+
+        if (downloading != null) {
+            ProgressLine(downloading)
+        }
+    }
+}
+
+/** The bar and its percentage, on one line, replacing the status text while a file is arriving. */
+@Composable
+private fun ProgressLine(status: FileStatus.Downloading) {
+    val fill by animateFloatAsState(
+        targetValue = status.fraction,
+        animationSpec = tween(280),
+        label = "file-fill",
+    )
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .height(6.dp)
+                .clip(CircleShape)
+                .background(Palette.SurfaceHigh),
+        ) {
+            if (status.hasKnownTotal) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(fill)
+                        .height(6.dp)
+                        .clip(CircleShape)
+                        .background(Palette.Accent),
+                )
+            } else {
+                // The server gave no size, so sweep rather than invent a percentage.
+                ShimmerBox(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(6.dp),
+                    shape = CircleShape,
+                )
+            }
+        }
+        if (status.hasKnownTotal) {
+            Text(
+                text = stringResource(R.string.loadout_percent, status.percent),
+                color = Palette.TextMuted,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
+            )
         }
     }
 }
 
 @Composable
-private fun FileKey(item: FileItem, component: LoadoutComponent) {
-    val (icon, tint, container, onClick) = when (item.status) {
-        FileStatus.Idle -> Quad(
-            Icons.Rounded.Download,
-            Palette.OnAccentDark,
-            Palette.Accent,
-        ) { component.onIntent(Intent.StartDownload(item.url)) }
-
-        is FileStatus.Downloading -> Quad(
-            Icons.Rounded.Close,
-            Palette.TextPrimary,
-            Palette.SurfaceHigh,
-        ) { component.onIntent(Intent.CancelDownload(item.url)) }
-
-        FileStatus.Ready -> Quad(
-            Icons.Rounded.PlayArrow,
-            Palette.OnAccentDark,
-            Palette.Positive,
-        ) { component.onIntent(Intent.Install(item.url)) }
-    }
-
-    Box(
+private fun ActionButton(
+    text: String,
+    container: Color,
+    content: Color,
+    onClick: () -> Unit,
+) {
+    Text(
+        text = text,
+        color = content,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Bold,
+        maxLines = 1,
+        softWrap = false,
         modifier = Modifier
-            .size(42.dp)
             .clip(CircleShape)
             .background(container)
-            .tappable(onClick = onClick)
-            .then(if (item.status is FileStatus.Ready) Modifier.popIn() else Modifier),
-        contentAlignment = Alignment.Center,
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = tint,
-            modifier = Modifier.size(20.dp),
-        )
-    }
+            .tappable(pressedScale = 0.95f, onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 11.dp),
+    )
 }
 
-/** Small carrier so the key's four properties can be destructured in one `when`. */
-private data class Quad(
-    val icon: androidx.compose.ui.graphics.vector.ImageVector,
-    val tint: Color,
-    val container: Color,
-    val onClick: () -> Unit,
-)
-
+/**
+ * The one piece of advice this screen gives, and it never leaves. [urgent] only changes how loudly
+ * it says it: once a download has actually stopped moving, the card stops being a footnote.
+ */
 @Composable
-private fun StalledNote() {
+private fun VpnNote(urgent: Boolean) {
+    val tint = if (urgent) Palette.Gold else Palette.TextFaint
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 4.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+            .padding(horizontal = GUTTER)
+            .clip(CARD_SHAPE)
+            .background(if (urgent) Palette.Gold.copy(alpha = 0.12f) else Palette.Surface)
+            .padding(14.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Icon(
-            imageVector = Icons.Rounded.Bolt,
-            contentDescription = null,
-            tint = Palette.Gold,
-            modifier = Modifier.size(16.dp),
-        )
+        Box(
+            modifier = Modifier
+                .size(34.dp)
+                .clip(CircleShape)
+                .background(tint.copy(alpha = 0.18f)),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.Bolt,
+                contentDescription = null,
+                tint = tint,
+                modifier = Modifier.size(18.dp),
+            )
+        }
+        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Text(
+                text = stringResource(R.string.loadout_vpn_title),
+                color = Palette.TextPrimary,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Bold,
+            )
+            Text(
+                text = stringResource(R.string.loadout_vpn_hint),
+                color = Palette.TextMuted,
+                fontSize = 14.sp,
+                lineHeight = 20.sp,
+            )
+        }
+    }
+}
+
+@Composable
+private fun EmptyPage() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(GUTTER),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(14.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .size(64.dp)
+                .clip(CircleShape)
+                .background(Palette.SurfaceHigh),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.FolderOff,
+                contentDescription = null,
+                tint = Palette.TextFaint,
+                modifier = Modifier.size(30.dp),
+            )
+        }
         Text(
-            text = stringResource(R.string.loadout_vpn_hint),
+            text = stringResource(R.string.loadout_empty),
             color = Palette.TextMuted,
-            fontSize = 12.sp,
-            lineHeight = 17.sp,
+            fontSize = 15.sp,
+            lineHeight = 22.sp,
         )
     }
 }
 
 @Composable
+private fun LoadingPage() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = GUTTER),
+        verticalArrangement = Arrangement.spacedBy(GAP),
+    ) {
+        // One card is a 44dp badge over two lines of text, inside 14dp of padding.
+        repeat(3) {
+            ShimmerBox(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
+                shape = CARD_SHAPE,
+            )
+        }
+    }
+}
+
+/** The single line under a file's name. A running download shows [ProgressLine] instead. */
+@Composable
 private fun statusText(item: FileItem): String = when (val status = item.status) {
     FileStatus.Idle -> formatBytes(item.sizeBytes) ?: stringResource(R.string.loadout_unknown_size)
-    is FileStatus.Downloading -> stringResource(R.string.loadout_downloading, status.percent)
+    is FileStatus.Downloading -> stringResource(R.string.loadout_percent, status.percent)
     FileStatus.Ready -> stringResource(R.string.loadout_ready)
 }
 

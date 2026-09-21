@@ -38,4 +38,7 @@ internal class CreationRepositoryImpl(
 
             is Outcome.Failed -> Outcome.Failed(outcome.error)
         }
+
+    override suspend fun recordDownload(modId: Int): Outcome<Int> =
+        networkCall { remote.recordDownload(modId).downloadsCount }
 }

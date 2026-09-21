@@ -5,12 +5,14 @@ import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
+import dev.mod.store.minecraft.core.ads.ScreenAds
 import dev.mod.store.minecraft.core.ui.state.FaultMessages
 import dev.mod.store.minecraft.domain.creation.FetchCreationUseCase
 import dev.mod.store.minecraft.domain.creation.FetchFileSizeUseCase
 import dev.mod.store.minecraft.domain.loadout.DownloadCreationUseCase
 import dev.mod.store.minecraft.domain.loadout.IsCreationDownloadedUseCase
 import dev.mod.store.minecraft.domain.loadout.OpenCreationFileUseCase
+import dev.mod.store.minecraft.domain.loadout.RecordDownloadUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import org.koin.core.component.KoinComponent
@@ -21,6 +23,9 @@ interface LoadoutComponent {
     val labels: Flow<LoadoutStore.Label>
     fun onIntent(intent: LoadoutStore.Intent)
     fun back()
+
+    /** True when a native ad is buffered and a slot on this screen can fill immediately. */
+    val hasNativeAd: Boolean
 }
 
 class DefaultLoadoutComponent(
@@ -35,7 +40,9 @@ class DefaultLoadoutComponent(
     private val downloadCreation: DownloadCreationUseCase by inject()
     private val isDownloaded: IsCreationDownloadedUseCase by inject()
     private val openFile: OpenCreationFileUseCase by inject()
+    private val recordDownload: RecordDownloadUseCase by inject()
     private val faults: FaultMessages by inject()
+    private val screenAds: ScreenAds by inject()
 
     private val store = instanceKeeper.getStore {
         LoadoutStoreFactory(
@@ -46,6 +53,7 @@ class DefaultLoadoutComponent(
             downloadCreation = downloadCreation,
             isDownloaded = isDownloaded,
             openFile = openFile,
+            recordDownload = recordDownload,
             faults = faults,
         ).create()
     }
@@ -56,6 +64,8 @@ class DefaultLoadoutComponent(
     override fun onIntent(intent: LoadoutStore.Intent) {
         store.accept(intent)
     }
+
+    override val hasNativeAd: Boolean get() = screenAds.hasNativeAd
 
     override fun back() = onBack()
 }

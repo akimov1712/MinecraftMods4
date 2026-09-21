@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="ignition_title">Mods Studio</string>
-    <string name="ignition_tagline">Mods, cartes et skins pour Minecraft PE</string>
-    <string name="ignition_ready_badge">PRÊT</string>
-    <string name="ignition_ready_body">Votre catalogue est chargé</string>
-    <string name="ignition_enter">Entrer dans l\'app</string>
-    <string name="ignition_loading">Chargement…</string>
-</resources>

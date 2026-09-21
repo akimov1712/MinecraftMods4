@@ -48,6 +48,8 @@ class BillboardController internal constructor(
 
     override val hasNativeAd: Boolean get() = NativeRegistry.hasAd()
 
+    override val nativeEnabled: Boolean get() = NativeRegistry.enabled
+
     override suspend fun awaitBoot() = booted.await()
 
     override fun onSpotlightEntered() {

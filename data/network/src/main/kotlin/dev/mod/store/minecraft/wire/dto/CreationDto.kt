@@ -17,6 +17,12 @@ internal data class CreationDto(
     @SerialName("commentCounts") val commentCount: Int = 0,
     @SerialName("reactionsCount") val reactionCount: Int = 0,
     @SerialName("createdAt") val createdAt: String = "",
+    /** 1-based place in the app's trending selection; null outside it. Needs `appId` on the request. */
+    @SerialName("trendingPosition") val trendingPosition: Int? = null,
+    /** Other mods from the same app, never this one. Needs `appId` on the request. */
+    @SerialName("similarMods") val similar: List<CreationDto> = emptyList(),
+    /** Not in the responses yet; read as soon as the backend starts sending it. */
+    @SerialName("downloadsCount") val downloadsCount: Int = 0,
 )
 
 @Serializable
@@ -28,4 +34,9 @@ internal data class VersionDto(
 internal data class CreationListResponseDto(
     @SerialName("count") val total: Int = 0,
     @SerialName("mods") val items: List<CreationDto> = emptyList(),
+)
+
+@Serializable
+internal data class DownloadCountDto(
+    @SerialName("downloadsCount") val downloadsCount: Int = 0,
 )

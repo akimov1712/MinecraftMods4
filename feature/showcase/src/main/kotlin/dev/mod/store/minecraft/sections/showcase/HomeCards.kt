@@ -44,6 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.component.MetaChip
 import dev.mod.store.minecraft.core.ui.component.RemoteImage
 import dev.mod.store.minecraft.core.ui.component.creationCategoryLabel
@@ -236,7 +237,7 @@ fun FreshCard(
         )
         creation.supportedVersions.firstOrNull()?.let { version ->
             Text(
-                text = "v$version+",
+                text = stringResource(dev.mod.store.minecraft.core.ui.R.string.creation_version_short, version),
                 color = Palette.TextFaint,
                 fontSize = 12.sp,
             )
@@ -247,14 +248,18 @@ fun FreshCard(
 /** Movement of a mod between the editorial order and the install chart. */
 enum class ChartMove { Up, Down, Flat, New }
 
-/** The small green/red delta shown beside a chart position. */
+/**
+ * The small green/red delta shown beside a chart position. A mod that has not moved says nothing —
+ * a dash next to every other place is noise, not information.
+ */
 @Composable
 fun ChartMoveTag(move: ChartMove, delta: Int, modifier: Modifier = Modifier) {
+    if (move == ChartMove.Flat) return
     val (text, tint) = when (move) {
         ChartMove.Up -> "↑$delta" to Palette.Positive
         ChartMove.Down -> "↓$delta" to Palette.Negative
-        ChartMove.Flat -> "—" to Palette.TextFaint
         ChartMove.New -> stringResource(R.string.showcase_chart_new) to Palette.Gold
+        ChartMove.Flat -> return
     }
     Text(
         text = text,

@@ -5,6 +5,7 @@ import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
+import dev.mod.store.minecraft.core.ads.ScreenAds
 import dev.mod.store.minecraft.core.ui.state.FaultMessages
 import dev.mod.store.minecraft.domain.outreach.SubmitRecommendationUseCase
 import dev.mod.store.minecraft.domain.outreach.SubmitReportUseCase
@@ -18,6 +19,9 @@ interface OutreachComponent {
     val labels: Flow<OutreachStore.Label>
     fun onIntent(intent: OutreachStore.Intent)
     fun back()
+
+    /** True when a native ad is buffered and a slot on this screen can fill immediately. */
+    val hasNativeAd: Boolean
 }
 
 class DefaultOutreachComponent(
@@ -29,6 +33,7 @@ class DefaultOutreachComponent(
     private val submitRecommendation: SubmitRecommendationUseCase by inject()
     private val submitReport: SubmitReportUseCase by inject()
     private val faults: FaultMessages by inject()
+    private val screenAds: ScreenAds by inject()
 
     private val store = instanceKeeper.getStore {
         OutreachStoreFactory(storeFactory, submitRecommendation, submitReport, faults).create()
@@ -40,6 +45,8 @@ class DefaultOutreachComponent(
     override fun onIntent(intent: OutreachStore.Intent) {
         store.accept(intent)
     }
+
+    override val hasNativeAd: Boolean get() = screenAds.hasNativeAd
 
     override fun back() {
         onBack()

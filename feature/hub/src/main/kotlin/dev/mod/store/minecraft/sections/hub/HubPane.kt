@@ -11,14 +11,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -49,10 +50,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.effect.tappable
 import dev.mod.store.minecraft.core.ui.theme.Palette
 import dev.mod.store.minecraft.feature.compendium.CompendiumPane
@@ -100,17 +104,35 @@ fun HubPane(
 }
 
 private val BarShape = RoundedCornerShape(30.dp)
+private val KeyShape = RoundedCornerShape(22.dp)
 
 /** Slot order inside the bar; the null slot is search, which is not a destination. */
 private val BarSlots = listOf(HubTab.Showcase, HubTab.Stash, null, HubTab.Compendium, HubTab.Settings)
 
+// The bar is built from fixed measurements rather than fractions, because the glow behind the keys
+// is painted by hand and has to land on exactly the same centre line the layout puts the icons on.
+
+private val BAR_HEIGHT = 82.dp
+
+/** Keeps the outer keys off the rounded rim instead of letting them run into it. */
+private val BAR_INSET = 8.dp
+
+/** Every key reserves the same band for its glyph, whatever size that glyph is drawn at. */
+private val ICON_BAND = 42.dp
+private val KEY_GAP = 3.dp
+private val LABEL_HEIGHT = 15.dp
+
+private val KEY_COLUMN = ICON_BAND + KEY_GAP + LABEL_HEIGHT
+
 /**
- * The bar floats clear of the screen edges and carries no dividers or pills. What marks the open
- * destination is light: a red aura that glides under the icons and a cap of colour on the rim above
- * it. Every press throws a ring outward from the key you touched, so the bar answers back.
+ * The bar floats clear of the screen edges and carries no dividers or pills. Five slots of equal
+ * width, each one an icon band with its name under it — search included, so the solid key in the
+ * middle sits on the same centre line as everything else instead of pushing its neighbours around.
+ * What marks the open destination is light: a red aura that glides under the icons and a cap of
+ * colour on the rim above it, and every press throws a ring outward from the key you touched.
  *
- * The glow, the cap and the rings are all painted in one [drawBehind] that reads its animations
- * straight from [Animatable]s — the draw phase repeats each frame, the composition does not.
+ * The glow, the cap and the rings are painted in one [drawBehind] that reads its animations straight
+ * from [Animatable]s — the draw phase repeats each frame, the composition does not.
  */
 @Composable
 private fun HubBar(
@@ -143,8 +165,8 @@ private fun HubBar(
         modifier = Modifier
             .fillMaxWidth()
             .navigationBarsPadding()
-            .padding(horizontal = 14.dp, vertical = 10.dp)
-            .height(78.dp)
+            .padding(horizontal = 16.dp, vertical = 10.dp)
+            .height(BAR_HEIGHT)
             .shadow(
                 elevation = 22.dp,
                 shape = BarShape,
@@ -155,12 +177,18 @@ private fun HubBar(
             .background(Palette.Surface)
             .border(1.dp, Palette.Stroke, BarShape)
             .drawBehind {
-                val slot = size.width / BarSlots.size
-                val row = size.height * 0.45f
+                val inset = BAR_INSET.toPx()
+                val slot = (size.width - inset * 2f) / BarSlots.size
+
+                /** Centre of the slot a key occupies — the same maths the Row lays keys out with. */
+                fun slotCentre(index: Float) = inset + slot * (index + 0.5f)
+
+                // The centre line of the icon band, so the glow sits on the glyphs and not below.
+                val row = (size.height - KEY_COLUMN.toPx()) / 2f + ICON_BAND.toPx() / 2f
 
                 // The aura under the open destination.
-                val auraX = slot * (aura.value + 0.5f)
-                val auraR = slot * 1.15f
+                val auraX = slotCentre(aura.value)
+                val auraR = slot * 1.05f
                 drawCircle(
                     brush = Brush.radialGradient(
                         colors = listOf(
@@ -185,23 +213,10 @@ private fun HubBar(
                     cornerRadius = CornerRadius(capHeight),
                 )
 
-                // A steady halo that keeps search reading as the odd one out.
-                val searchX = slot * 2.5f
-                val searchR = slot * 0.82f
-                drawCircle(
-                    brush = Brush.radialGradient(
-                        colors = listOf(Palette.Accent.copy(alpha = 0.30f), Color.Transparent),
-                        center = Offset(searchX, row),
-                        radius = searchR,
-                    ),
-                    radius = searchR,
-                    center = Offset(searchX, row),
-                )
-
                 // The spread thrown by the last press.
                 val p = spread.value
                 if (p < 1f) {
-                    val burstX = slot * (spreadSlot + 0.5f)
+                    val burstX = slotCentre(spreadSlot.toFloat())
                     drawCircle(
                         color = Palette.Accent.copy(alpha = 0.38f * (1f - p)),
                         radius = p * slot * 1.7f,
@@ -215,7 +230,8 @@ private fun HubBar(
                         style = Stroke(width = 1.5.dp.toPx()),
                     )
                 }
-            },
+            }
+            .padding(horizontal = BAR_INSET),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         BarSlots.forEachIndexed { index, tab ->
@@ -240,21 +256,64 @@ private fun HubBar(
     }
 }
 
-/** Search: the one key painted solid, so "do" never looks like "go". */
+/**
+ * The shape every slot shares: one band of fixed height for the glyph, its name directly under it,
+ * the pair centred in the bar. Because the band is the same height for a 25dp icon and a 42dp disc,
+ * all five glyphs land on one line and all five names on another.
+ */
 @Composable
-private fun RowScope.SearchKey(onClick: () -> Unit) {
-    Box(
+private fun RowScope.BarKey(
+    label: String,
+    tint: Color,
+    bold: Boolean,
+    pressedScale: Float,
+    onClick: () -> Unit,
+    glyph: @Composable () -> Unit,
+) {
+    Column(
         modifier = Modifier
             .weight(1f)
             .fillMaxHeight()
-            .clip(RoundedCornerShape(26.dp))
-            .tappable(pressedScale = 0.88f, onClick = onClick),
-        contentAlignment = Alignment.Center,
+            .clip(KeyShape)
+            .tappable(pressedScale = pressedScale, onClick = onClick),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
         Box(
             modifier = Modifier
-                .offset(y = (-4).dp)
-                .size(50.dp)
+                .fillMaxWidth()
+                .height(ICON_BAND),
+            contentAlignment = Alignment.Center,
+            content = { glyph() },
+        )
+        Spacer(Modifier.height(KEY_GAP))
+        Text(
+            text = label,
+            color = tint,
+            fontSize = 11.sp,
+            lineHeight = 15.sp,
+            fontWeight = if (bold) FontWeight.Bold else FontWeight.Medium,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
+}
+
+/** Search: the one key painted solid, so "do" never looks like "go". */
+@Composable
+private fun RowScope.SearchKey(onClick: () -> Unit) {
+    BarKey(
+        label = stringResource(R.string.hub_search),
+        tint = Palette.AccentSoft,
+        bold = true,
+        pressedScale = 0.88f,
+        onClick = onClick,
+    ) {
+        Box(
+            modifier = Modifier
+                .size(42.dp)
                 .clip(CircleShape)
                 .background(Palette.Accent),
             contentAlignment = Alignment.Center,
@@ -263,13 +322,13 @@ private fun RowScope.SearchKey(onClick: () -> Unit) {
                 imageVector = Icons.Filled.Search,
                 contentDescription = stringResource(R.string.hub_search),
                 tint = Palette.OnAccentDark,
-                modifier = Modifier.size(26.dp),
+                modifier = Modifier.size(23.dp),
             )
         }
     }
 }
 
-/** A destination key: solid icon that rises into the aura, name underneath. */
+/** A destination key: solid icon that swells inside the aura, name underneath. */
 @Composable
 private fun RowScope.HubKey(
     tab: HubTab,
@@ -280,46 +339,24 @@ private fun RowScope.HubKey(
         targetValue = if (active) Palette.OnAccent else Palette.TextFaint,
         label = "key-tint",
     )
-    val lift by animateDpAsState(
-        targetValue = if (active) (-4).dp else 0.dp,
-        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
-        label = "key-lift",
-    )
     val icon by animateDpAsState(
         targetValue = if (active) 28.dp else 25.dp,
         animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
         label = "key-icon",
     )
 
-    Box(
-        modifier = Modifier
-            .weight(1f)
-            .fillMaxHeight()
-            .clip(RoundedCornerShape(26.dp))
-            .tappable(pressedScale = 0.9f, onClick = onClick),
-        contentAlignment = Alignment.Center,
+    BarKey(
+        label = stringResource(tab.labelRes),
+        tint = tint,
+        bold = active,
+        pressedScale = 0.9f,
+        onClick = onClick,
     ) {
-        Box(
-            modifier = Modifier
-                .offset(y = lift)
-                .size(icon),
-        ) {
-            Icon(
-                imageVector = tab.icon,
-                contentDescription = null,
-                tint = tint,
-                modifier = Modifier.fillMaxSize(),
-            )
-        }
-        Text(
-            text = stringResource(tab.labelRes),
-            color = tint,
-            fontSize = 12.sp,
-            fontWeight = if (active) FontWeight.Bold else FontWeight.Medium,
-            maxLines = 1,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 9.dp),
+        Icon(
+            imageVector = tab.icon,
+            contentDescription = null,
+            tint = tint,
+            modifier = Modifier.size(icon),
         )
     }
 }

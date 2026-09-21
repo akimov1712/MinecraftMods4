@@ -3,6 +3,7 @@ package dev.mod.store.minecraft.feature.compendium
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.core.store.StoreFactory
+import dev.mod.store.minecraft.core.ads.ScreenAds
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.koin.core.component.KoinComponent
@@ -11,6 +12,9 @@ import org.koin.core.component.inject
 interface CompendiumComponent {
     val state: StateFlow<CompendiumStore.State>
     fun onIntent(intent: CompendiumStore.Intent)
+
+    /** True when a native ad is buffered and a slot on this screen can fill immediately. */
+    val hasNativeAd: Boolean
 }
 
 class DefaultCompendiumComponent(
@@ -18,10 +22,13 @@ class DefaultCompendiumComponent(
 ) : CompendiumComponent, ComponentContext by componentContext, KoinComponent {
 
     private val storeFactory: StoreFactory by inject()
+    private val screenAds: ScreenAds by inject()
 
     private val store = instanceKeeper.getStore {
         CompendiumStoreFactory(storeFactory).create()
     }
+
+    override val hasNativeAd: Boolean get() = screenAds.hasNativeAd
 
     override val state: StateFlow<CompendiumStore.State> = store.stateFlow(lifecycle)
 

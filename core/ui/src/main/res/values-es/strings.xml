@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Every string in the app lives here, in one file per language. Features do not carry
+  resources of their own: they read these through dev.mod.store.minecraft.core.ui.R.
+-->
 <resources>
+    <!-- Application -->
+    <string name="app_name">Mod TNT para Minecraft PE</string>
+
+    <!-- Shared -->
     <string name="atlas_ad">Anuncio</string>
     <string name="atlas_retry">Reintentar</string>
     <string name="atlas_empty_title">Aún no hay nada aquí</string>
@@ -17,4 +25,215 @@
     <string name="category_maps">Mapas</string>
     <string name="category_texture">Texturas</string>
     <string name="category_skin">Skins</string>
+    <string name="creation_version_short">v%1$s+</string>
+
+    <!-- Splash -->
+    <string name="ignition_enter">Entrar en la app</string>
+    <string name="ignition_hint_free">Aquí todo se descarga gratis</string>
+    <string name="ignition_hint_install">Abre un mod, baja el archivo y ábrelo en Minecraft</string>
+    <string name="ignition_hint_save">Toca el marcador para guardar un mod</string>
+    <string name="ignition_hint_vpn">¿La descarga se atascó? Activa una VPN</string>
+    <string name="ignition_hint_search">Usa el buscador para encontrar un mod por nombre</string>
+    <string name="ignition_percent">%1$d%%</string>
+    <string name="ignition_curtain_close">Cerrar</string>
+
+    <!-- Navigation -->
+    <string name="hub_tab_showcase">Catálogo</string>
+    <string name="hub_tab_stash">Guardados</string>
+    <string name="hub_tab_compendium">FAQ</string>
+    <string name="hub_search">Buscar</string>
+    <string name="hub_tab_settings">Ajustes</string>
+
+    <!-- Catalog and search -->
+    <string name="showcase_section_pick">Mod del día</string>
+    <string name="showcase_section_trending">Tendencias</string>
+    <string name="showcase_section_popular">Populares</string>
+    <string name="showcase_section_fresh">Novedades</string>
+    <string name="showcase_section_top_rated">Mejor valorados</string>
+    <string name="showcase_see_all">Todo</string>
+    <string name="showcase_fresh_badge">NUEVO</string>
+    <string name="showcase_browse_back">Atrás</string>
+    <string name="showcase_browse_count">%1$s encontrados</string>
+    <string name="showcase_browse_retry">Reintentar</string>
+    <string name="search_hint">Mods, mapas, skins…</string>
+    <string name="search_back">Atrás</string>
+    <string name="search_empty_title">Sin resultados</string>
+    <string name="search_empty_body">Prueba con otra palabra o más corta.</string>
+    <string name="showcase_chart_new">nuevo</string>
+    <string name="search_title">Buscar</string>
+
+    <!-- Mod page -->
+    <string name="spotlight_versions_title">Versiones compatibles</string>
+    <string name="spotlight_get_files">Obtener archivos</string>
+    <string name="spotlight_how_to_install">Instalar</string>
+    <string name="spotlight_report">Informar de un problema</string>
+    <string name="spotlight_report_title">Informar de un problema</string>
+    <string name="spotlight_report_email_hint">Tu correo</string>
+    <string name="spotlight_report_message_hint">Describe el problema</string>
+    <string name="spotlight_report_send">Enviar</string>
+    <string name="spotlight_report_cancel">Cancelar</string>
+    <string name="spotlight_report_sent">¡Gracias! Tu informe se envió.</string>
+    <string name="spotlight_tab_about">Resumen</string>
+    <string name="spotlight_tab_files">Archivos</string>
+    <string name="spotlight_tab_images">Capturas</string>
+    <string name="spotlight_tab_versions">Versiones</string>
+    <string name="spotlight_files_hint">El archivo se abre en Minecraft al terminar la descarga.</string>
+    <string name="spotlight_versions_empty">El autor no indicó versiones del juego.</string>
+    <string name="spotlight_read_more">Leer más</string>
+    <string name="spotlight_read_less">Menos</string>
+    <string name="spotlight_suggest">Sugerir un mod</string>
+    <string name="spotlight_section_description">Descripción</string>
+    <string name="spotlight_section_details">Detalles</string>
+    <string name="spotlight_detail_category">Categoría</string>
+    <string name="spotlight_detail_format">Tipo de archivo</string>
+    <string name="spotlight_detail_files">Archivos</string>
+    <string name="spotlight_detail_versions">Versiones</string>
+    <string name="spotlight_detail_published">Añadido</string>
+    <string name="spotlight_value_none">Sin indicar</string>
+    <string name="spotlight_files_empty">El autor no adjuntó ningún archivo a este mod.</string>
+    <string name="spotlight_images_empty">Este mod aún no tiene capturas.</string>
+    <string name="spotlight_image_index">Captura %1$d de %2$d</string>
+    <string name="spotlight_versions_hint">El autor indica que el mod funciona en estas versiones del juego:</string>
+    <string name="spotlight_install_sub">Guía breve para instalar el mod en el juego</string>
+    <string name="spotlight_suggest_sub">Envíanos un mod que quieras ver aquí</string>
+    <string name="spotlight_report_sub">Enlace roto, archivos incorrectos, otra cosa</string>
+    <string name="spotlight_share">Compartir</string>
+    <string name="spotlight_share_text">%1$s
+%2$s</string>
+    <string name="spotlight_report_body">Cuéntanos qué pasa con este mod y lo revisaremos.</string>
+    <string name="spotlight_report_email_label">Correo para la respuesta</string>
+    <string name="spotlight_report_message_label">¿Qué va mal?</string>
+
+    <!-- Downloads -->
+    <string name="loadout_title">Archivos</string>
+    <string name="loadout_download">Descargar</string>
+    <string name="loadout_cancel">Cancelar</string>
+    <string name="loadout_ready">Guardado</string>
+    <string name="loadout_vpn_hint">En algunos países los proveedores bloquean el servidor donde están los archivos. Activa una VPN y empieza la descarga otra vez: casi siempre lo soluciona.</string>
+    <string name="loadout_download_failed">Error de descarga. Inténtalo de nuevo.</string>
+    <string name="loadout_open_failed">No se pudo abrir el archivo. ¿Tienes Minecraft instalado?</string>
+    <string name="loadout_unknown_size">Tamaño desconocido</string>
+    <string name="loadout_action_open">Abrir en Minecraft</string>
+    <string name="loadout_empty">Esta creación no tiene archivos adjuntos.</string>
+    <string name="loadout_percent">%1$d%%</string>
+    <string name="loadout_vpn_title">¿La descarga se atascó?</string>
+
+    <!-- Saved -->
+    <string name="stash_title">Guardados</string>
+    <string name="stash_count">%1$d guardados</string>
+    <string name="stash_empty">Aún no hay nada guardado</string>
+    <string name="stash_empty_hint">Toca el marcador de un contenido para guardarlo aquí.</string>
+
+    <!-- FAQ -->
+    <string name="compendium_title">Asistente</string>
+    <string name="faq_what_q">¿Qué hace esta app?</string>
+    <string name="faq_what_a">Te permite explorar e instalar contenido gratuito — addons, mapas, texturas y skins — para Minecraft.</string>
+    <string name="faq_internet_q">¿Necesito conexión a internet?</string>
+    <string name="faq_internet_a">Sí, para explorar y descargar. Una vez guardado el archivo, puedes instalarlo sin conexión.</string>
+    <string name="faq_how_q">¿Cómo instalo un contenido?</string>
+    <string name="faq_how_a">Abre un mod, toca Obtener archivos y luego Descargar. Cuando se guarde, toca Abrir en Minecraft: el juego se abre y lo añade solo.</string>
+    <string name="faq_fail_q">La instalación no funcionó. ¿Y ahora?</string>
+    <string name="faq_fail_a">Comprueba que Minecraft esté instalado y actualizado y abre el archivo otra vez. Si la descarga no terminó, activa una VPN y bájalo de nuevo.</string>
+    <string name="faq_stuck_q">Mi descarga se atascó.</string>
+    <string name="faq_stuck_a">Normalmente tu proveedor bloquea el servidor. Activa una VPN y descarga otra vez: casi siempre funciona. Vale cualquier VPN gratuita y luego puedes apagarla.</string>
+    <string name="faq_hidden_q">Lo instalé pero no lo encuentro en el juego.</string>
+    <string name="faq_hidden_a">Entra en los ajustes de tu mundo y activa el paquete ahí. Algunos mods también necesitan los experimentos activados.</string>
+    <string name="faq_lag_q">El juego va lento tras instalar.</string>
+    <string name="faq_lag_a">Los mods grandes exigen mucho al móvil. Baja la distancia de visión o quita otros paquetes del mundo.</string>
+    <string name="faq_ads_q">¿Por qué hay anuncios?</string>
+    <string name="faq_ads_a">Los anuncios mantienen la app y todo el contenido completamente gratis.</string>
+    <string name="faq_free_q">¿Todo es gratis?</string>
+    <string name="faq_free_a">Sí: todo el contenido del catálogo se puede descargar e instalar gratis.</string>
+    <string name="faq_fresh_q">¿Con qué frecuencia se añade contenido nuevo?</string>
+    <string name="faq_fresh_a">El catálogo se actualiza con frecuencia con contenido nuevo.</string>
+    <string name="faq_safe_q">¿Los archivos son seguros para mis mundos?</string>
+    <string name="faq_safe_a">Sí. Usan los formatos del propio Minecraft. Aun así, haz una copia de un mundo importante antes de un mod grande.</string>
+    <string name="compendium_subtitle">Respuestas a las dudas típicas</string>
+    <string name="compendium_greeting">¡Hola! Elige una pregunta y te respondo aquí.</string>
+    <string name="compendium_prompt">Toca una pregunta</string>
+    <string name="compendium_restart">Empezar de nuevo</string>
+    <string name="compendium_done">Eso es todo lo que sé. Toca la flecha de arriba para empezar de nuevo.</string>
+    <string name="faq_how_chip">Cómo instalar</string>
+    <string name="faq_fail_chip">No se instaló</string>
+    <string name="faq_stuck_chip">No descarga</string>
+    <string name="faq_hidden_chip">No aparece en el juego</string>
+    <string name="faq_lag_chip">El juego va lento</string>
+    <string name="faq_what_chip">Qué es esta app</string>
+    <string name="faq_internet_chip">¿Hace falta internet?</string>
+    <string name="faq_free_chip">¿Es gratis?</string>
+    <string name="faq_ads_chip">Por qué anuncios</string>
+    <string name="faq_fresh_chip">Contenido nuevo</string>
+    <string name="faq_safe_chip">¿Es seguro?</string>
+    <string name="compendium_show_all">Todas las preguntas · %1$d</string>
+    <string name="compendium_collapse">Ocultar las preguntas</string>
+    <string name="compendium_expand">Mostrar las preguntas</string>
+
+    <!-- How to install -->
+    <string name="walkthrough_title">Cómo instalar</string>
+    <string name="walkthrough_s1_title">Elige un contenido</string>
+    <string name="walkthrough_s1_text">Abre cualquier contenido del catálogo y toca «Obtener archivos».</string>
+    <string name="walkthrough_s2_title">Descarga el archivo</string>
+    <string name="walkthrough_s2_text">Toca «Descargar» y espera a que el archivo termine de guardarse.</string>
+    <string name="walkthrough_s3_title">Toca «Instalar»</string>
+    <string name="walkthrough_s3_text">Una vez guardado, toca «Instalar»: el sistema te pregunta con qué app abrir el archivo.</string>
+    <string name="walkthrough_s4_title">Elige Minecraft</string>
+    <string name="walkthrough_s4_text">Selecciona Minecraft en la lista. El juego se abre e importa el contenido.</string>
+    <string name="walkthrough_s5_title">Espera la importación</string>
+    <string name="walkthrough_s5_text">Minecraft muestra una barra de progreso de importación. Deja que termine.</string>
+    <string name="walkthrough_s6_title">Actívalo en tu mundo</string>
+    <string name="walkthrough_s6_text">En los ajustes del mundo, añade el paquete en paquetes de recursos o de comportamiento.</string>
+    <string name="walkthrough_s7_title">¡Disfruta!</string>
+    <string name="walkthrough_s7_text">Inicia el mundo y disfruta tu nuevo contenido. Haz copia de los mundos importantes primero.</string>
+
+    <!-- Get in touch -->
+    <string name="outreach_title">Contáctanos</string>
+    <string name="outreach_mode_recommend">Sugerir contenido</string>
+    <string name="outreach_mode_report">Enviar comentarios</string>
+    <string name="outreach_email_hint">Tu correo</string>
+    <string name="outreach_message_recommend_hint">¿Qué contenido deberíamos añadir?</string>
+    <string name="outreach_message_report_hint">Cuéntanos qué pasó</string>
+    <string name="outreach_submit">Enviar</string>
+    <string name="outreach_sent">¡Gracias! Recibimos tu mensaje.</string>
+    <string name="outreach_intro_title">Leemos cada mensaje</string>
+    <string name="outreach_intro_body">Cuéntanos qué añadir o qué falló. Esto lo lee una persona, no un robot.</string>
+    <string name="outreach_purpose">¿De qué se trata?</string>
+    <string name="outreach_mode_recommend_body">Un mod, mapa, skin o paquete de texturas que quieras ver en el catálogo</string>
+    <string name="outreach_mode_report_body">Algo está roto, falta o se comporta de forma rara</string>
+    <string name="outreach_form">Tu mensaje</string>
+    <string name="outreach_email_label">Correo para responderte</string>
+    <string name="outreach_email_help">Solo lo usamos para contestarte. Nada más.</string>
+    <string name="outreach_counter">%1$d / %2$d</string>
+    <string name="outreach_sent_title">Mensaje enviado</string>
+    <string name="outreach_sent_body">¡Gracias! Leemos todo lo que llega y te escribiremos si tu mensaje necesita respuesta.</string>
+    <string name="outreach_sent_again">Escribir otro</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_version">Versión %1$s</string>
+    <string name="settings_group_data">Tus datos</string>
+    <string name="settings_saved">Mods guardados</string>
+    <string name="settings_clear">Borrar guardados</string>
+    <string name="settings_cleared">Lista borrada</string>
+    <string name="settings_clear_title">¿Borrar los guardados?</string>
+    <string name="settings_clear_body">Se quitarán todos los marcadores. Los mods siguen en el catálogo.</string>
+    <string name="settings_clear_cancel">Cancelar</string>
+    <string name="settings_clear_confirm">Borrar</string>
+    <string name="settings_group_help">Ayuda</string>
+    <string name="settings_walkthrough">Cómo instalar mods</string>
+    <string name="settings_write">Escríbenos</string>
+    <string name="settings_group_app">Aplicación</string>
+    <string name="settings_rate">Valorar la app</string>
+    <string name="settings_share">Compartir la app</string>
+    <string name="settings_system">Ajustes del sistema</string>
+
+    <!-- Reactions, trending, similar -->
+    <string name="spotlight_trending_badge">#%1$d en tendencia</string>
+    <string name="spotlight_reactions_title">¿Qué te parece?</string>
+    <string name="spotlight_section_similar">Mods parecidos</string>
+    <string name="spotlight_detail_downloads">Descargas</string>
+    <string name="reaction_like">Me gusta</string>
+    <string name="reaction_fire">Fuego</string>
+    <string name="reaction_love">Me encanta</string>
+    <string name="reaction_funny">Divertido</string>
+    <string name="reaction_wow">Guau</string>
 </resources>

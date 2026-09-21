@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -26,6 +27,8 @@ import dev.mod.store.minecraft.core.ui.theme.Palette
 fun AppLogo(
     modifier: Modifier = Modifier,
     size: Dp = 88.dp,
+    /** Defaults to the app's usual rounding; the splash asks for a square. */
+    shape: Shape = RoundedCornerShape(size / 4),
 ) {
     val context = LocalContext.current
     val icon: ImageBitmap? = remember(context) {
@@ -40,7 +43,7 @@ fun AppLogo(
     Box(
         modifier = modifier
             .size(size)
-            .clip(RoundedCornerShape(size / 4))
+            .clip(shape)
             .background(Palette.SurfaceHigh),
     ) {
         if (icon != null) {

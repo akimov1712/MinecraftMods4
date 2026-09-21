@@ -9,6 +9,7 @@ import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.router.stack.replaceAll
 import com.arkivanov.decompose.value.Value
 import dev.mod.store.minecraft.feature.hub.DefaultHubComponent
+import dev.mod.store.minecraft.feature.ignition.DefaultCurtainComponent
 import dev.mod.store.minecraft.feature.ignition.DefaultIgnitionComponent
 import dev.mod.store.minecraft.feature.loadout.DefaultLoadoutComponent
 import dev.mod.store.minecraft.feature.outreach.DefaultOutreachComponent
@@ -37,7 +38,17 @@ class DefaultRootComponent(
             Config.Ignition -> RootComponent.Child.Ignition(
                 DefaultIgnitionComponent(
                     componentContext = context,
-                    onProceed = { navigation.replaceAll(Config.Hub) },
+                    onProceed = { showPromo ->
+                        navigation.replaceAll(if (showPromo) Config.Curtain else Config.Hub)
+                    },
+                ),
+            )
+
+            Config.Curtain -> RootComponent.Child.Curtain(
+                DefaultCurtainComponent(
+                    componentContext = context,
+                    // Replace rather than pop: the promo is not somewhere to come back to.
+                    onClose = { navigation.replaceAll(Config.Hub) },
                 ),
             )
 
@@ -67,6 +78,7 @@ class DefaultRootComponent(
                     onOpenLoadout = { creationId -> navigation.pushNew(Config.Loadout(creationId)) },
                     onOpenWalkthrough = { navigation.pushNew(Config.Walkthrough) },
                     onOpenOutreach = { navigation.pushNew(Config.Outreach) },
+                    onOpenCreation = { creationId -> navigation.pushNew(Config.Spotlight(creationId)) },
                 ),
             )
 
@@ -97,6 +109,9 @@ class DefaultRootComponent(
     private sealed interface Config {
         @Serializable
         data object Ignition : Config
+
+        @Serializable
+        data object Curtain : Config
 
         @Serializable
         data object Hub : Config

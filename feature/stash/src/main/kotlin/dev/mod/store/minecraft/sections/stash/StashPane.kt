@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,7 +16,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.mod.store.minecraft.core.ads.AdCadence
+import dev.mod.store.minecraft.core.ads.NativeSlot
+import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.component.CreationCard
+import dev.mod.store.minecraft.core.ui.component.CreationCardSkeleton
 import dev.mod.store.minecraft.core.ui.component.EmptyState
 import dev.mod.store.minecraft.core.ui.component.PagedColumn
 import dev.mod.store.minecraft.core.ui.component.RefreshSurface
@@ -60,12 +63,7 @@ fun StashPane(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
                 skeleton = {
-                    items(3) {
-                        ShimmerBox(
-                            modifier = Modifier.fillMaxWidth().aspectRatio(1.1f),
-                            shape = RoundedCornerShape(28.dp),
-                        )
-                    }
+                    items(4) { CreationCardSkeleton() }
                 },
                 empty = {
                     item {
@@ -76,11 +74,22 @@ fun StashPane(
                     }
                 },
             ) { creations ->
-                items(items = creations, key = { it.id }) { creation ->
-                    CreationCard(
-                        creation = creation,
-                        onClick = { component.openCreation(creation.id) },
-                    )
+                val cadence = AdCadence.of(component.nativeAdInterval)
+                creations.forEachIndexed { index, creation ->
+                    item(key = creation.id) {
+                        CreationCard(
+                            creation = creation,
+                            onClick = { component.openCreation(creation.id) },
+                        )
+                    }
+                    if (AdCadence.breaksAfter(index, cadence)) {
+                        item(key = "ad_$index") {
+                            NativeSlot(
+                                slotKey = "stash_$index",
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
+                    }
                 }
             }
         }

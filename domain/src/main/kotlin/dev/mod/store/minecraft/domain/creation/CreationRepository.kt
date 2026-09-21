@@ -11,4 +11,7 @@ interface CreationRepository {
     suspend fun fetchPickOfDay(): Outcome<CreationEntity>
 
     suspend fun fetchFileSize(url: String): Outcome<Long>
+
+    /** Counts one download of [modId] from this app; returns the mod's new download total. */
+    suspend fun recordDownload(modId: Int): Outcome<Int>
 }

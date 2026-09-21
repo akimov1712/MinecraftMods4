@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Every string in the app lives here, in one file per language. Features do not carry
+  resources of their own: they read these through dev.mod.store.minecraft.core.ui.R.
+-->
 <resources>
+    <!-- Application -->
+    <string name="app_name">Minecraft PE用 TNT MOD</string>
+
+    <!-- Shared -->
     <string name="atlas_ad">広告</string>
     <string name="atlas_retry">再試行</string>
     <string name="atlas_empty_title">まだ何もありません</string>
@@ -17,4 +25,215 @@
     <string name="category_maps">マップ</string>
     <string name="category_texture">テクスチャ</string>
     <string name="category_skin">スキン</string>
+    <string name="creation_version_short">v%1$s+</string>
+
+    <!-- Splash -->
+    <string name="ignition_enter">アプリに入る</string>
+    <string name="ignition_hint_free">ここにあるものは全部無料です</string>
+    <string name="ignition_hint_install">MODを開いてファイルを取り、Minecraftで開きます</string>
+    <string name="ignition_hint_save">しおりを押すとMODを保存できます</string>
+    <string name="ignition_hint_vpn">ダウンロードが止まったらVPNをオンに</string>
+    <string name="ignition_hint_search">検索を使うと名前でMODを探せます</string>
+    <string name="ignition_percent">%1$d%%</string>
+    <string name="ignition_curtain_close">閉じる</string>
+
+    <!-- Navigation -->
+    <string name="hub_tab_showcase">カタログ</string>
+    <string name="hub_tab_stash">保存済み</string>
+    <string name="hub_tab_compendium">FAQ</string>
+    <string name="hub_search">検索</string>
+    <string name="hub_tab_settings">設定</string>
+
+    <!-- Catalog and search -->
+    <string name="showcase_section_pick">今日のMOD</string>
+    <string name="showcase_section_trending">トレンド</string>
+    <string name="showcase_section_popular">人気</string>
+    <string name="showcase_section_fresh">新着</string>
+    <string name="showcase_section_top_rated">高評価</string>
+    <string name="showcase_see_all">すべて</string>
+    <string name="showcase_fresh_badge">新着</string>
+    <string name="showcase_browse_back">戻る</string>
+    <string name="showcase_browse_count">%1$s 件</string>
+    <string name="showcase_browse_retry">再試行</string>
+    <string name="search_hint">MOD、マップ、スキンを検索…</string>
+    <string name="search_back">戻る</string>
+    <string name="search_empty_title">見つかりませんでした</string>
+    <string name="search_empty_body">短い言葉や別の言葉で試してください。</string>
+    <string name="showcase_chart_new">新着</string>
+    <string name="search_title">検索</string>
+
+    <!-- Mod page -->
+    <string name="spotlight_versions_title">対応バージョン</string>
+    <string name="spotlight_get_files">ファイルを取得</string>
+    <string name="spotlight_how_to_install">導入方法</string>
+    <string name="spotlight_report">問題を報告</string>
+    <string name="spotlight_report_title">問題を報告</string>
+    <string name="spotlight_report_email_hint">メールアドレス</string>
+    <string name="spotlight_report_message_hint">問題を説明してください</string>
+    <string name="spotlight_report_send">送信</string>
+    <string name="spotlight_report_cancel">キャンセル</string>
+    <string name="spotlight_report_sent">ありがとうございます。報告を送信しました。</string>
+    <string name="spotlight_tab_about">概要</string>
+    <string name="spotlight_tab_files">ファイル</string>
+    <string name="spotlight_tab_images">画像</string>
+    <string name="spotlight_tab_versions">バージョン</string>
+    <string name="spotlight_files_hint">ダウンロードが終わるとファイルはMinecraftで開きます。</string>
+    <string name="spotlight_versions_empty">作者は対応バージョンを記載していません。</string>
+    <string name="spotlight_read_more">続きを読む</string>
+    <string name="spotlight_read_less">閉じる</string>
+    <string name="spotlight_suggest">MODを提案</string>
+    <string name="spotlight_section_description">説明</string>
+    <string name="spotlight_section_details">詳細</string>
+    <string name="spotlight_detail_category">カテゴリー</string>
+    <string name="spotlight_detail_format">ファイル形式</string>
+    <string name="spotlight_detail_files">ファイル数</string>
+    <string name="spotlight_detail_versions">バージョン</string>
+    <string name="spotlight_detail_published">追加日</string>
+    <string name="spotlight_value_none">記載なし</string>
+    <string name="spotlight_files_empty">作者はこのMODにファイルを添付していません。</string>
+    <string name="spotlight_images_empty">このMODにはまだ画像がありません。</string>
+    <string name="spotlight_image_index">画像 %1$d / %2$d</string>
+    <string name="spotlight_versions_hint">作者によると、このMODは次のバージョンで動作します:</string>
+    <string name="spotlight_install_sub">MODをゲームに入れる手順の簡単な案内</string>
+    <string name="spotlight_suggest_sub">ここで見たいMODを送ってください</string>
+    <string name="spotlight_report_sub">リンク切れ、ファイル違い、その他</string>
+    <string name="spotlight_share">共有</string>
+    <string name="spotlight_share_text">%1$s
+%2$s</string>
+    <string name="spotlight_report_body">このMODの何が問題か教えてください。確認します。</string>
+    <string name="spotlight_report_email_label">返信用メールアドレス</string>
+    <string name="spotlight_report_message_label">どこが問題ですか？</string>
+
+    <!-- Downloads -->
+    <string name="loadout_title">ファイル</string>
+    <string name="loadout_download">ダウンロード</string>
+    <string name="loadout_cancel">キャンセル</string>
+    <string name="loadout_ready">保存済み</string>
+    <string name="loadout_vpn_hint">国によっては、プロバイダーがファイルの置かれたサーバーをブロックしています。VPNをオンにしてもう一度ダウンロードしてください。ほとんどの場合これで解決します。</string>
+    <string name="loadout_download_failed">ダウンロードに失敗しました。もう一度お試しください。</string>
+    <string name="loadout_open_failed">ファイルを開けませんでした。Minecraft はインストールされていますか？</string>
+    <string name="loadout_unknown_size">サイズ不明</string>
+    <string name="loadout_action_open">Minecraftで開く</string>
+    <string name="loadout_empty">この作品にはファイルが添付されていません。</string>
+    <string name="loadout_percent">%1$d%%</string>
+    <string name="loadout_vpn_title">ダウンロードが止まりましたか？</string>
+
+    <!-- Saved -->
+    <string name="stash_title">保存済み</string>
+    <string name="stash_count">%1$d 件保存済み</string>
+    <string name="stash_empty">保存済みはまだありません</string>
+    <string name="stash_empty_hint">コンテンツのブックマークをタップするとここに保存されます。</string>
+
+    <!-- FAQ -->
+    <string name="compendium_title">アシスタント</string>
+    <string name="faq_what_q">このアプリは何をしますか？</string>
+    <string name="faq_what_a">Minecraft 向けの無料コンテンツ（アドオン、マップ、テクスチャ、スキン）を閲覧してインストールできます。</string>
+    <string name="faq_internet_q">インターネット接続は必要ですか？</string>
+    <string name="faq_internet_a">閲覧とダウンロードには必要です。保存後はオフラインでインストールできます。</string>
+    <string name="faq_how_q">コンテンツのインストール方法は？</string>
+    <string name="faq_how_a">MODを開いて「ファイルを取得」、次に「ダウンロード」を押します。保存できたら「Minecraftで開く」を押すと、ゲームが起動して追加してくれます。</string>
+    <string name="faq_fail_q">インストールできません。どうすれば？</string>
+    <string name="faq_fail_a">Minecraftが入っていて最新か確認し、ファイルをもう一度開いてください。ダウンロードが終わっていないなら、VPNをオンにして入れ直します。</string>
+    <string name="faq_stuck_q">ダウンロードが止まります。</string>
+    <string name="faq_stuck_a">たいていは回線事業者がサーバーをブロックしています。VPNをオンにしてもう一度ダウンロードしてください。ほぼ必ず直ります。無料のVPNでよく、あとで切って大丈夫です。</string>
+    <string name="faq_hidden_q">インストールしたのにゲーム内で見つかりません。</string>
+    <string name="faq_hidden_a">ワールド設定を開いて、そこでパックをオンにします。実験モードが必要なMODもあります。</string>
+    <string name="faq_lag_q">インストール後にゲームが重いです。</string>
+    <string name="faq_lag_a">大きなMODはスマホに重いです。描画距離を下げるか、ワールドから他のパックを外してください。</string>
+    <string name="faq_ads_q">なぜ広告があるのですか？</string>
+    <string name="faq_ads_a">広告のおかげでアプリとすべてのコンテンツが完全に無料です。</string>
+    <string name="faq_free_q">すべて無料ですか？</string>
+    <string name="faq_free_a">はい。カタログのすべてのコンテンツは無料でダウンロード・インストールできます。</string>
+    <string name="faq_fresh_q">新しいコンテンツはどのくらいの頻度で追加されますか？</string>
+    <string name="faq_fresh_a">カタログは定期的に新しいコンテンツで更新されます。</string>
+    <string name="faq_safe_q">ファイルはワールドにとって安全ですか？</string>
+    <string name="faq_safe_a">はい。Minecraft自身のファイル形式です。それでも大きなMODを入れる前に、大事なワールドはバックアップを。</string>
+    <string name="compendium_subtitle">よくある質問への回答</string>
+    <string name="compendium_greeting">こんにちは！質問を選んでください。ここで答えます。</string>
+    <string name="compendium_prompt">質問をタップ</string>
+    <string name="compendium_restart">最初から</string>
+    <string name="compendium_done">知っているのはここまでです。上の矢印でもう一度最初から。</string>
+    <string name="faq_how_chip">導入方法</string>
+    <string name="faq_fail_chip">導入できない</string>
+    <string name="faq_stuck_chip">ダウンロードが進まない</string>
+    <string name="faq_hidden_chip">ゲームに出てこない</string>
+    <string name="faq_lag_chip">動作が重い</string>
+    <string name="faq_what_chip">このアプリは何</string>
+    <string name="faq_internet_chip">通信は必要？</string>
+    <string name="faq_free_chip">無料？</string>
+    <string name="faq_ads_chip">広告について</string>
+    <string name="faq_fresh_chip">新着について</string>
+    <string name="faq_safe_chip">安全？</string>
+    <string name="compendium_show_all">すべての質問 · %1$d</string>
+    <string name="compendium_collapse">質問を隠す</string>
+    <string name="compendium_expand">質問を表示</string>
+
+    <!-- How to install -->
+    <string name="walkthrough_title">インストール方法</string>
+    <string name="walkthrough_s1_title">コンテンツを選ぶ</string>
+    <string name="walkthrough_s1_text">カタログから任意のコンテンツを開き「ファイルを取得」をタップします。</string>
+    <string name="walkthrough_s2_title">ファイルをダウンロード</string>
+    <string name="walkthrough_s2_text">「ダウンロード」をタップし、ファイルの保存が完了するまで待ちます。</string>
+    <string name="walkthrough_s3_title">「インストール」をタップ</string>
+    <string name="walkthrough_s3_text">保存後「インストール」をタップすると、どのアプリで開くか尋ねられます。</string>
+    <string name="walkthrough_s4_title">Minecraft を選ぶ</string>
+    <string name="walkthrough_s4_text">一覧から Minecraft を選びます。ゲームが開いてコンテンツを取り込みます。</string>
+    <string name="walkthrough_s5_title">取り込みを待つ</string>
+    <string name="walkthrough_s5_text">Minecraft が取り込みの進行状況を表示します。完了するまで待ちます。</string>
+    <string name="walkthrough_s6_title">ワールドで有効化</string>
+    <string name="walkthrough_s6_text">ワールド設定で、リソースパックまたはビヘイビアパックとして追加します。</string>
+    <string name="walkthrough_s7_title">お楽しみください！</string>
+    <string name="walkthrough_s7_text">ワールドを開始して新しいコンテンツをお楽しみください。先に大切なワールドをバックアップしましょう。</string>
+
+    <!-- Get in touch -->
+    <string name="outreach_title">お問い合わせ</string>
+    <string name="outreach_mode_recommend">コンテンツを提案</string>
+    <string name="outreach_mode_report">フィードバックを送信</string>
+    <string name="outreach_email_hint">メールアドレス</string>
+    <string name="outreach_message_recommend_hint">どのコンテンツを追加しましょうか？</string>
+    <string name="outreach_message_report_hint">何が起きたか教えてください</string>
+    <string name="outreach_submit">送信</string>
+    <string name="outreach_sent">ありがとうございます。メッセージを受け取りました。</string>
+    <string name="outreach_intro_title">すべてのメッセージを読んでいます</string>
+    <string name="outreach_intro_body">追加してほしいもの、うまくいかないことを教えてください。読むのはロボットではなく人です。</string>
+    <string name="outreach_purpose">どんな内容ですか？</string>
+    <string name="outreach_mode_recommend_body">カタログに入れてほしいMOD・マップ・スキン・テクスチャパック</string>
+    <string name="outreach_mode_report_body">壊れている、見つからない、動きがおかしい</string>
+    <string name="outreach_form">メッセージ</string>
+    <string name="outreach_email_label">返信用のメールアドレス</string>
+    <string name="outreach_email_help">返信のためだけに使います。それ以外には使いません。</string>
+    <string name="outreach_counter">%1$d / %2$d</string>
+    <string name="outreach_sent_title">送信しました</string>
+    <string name="outreach_sent_body">ありがとうございます。届いたものはすべて読み、返信が必要な場合はメールでお返事します。</string>
+    <string name="outreach_sent_again">もう一通書く</string>
+
+    <!-- Settings -->
+    <string name="settings_title">設定</string>
+    <string name="settings_version">バージョン %1$s</string>
+    <string name="settings_group_data">あなたのデータ</string>
+    <string name="settings_saved">保存したMOD</string>
+    <string name="settings_clear">保存リストを空にする</string>
+    <string name="settings_cleared">リストを空にしました</string>
+    <string name="settings_clear_title">保存リストを空にしますか？</string>
+    <string name="settings_clear_body">ブックマークがすべて削除されます。MOD自体はカタログに残ります。</string>
+    <string name="settings_clear_cancel">キャンセル</string>
+    <string name="settings_clear_confirm">空にする</string>
+    <string name="settings_group_help">ヘルプ</string>
+    <string name="settings_walkthrough">MODの導入方法</string>
+    <string name="settings_write">お問い合わせ</string>
+    <string name="settings_group_app">アプリ</string>
+    <string name="settings_rate">アプリを評価</string>
+    <string name="settings_share">アプリを共有</string>
+    <string name="settings_system">システム設定</string>
+
+    <!-- Reactions, trending, similar -->
+    <string name="spotlight_trending_badge">トレンド%1$d位</string>
+    <string name="spotlight_reactions_title">このMODはどう？</string>
+    <string name="spotlight_section_similar">似ているMOD</string>
+    <string name="spotlight_detail_downloads">ダウンロード数</string>
+    <string name="reaction_like">いいね</string>
+    <string name="reaction_fire">アツい</string>
+    <string name="reaction_love">大好き</string>
+    <string name="reaction_funny">おもしろい</string>
+    <string name="reaction_wow">すごい</string>
 </resources>

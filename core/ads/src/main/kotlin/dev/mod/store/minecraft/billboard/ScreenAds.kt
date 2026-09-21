@@ -11,6 +11,12 @@ interface ScreenAds {
     /** True once at least one native ad is buffered and a slot can render immediately. */
     val hasNativeAd: Boolean
 
+    /**
+     * Whether native ads are switched on at all by the remote config. False means no pool was ever
+     * started, so waiting for one to fill is waiting for something that cannot happen.
+     */
+    val nativeEnabled: Boolean
+
     /** Called when the Spotlight screen is shown — may surface an interstitial. */
     fun onSpotlightEntered()
 

@@ -1,5 +1,6 @@
 package dev.mod.store.minecraft.feature.hub
 
+import dev.mod.store.minecraft.core.ui.R
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
