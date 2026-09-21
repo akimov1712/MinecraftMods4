@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Every string in the app lives here, in one file per language. Features do not carry
+  resources of their own: they read these through dev.mod.store.minecraft.core.ui.R.
+-->
+<resources>
+    <!-- Application -->
+    <string name="app_name">Mod TNT untuk Minecraft PE</string>
+
+    <!-- Shared -->
+    <string name="atlas_ad">Iklan</string>
+    <string name="atlas_retry">Coba lagi</string>
+    <string name="atlas_empty_title">Belum ada apa-apa di sini</string>
+    <string name="atlas_error_title">Terjadi kesalahan</string>
+    <string name="atlas_error_body">Periksa koneksi kamu lalu coba lagi.</string>
+    <string name="fault_timeout">Permintaan habis waktu. Coba lagi.</string>
+    <string name="fault_no_connection">Tidak ada koneksi internet.</string>
+    <string name="fault_server">Server sedang tidak tersedia.</string>
+    <string name="fault_serialization">Menerima respons yang tidak terduga.</string>
+    <string name="fault_bad_request">Ada yang salah dengan permintaan ini.</string>
+    <string name="fault_not_found">Tidak ada yang ditemukan.</string>
+    <string name="fault_unknown">Terjadi kesalahan tak terduga.</string>
+    <string name="fault_validation">Periksa data yang kamu masukkan.</string>
+    <string name="category_addon">Addon</string>
+    <string name="category_maps">Peta</string>
+    <string name="category_texture">Tekstur</string>
+    <string name="category_skin">Skin</string>
+    <string name="creation_version_short">v%1$s+</string>
+
+    <!-- Splash -->
+    <string name="ignition_enter">Masuk ke aplikasi</string>
+    <string name="ignition_hint_free">Semua di sini gratis diunduh</string>
+    <string name="ignition_hint_install">Buka mod, ambil filenya, buka di Minecraft</string>
+    <string name="ignition_hint_save">Tekan penanda untuk menyimpan mod</string>
+    <string name="ignition_hint_vpn">Unduhan macet? Nyalakan VPN lalu coba lagi</string>
+    <string name="ignition_hint_search">Pakai pencarian untuk mencari mod dari namanya</string>
+    <string name="ignition_percent">%1$d%%</string>
+    <string name="ignition_curtain_close">Tutup</string>
+
+    <!-- Navigation -->
+    <string name="hub_tab_showcase">Katalog</string>
+    <string name="hub_tab_stash">Disimpan</string>
+    <string name="hub_tab_compendium">Tanya jawab</string>
+    <string name="hub_search">Cari</string>
+    <string name="hub_tab_settings">Pengaturan</string>
+
+    <!-- Catalog and search -->
+    <string name="showcase_section_pick">Mod hari ini</string>
+    <string name="showcase_section_trending">Sedang naik daun</string>
+    <string name="showcase_section_popular">Paling banyak dipasang</string>
+    <string name="showcase_section_fresh">Baru masuk</string>
+    <string name="showcase_section_top_rated">Nilai tertinggi</string>
+    <string name="showcase_see_all">Semua</string>
+    <string name="showcase_fresh_badge">BARU</string>
+    <string name="showcase_browse_back">Kembali</string>
+    <string name="showcase_browse_count">%1$s ditemukan</string>
+    <string name="showcase_browse_retry">Coba lagi</string>
+    <string name="search_hint">Cari mod, peta, skin…</string>
+    <string name="search_back">Kembali</string>
+    <string name="search_empty_title">Tidak ada yang cocok</string>
+    <string name="search_empty_body">Coba kata yang lebih pendek atau lain.</string>
+    <string name="showcase_chart_new">baru</string>
+    <string name="search_title">Pencarian</string>
+
+    <!-- Mod page -->
+    <string name="spotlight_versions_title">Versi yang didukung</string>
+    <string name="spotlight_get_files">Ambil file</string>
+    <string name="spotlight_how_to_install">Pemasangan</string>
+    <string name="spotlight_report">Laporkan masalah</string>
+    <string name="spotlight_report_title">Laporkan masalah</string>
+    <string name="spotlight_report_email_hint">Email kamu</string>
+    <string name="spotlight_report_message_hint">Jelaskan masalahnya</string>
+    <string name="spotlight_report_send">Kirim</string>
+    <string name="spotlight_report_cancel">Batal</string>
+    <string name="spotlight_report_sent">Terima kasih! Laporanmu sudah terkirim.</string>
+    <string name="spotlight_tab_about">Ringkasan</string>
+    <string name="spotlight_tab_files">File</string>
+    <string name="spotlight_tab_images">Gambar</string>
+    <string name="spotlight_tab_versions">Versi</string>
+    <string name="spotlight_files_hint">File langsung terbuka di Minecraft begitu unduhan selesai.</string>
+    <string name="spotlight_versions_empty">Pembuatnya tidak mencantumkan versi game.</string>
+    <string name="spotlight_read_more">Baca selengkapnya</string>
+    <string name="spotlight_read_less">Tutup</string>
+    <string name="spotlight_suggest">Usulkan mod</string>
+    <string name="spotlight_section_description">Deskripsi</string>
+    <string name="spotlight_section_details">Rincian</string>
+    <string name="spotlight_detail_category">Kategori</string>
+    <string name="spotlight_detail_format">Jenis file</string>
+    <string name="spotlight_detail_files">Jumlah file</string>
+    <string name="spotlight_detail_versions">Versi</string>
+    <string name="spotlight_detail_published">Ditambahkan</string>
+    <string name="spotlight_value_none">Tidak disebutkan</string>
+    <string name="spotlight_files_empty">Pembuatnya tidak melampirkan file apa pun pada mod ini.</string>
+    <string name="spotlight_images_empty">Mod ini belum punya tangkapan layar.</string>
+    <string name="spotlight_image_index">Tangkapan layar %1$d dari %2$d</string>
+    <string name="spotlight_versions_hint">Menurut pembuatnya, mod ini jalan di versi game berikut:</string>
+    <string name="spotlight_install_sub">Panduan singkat memasang mod ke dalam game</string>
+    <string name="spotlight_suggest_sub">Kirimkan mod yang ingin kamu lihat di sini</string>
+    <string name="spotlight_report_sub">Tautan rusak, file keliru, atau hal lain</string>
+    <string name="spotlight_share">Bagikan</string>
+    <string name="spotlight_share_text">%1$s\n%2$s</string>
+    <string name="spotlight_report_body">Ceritakan apa yang salah dengan mod ini, akan kami periksa.</string>
+    <string name="spotlight_report_email_label">Email untuk balasan kami</string>
+    <string name="spotlight_report_message_label">Apa yang salah?</string>
+
+    <!-- Downloads -->
+    <string name="loadout_title">File</string>
+    <string name="loadout_download">Unduh</string>
+    <string name="loadout_cancel">Batal</string>
+    <string name="loadout_ready">Tersimpan</string>
+    <string name="loadout_vpn_hint">Di sebagian negara, penyedia internet memblokir server tempat file berada. Nyalakan VPN dan mulai unduhan lagi — hampir selalu berhasil.</string>
+    <string name="loadout_download_failed">Unduhan gagal. Coba lagi.</string>
+    <string name="loadout_open_failed">Tidak bisa membuka file. Minecraft sudah terpasang?</string>
+    <string name="loadout_unknown_size">Ukuran tidak diketahui</string>
+    <string name="loadout_action_open">Buka di Minecraft</string>
+    <string name="loadout_empty">Karya ini tidak punya file terlampir.</string>
+    <string name="loadout_percent">%1$d%%</string>
+    <string name="loadout_vpn_title">Unduhan macet?</string>
+
+    <!-- Saved -->
+    <string name="stash_title">Disimpan</string>
+    <string name="stash_count">%1$d tersimpan</string>
+    <string name="stash_empty">Belum ada karya tersimpan</string>
+    <string name="stash_empty_hint">Tekan penanda pada sebuah karya untuk menyimpannya di sini.</string>
+
+    <!-- FAQ -->
+    <string name="compendium_title">Asisten</string>
+    <string name="faq_what_q">Aplikasi ini untuk apa?</string>
+    <string name="faq_what_a">Untuk menelusuri dan memasang karya gratis — addon, peta, tekstur, dan skin — untuk Minecraft.</string>
+    <string name="faq_internet_q">Perlu koneksi internet?</string>
+    <string name="faq_internet_a">Ya, untuk menelusuri dan mengunduh. Setelah file tersimpan, pemasangan bisa offline.</string>
+    <string name="faq_how_q">Bagaimana cara memasang karya?</string>
+    <string name="faq_how_a">Buka mod, tekan Ambil file, lalu tekan Unduh. Setelah tersimpan, tekan Buka di Minecraft — game akan terbuka dan menambahkannya sendiri.</string>
+    <string name="faq_fail_q">Pemasangan gagal. Lalu bagaimana?</string>
+    <string name="faq_fail_a">Pastikan Minecraft terpasang dan terbaru, lalu buka lagi filenya. Kalau unduhan tidak pernah selesai, nyalakan VPN dan ambil ulang.</string>
+    <string name="faq_stuck_q">Unduhan saya macet.</string>
+    <string name="faq_stuck_a">Biasanya penyedia internetmu memblokir server. Nyalakan VPN lalu unduh lagi — hampir selalu berhasil. VPN gratis apa pun bisa, dan boleh dimatikan setelahnya.</string>
+    <string name="faq_hidden_q">Sudah dipasang tapi tidak ada di game.</string>
+    <string name="faq_hidden_a">Buka pengaturan dunia dan aktifkan paketnya di sana. Sebagian mod juga perlu opsi eksperimen dinyalakan.</string>
+    <string name="faq_lag_q">Game jadi patah-patah setelah dipasang.</string>
+    <string name="faq_lag_a">Mod besar berat untuk ponsel. Turunkan jarak pandang atau lepas paket lain dari dunia itu.</string>
+    <string name="faq_ads_q">Kenapa ada iklan?</string>
+    <string name="faq_ads_a">Iklan membuat aplikasi dan semua karya tetap gratis.</string>
+    <string name="faq_free_q">Semuanya gratis?</string>
+    <string name="faq_free_a">Ya — semua karya di katalog gratis diunduh dan dipasang.</string>
+    <string name="faq_fresh_q">Seberapa sering konten baru ditambahkan?</string>
+    <string name="faq_fresh_a">Katalog diperbarui secara rutin dengan karya baru.</string>
+    <string name="faq_safe_q">Apakah filenya aman untuk dunia saya?</string>
+    <string name="faq_safe_a">Aman. Formatnya milik Minecraft sendiri. Tetap saja, cadangkan dunia penting sebelum menambah mod besar.</string>
+    <string name="compendium_subtitle">Jawaban untuk pertanyaan yang sering muncul</string>
+    <string name="compendium_greeting">Halo! Pilih pertanyaan, akan kujawab di sini.</string>
+    <string name="compendium_prompt">Pilih pertanyaan</string>
+    <string name="compendium_restart">Mulai lagi</string>
+    <string name="compendium_done">Itu semua yang aku tahu. Tekan panah di atas untuk mulai lagi.</string>
+    <string name="faq_how_chip">Cara memasang</string>
+    <string name="faq_fail_chip">Pemasangan gagal</string>
+    <string name="faq_stuck_chip">Unduhan macet</string>
+    <string name="faq_hidden_chip">Tidak ada di game</string>
+    <string name="faq_lag_chip">Game patah-patah</string>
+    <string name="faq_what_chip">Aplikasi ini apa</string>
+    <string name="faq_internet_chip">Perlu internet?</string>
+    <string name="faq_free_chip">Gratis?</string>
+    <string name="faq_ads_chip">Kenapa ada iklan</string>
+    <string name="faq_fresh_chip">Konten baru</string>
+    <string name="faq_safe_chip">Apakah aman</string>
+    <string name="compendium_show_all">Semua pertanyaan · %1$d</string>
+    <string name="compendium_collapse">Sembunyikan pertanyaan</string>
+    <string name="compendium_expand">Tampilkan pertanyaan</string>
+
+    <!-- How to install -->
+    <string name="walkthrough_title">Cara memasang</string>
+    <string name="walkthrough_s1_title">Pilih karya</string>
+    <string name="walkthrough_s1_text">Buka karya mana pun dari katalog lalu tekan «Ambil file».</string>
+    <string name="walkthrough_s2_title">Unduh filenya</string>
+    <string name="walkthrough_s2_text">Tekan Unduh dan tunggu sampai file selesai tersimpan.</string>
+    <string name="walkthrough_s3_title">Tekan Pasang</string>
+    <string name="walkthrough_s3_text">Setelah tersimpan, tekan Pasang — sistem akan menanyakan aplikasi mana yang membuka file itu.</string>
+    <string name="walkthrough_s4_title">Pilih Minecraft</string>
+    <string name="walkthrough_s4_text">Pilih Minecraft dari daftar. Game terbuka dan mengimpor kontennya.</string>
+    <string name="walkthrough_s5_title">Tunggu impornya</string>
+    <string name="walkthrough_s5_text">Minecraft menampilkan bilah kemajuan impor. Biarkan sampai selesai.</string>
+    <string name="walkthrough_s6_title">Aktifkan di duniamu</string>
+    <string name="walkthrough_s6_text">Di pengaturan dunia, tambahkan paketnya pada Resource atau Behavior packs.</string>
+    <string name="walkthrough_s7_title">Selamat bermain!</string>
+    <string name="walkthrough_s7_text">Mulai dunianya dan nikmati karya barumu. Cadangkan dulu dunia yang penting.</string>
+
+    <!-- Get in touch -->
+    <string name="outreach_title">Hubungi kami</string>
+    <string name="outreach_mode_recommend">Usulkan karya</string>
+    <string name="outreach_mode_report">Kirim masukan</string>
+    <string name="outreach_email_hint">Email kamu</string>
+    <string name="outreach_message_recommend_hint">Karya apa yang sebaiknya kami tambahkan?</string>
+    <string name="outreach_message_report_hint">Ceritakan apa yang terjadi</string>
+    <string name="outreach_submit">Kirim</string>
+    <string name="outreach_sent">Terima kasih! Pesanmu sudah kami terima.</string>
+    <string name="outreach_intro_title">Kami membaca setiap pesan</string>
+    <string name="outreach_intro_body">Ceritakan apa yang perlu ditambah atau apa yang rusak. Yang membaca ini orang, bukan robot.</string>
+    <string name="outreach_purpose">Ini tentang apa?</string>
+    <string name="outreach_mode_recommend_body">Mod, peta, skin, atau paket tekstur yang ingin kamu lihat di katalog</string>
+    <string name="outreach_mode_report_body">Ada yang rusak, hilang, atau berperilaku aneh</string>
+    <string name="outreach_form">Pesan kamu</string>
+    <string name="outreach_email_label">Email untuk balasan kami</string>
+    <string name="outreach_email_help">Hanya dipakai untuk membalasmu. Tidak untuk hal lain.</string>
+    <string name="outreach_counter">%1$d / %2$d</string>
+    <string name="outreach_sent_title">Pesan terkirim</string>
+    <string name="outreach_sent_body">Terima kasih! Kami membaca semua yang masuk, dan akan membalas ke emailmu bila pesanmu perlu jawaban.</string>
+    <string name="outreach_sent_again">Tulis lagi</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Pengaturan</string>
+    <string name="settings_version">Versi %1$s</string>
+    <string name="settings_group_data">Data kamu</string>
+    <string name="settings_saved">Mod tersimpan</string>
+    <string name="settings_clear">Kosongkan daftar simpanan</string>
+    <string name="settings_cleared">Daftar simpanan dikosongkan</string>
+    <string name="settings_clear_title">Kosongkan daftar simpanan?</string>
+    <string name="settings_clear_body">Semua mod yang kamu tandai akan dihapus. Mod-nya sendiri tetap ada di katalog.</string>
+    <string name="settings_clear_cancel">Batal</string>
+    <string name="settings_clear_confirm">Kosongkan</string>
+    <string name="settings_group_help">Bantuan</string>
+    <string name="settings_walkthrough">Cara memasang mod</string>
+    <string name="settings_write">Tulis ke kami</string>
+    <string name="settings_group_app">Aplikasi</string>
+    <string name="settings_rate">Beri nilai aplikasi</string>
+    <string name="settings_share">Bagikan aplikasi</string>
+    <string name="settings_system">Pengaturan sistem</string>
+
+    <!-- Reactions, trending, similar -->
+    <string name="spotlight_trending_badge">#%1$d sedang tren</string>
+    <string name="spotlight_reactions_title">Bagaimana menurutmu?</string>
+    <string name="spotlight_section_similar">Mod serupa</string>
+    <string name="spotlight_detail_downloads">Unduhan</string>
+    <string name="reaction_like">Suka</string>
+    <string name="reaction_fire">Keren</string>
+    <string name="reaction_love">Cinta</string>
+    <string name="reaction_funny">Lucu</string>
+    <string name="reaction_wow">Wow</string>
+</resources>
