@@ -30,6 +30,9 @@ interface SpotlightStore : Store<Intent, State, Label> {
 
     sealed interface Intent {
         data object Retry : Intent
+
+        /** Pulled down: fetch the mod and its reactions again, keeping the page on screen. */
+        data object Refresh : Intent
         data object ToggleBookmark : Intent
         data object OpenReport : Intent
         data object DismissReport : Intent
@@ -47,8 +50,13 @@ interface SpotlightStore : Store<Intent, State, Label> {
         val reportOpen: Boolean = false,
         val report: ReportForm = ReportForm(),
         val reactions: ReactionSummary = ReactionSummary(),
-        /** A reaction write is in flight; further taps are ignored until it settles. */
-        val reacting: Boolean = false,
+        /**
+         * The reaction whose write is in flight, so the screen can put the spinner on that exact
+         * key. Null when nothing is being sent; further taps are ignored until it settles.
+         */
+        val pendingReaction: ReactionType? = null,
+        /** A pull-to-refresh is running; the current page stays up underneath it. */
+        val refreshing: Boolean = false,
     )
 
     data class ReportForm(
@@ -100,7 +108,8 @@ internal class SpotlightStoreFactory(
         data class ReportSending(val value: Boolean) : Message
         data object ReportReset : Message
         data class Reactions(val value: ReactionSummary) : Message
-        data class Reacting(val value: Boolean) : Message
+        data class Pending(val type: ReactionType?) : Message
+        data class Refreshing(val value: Boolean) : Message
     }
 
     private fun State.reduce(message: Message): State = when (message) {
@@ -114,7 +123,8 @@ internal class SpotlightStoreFactory(
         is Message.ReportSending -> copy(report = report.copy(sending = message.value))
         Message.ReportReset -> copy(reportOpen = false, report = State().report)
         is Message.Reactions -> copy(reactions = message.value)
-        is Message.Reacting -> copy(reacting = message.value)
+        is Message.Pending -> copy(pendingReaction = message.type)
+        is Message.Refreshing -> copy(refreshing = message.value)
     }
 
     private inner class Executor :
@@ -129,6 +139,7 @@ internal class SpotlightStoreFactory(
         override fun executeIntent(intent: Intent) {
             when (intent) {
                 Intent.Retry -> load()
+                Intent.Refresh -> refresh()
                 Intent.ToggleBookmark -> toggle()
                 Intent.OpenReport -> dispatch(Message.ReportOpen(true))
                 Intent.DismissReport -> dispatch(Message.ReportOpen(false))
@@ -158,6 +169,26 @@ internal class SpotlightStoreFactory(
             }
         }
 
+        /**
+         * Unlike [load], this never touches the page's stage: the mod already on screen stays there
+         * while the new copy is fetched, and a failed refresh leaves it in place with a message
+         * rather than swapping it for an error screen. Reactions come along too, since the counts
+         * are the part most likely to have moved.
+         */
+        private fun refresh() {
+            if (state().refreshing) return
+            dispatch(Message.Refreshing(true))
+            scope.launch {
+                val reactions = launch { refreshReactions() }
+                when (val outcome = fetchCreation(creationId)) {
+                    is Outcome.Done -> dispatch(Message.Loaded(outcome.value))
+                    is Outcome.Failed -> publish(Label.Notify(faults.text(outcome.error)))
+                }
+                reactions.join()
+                dispatch(Message.Refreshing(false))
+            }
+        }
+
         private suspend fun refreshReactions() {
             fetchReactions(creationId).valueOrNull()?.let { dispatch(Message.Reactions(it)) }
         }
@@ -165,19 +196,24 @@ internal class SpotlightStoreFactory(
         /**
          * Answers the tap at once and asks the server after. The screen shows the new choice and
          * its counts immediately; if the server refuses, or the write is throttled, the previous
-         * state is put back exactly as it was. After an accepted write the counts are fetched
-         * again, since other readers may have reacted in the meantime.
+         * state is put back exactly as it was.
+         *
+         * The spinner covers the write and nothing more: as soon as the server has answered, the
+         * key is released, and the fresh counts (other readers may have reacted meanwhile) are
+         * fetched quietly behind it rather than keeping the reader waiting on a second round trip.
          */
         private fun react(type: ReactionType) {
-            if (state().reacting) return
+            if (state().pendingReaction != null) return
             val before = state().reactions
             val next = if (before.selected == type) null else type
 
-            dispatch(Message.Reacting(true))
+            dispatch(Message.Pending(type))
             dispatch(Message.Reactions(before.choose(next)))
 
             scope.launch {
-                when (val result = setReaction(creationId, next)) {
+                val result = setReaction(creationId, next)
+                dispatch(Message.Pending(null))
+                when (result) {
                     ReactionWrite.Applied -> refreshReactions()
                     ReactionWrite.Throttled -> dispatch(Message.Reactions(before))
                     is ReactionWrite.Failed -> {
@@ -185,7 +221,6 @@ internal class SpotlightStoreFactory(
                         publish(Label.Notify(faults.text(result.error)))
                     }
                 }
-                dispatch(Message.Reacting(false))
             }
         }
 

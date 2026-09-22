@@ -58,6 +58,7 @@ import androidx.compose.material.icons.outlined.FolderOpen
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.PhotoLibrary
 import androidx.compose.material.icons.outlined.Tune
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -75,7 +76,6 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -97,6 +97,7 @@ import dev.mod.store.minecraft.core.ui.component.ImageViewerDialog
 import dev.mod.store.minecraft.core.ui.component.NoticeHost
 import dev.mod.store.minecraft.core.ui.component.OutlineField
 import dev.mod.store.minecraft.core.ui.component.PillButton
+import dev.mod.store.minecraft.core.ui.component.RefreshSurface
 import dev.mod.store.minecraft.core.ui.component.RemoteImage
 import dev.mod.store.minecraft.core.ui.component.ShimmerBox
 import dev.mod.store.minecraft.core.ui.component.creationCategoryAccent
@@ -202,20 +203,26 @@ fun SpotlightPane(
             else -> {
                 val chapters = remember(creation) { chaptersOf(creation) }
 
-                Story(
-                    creation = creation,
-                    reactions = state.reactions,
-                    reacting = state.reacting,
-                    onReact = { component.onIntent(Intent.React(it)) },
-                    chapters = chapters,
-                    // A tab can vanish when the mod reloads with less material; fall back to the
-                    // one chapter that is always there rather than showing a blank page.
-                    chapter = chapter.takeIf { it in chapters } ?: Chapter.Overview,
-                    onSelectChapter = { chapter = it },
-                    onOpenShot = { viewerIndex = it },
-                    component = component,
+                RefreshSurface(
+                    refreshing = state.refreshing,
+                    onRefresh = { component.onIntent(Intent.Refresh) },
                     modifier = Modifier.fillMaxSize(),
-                )
+                ) {
+                    Story(
+                        creation = creation,
+                        reactions = state.reactions,
+                        pendingReaction = state.pendingReaction,
+                        onReact = { component.onIntent(Intent.React(it)) },
+                        chapters = chapters,
+                        // A tab can vanish when the mod reloads with less material; fall back to the
+                        // one chapter that is always there rather than showing a blank page.
+                        chapter = chapter.takeIf { it in chapters } ?: Chapter.Overview,
+                        onSelectChapter = { chapter = it },
+                        onOpenShot = { viewerIndex = it },
+                        component = component,
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                }
             }
         }
 
@@ -265,7 +272,7 @@ fun SpotlightPane(
 private fun Story(
     creation: CreationEntity,
     reactions: ReactionSummary,
-    reacting: Boolean,
+    pendingReaction: ReactionType?,
     onReact: (ReactionType) -> Unit,
     chapters: List<Chapter>,
     chapter: Chapter,
@@ -298,7 +305,7 @@ private fun Story(
 
         item(key = "reactions") {
             Spacer(Modifier.height(16.dp))
-            ReactionStrip(summary = reactions, busy = reacting, onReact = onReact)
+            ReactionStrip(summary = reactions, pending = pendingReaction, onReact = onReact)
         }
 
         // A lone Overview tab is not a choice, so the rail stays out of the way entirely.
@@ -574,13 +581,16 @@ private fun ReactionType.labelRes(): Int = when (this) {
 
 /**
  * Five reactions in a row, each a face over its count. The one this reader chose is lit; tapping
- * it again takes it back, tapping another moves the choice. While a change is on its way the row
- * dims slightly and stops listening, so a burst of taps is one change and not five.
+ * it again takes it back, tapping another moves the choice.
+ *
+ * While a change is on its way, the key that was tapped swaps its count for a spinner, so it is
+ * obvious that something is happening and where. The other keys stay at full brightness — a whole
+ * row going grey looked like the screen had frozen — and simply ignore taps until the write lands.
  */
 @Composable
 private fun ReactionStrip(
     summary: ReactionSummary,
-    busy: Boolean,
+    pending: ReactionType?,
     onReact: (ReactionType) -> Unit,
 ) {
     Column(
@@ -596,9 +606,7 @@ private fun ReactionStrip(
             fontWeight = FontWeight.SemiBold,
         )
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .graphicsLayer { alpha = if (busy) 0.6f else 1f },
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             REACTIONS.forEach { (type, face) ->
@@ -607,7 +615,8 @@ private fun ReactionStrip(
                     label = stringResource(type.labelRes()),
                     count = summary.count(type),
                     selected = summary.selected == type,
-                    enabled = !busy,
+                    loading = pending == type,
+                    enabled = pending == null,
                     onClick = { onReact(type) },
                     modifier = Modifier.weight(1f),
                 )
@@ -622,6 +631,7 @@ private fun ReactionKey(
     label: String,
     count: Int,
     selected: Boolean,
+    loading: Boolean,
     enabled: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -651,13 +661,29 @@ private fun ReactionKey(
             fontSize = 22.sp,
             modifier = Modifier.then(if (selected) Modifier.popIn() else Modifier),
         )
-        Text(
-            text = formatCompact(count),
-            color = if (selected) Palette.TextPrimary else Palette.TextFaint,
-            fontSize = 12.sp,
-            fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
-            maxLines = 1,
-        )
+        // A fixed-height slot, so swapping the count for the spinner never moves the row.
+        Box(
+            modifier = Modifier.height(16.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (loading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(14.dp),
+                    color = Palette.Accent,
+                    trackColor = Palette.Accent.copy(alpha = 0.18f),
+                    strokeWidth = 2.dp,
+                )
+            } else {
+                Text(
+                    text = formatCompact(count),
+                    color = if (selected) Palette.TextPrimary else Palette.TextFaint,
+                    fontSize = 12.sp,
+                    lineHeight = 16.sp,
+                    fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
+                    maxLines = 1,
+                )
+            }
+        }
     }
 }
 
@@ -950,6 +976,9 @@ private fun LazyListScope.overviewChapter(
         }
     }
 
+    // Once the description has been read — the natural pause in the chapter.
+    overviewAd(component, key = "overview_ad_description", slotKey = "spotlight_after_description")
+
     item(key = "overview_facts") {
         Spacer(Modifier.height(BLOCK_GAP))
         val none = stringResource(R.string.spotlight_value_none)
@@ -1022,6 +1051,8 @@ private fun LazyListScope.overviewChapter(
         )
     }
 
+    overviewAd(component, key = "overview_ad_similar", slotKey = "spotlight_before_similar")
+
     // What to open next, once this page has been read. Only mods the server picked from the same
     // app, and never this one, so every tile here is a real next step.
     if (creation.similar.isNotEmpty()) {
@@ -1062,17 +1093,27 @@ private fun LazyListScope.overviewChapter(
         }
     }
 
-    // Last thing in the chapter, a long way below the download button.
-    if (component.hasNativeAd) {
-        item(key = "overview_ad") {
-            Spacer(Modifier.height(BLOCK_GAP))
-            NativeSlot(
-                slotKey = "spotlight_about",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = GUTTER),
-            )
-        }
+}
+
+/**
+ * One ad slot inside the About chapter. The other chapters — files, screenshots, versions — never
+ * get one: there the reader is choosing a file or looking at pictures, not reading, and an ad would
+ * sit in the middle of the thing they came to do.
+ */
+private fun LazyListScope.overviewAd(
+    component: SpotlightComponent,
+    key: String,
+    slotKey: String,
+) {
+    if (!component.hasNativeAd) return
+    item(key = key) {
+        Spacer(Modifier.height(BLOCK_GAP))
+        NativeSlot(
+            slotKey = slotKey,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = GUTTER),
+        )
     }
 }
 

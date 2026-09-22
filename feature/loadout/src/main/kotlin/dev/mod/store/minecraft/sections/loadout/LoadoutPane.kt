@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -64,6 +63,9 @@ import dev.mod.store.minecraft.feature.loadout.LoadoutStore.Notice
 private val GUTTER = 20.dp
 private val GAP = 12.dp
 private val CARD_SHAPE = RoundedCornerShape(18.dp)
+
+/** Files between two ads in the list. */
+private const val FILES_PER_AD = 6
 
 /**
  * Getting the files, kept to the one thing that matters: for each file there is a button, and the
@@ -128,18 +130,25 @@ fun LoadoutPane(
                     // moving, they have usually already left. Saying it up front costs one card.
                     item(key = "vpn") { VpnNote(urgent = state.showVpnHint) }
 
-                    items(items = state.items, key = { it.url }) { item ->
-                        FileCard(item = item, component = component)
-                    }
-
-                    if (component.hasNativeAd) {
-                        item(key = "ad") {
-                            NativeSlot(
-                                slotKey = "loadout_files",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = GUTTER),
-                            )
+                    // An ad after every sixth file. Most mods ship fewer than six, so a list
+                    // too short to reach a break gets one ad after its last file instead of none.
+                    val showAds = component.hasNativeAd
+                    val breaks = state.items.size / FILES_PER_AD
+                    state.items.forEachIndexed { index, item ->
+                        item(key = item.url) {
+                            FileCard(item = item, component = component)
+                        }
+                        val atBreak = (index + 1) % FILES_PER_AD == 0
+                        val closingShortList = breaks == 0 && index == state.items.lastIndex
+                        if (showAds && (atBreak || closingShortList)) {
+                            item(key = "ad_$index") {
+                                NativeSlot(
+                                    slotKey = "loadout_$index",
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = GUTTER),
+                                )
+                            }
                         }
                     }
 
