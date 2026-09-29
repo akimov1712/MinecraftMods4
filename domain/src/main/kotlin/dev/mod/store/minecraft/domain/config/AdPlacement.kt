@@ -12,13 +12,13 @@ package dev.mod.store.minecraft.domain.config
  * The ids are the panel's, not the app's, so they keep the backend's spelling (`addon_*`) even
  * where this app's own screens are named differently.
  */
-enum class AdPlacement(val id: String) {
+enum class AdPlacement(val id: String, val fullscreen: Boolean = false) {
 
     /** Native block on the second stage of the splash. */
-    LOADER_NATIVE("loader_native"),
+    LOADER_NATIVE("loader_native", fullscreen = true),
 
     /** The full-screen promo between the splash and the catalog. */
-    ADDON_OPEN_FULLSCREEN_NATIVE("addon_open_fullscreen_native"),
+    ADDON_OPEN_FULLSCREEN_NATIVE("addon_open_fullscreen_native", fullscreen = true),
 
     /** Between the sections of the home feed. */
     HOME_LIST_NATIVE("home_list_native"),

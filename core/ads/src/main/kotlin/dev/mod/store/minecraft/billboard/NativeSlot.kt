@@ -36,6 +36,7 @@ internal object NativeRegistry {
     private var chance: Int = 100
     private val cache = HashMap<String, NativeHolder>()
     private var placements: Set<AdPlacement> = AdPlacement.entries.toSet()
+    private val fullscreenRolls = HashMap<AdPlacement, Boolean>()
 
     var enabled: Boolean = false
         private set
@@ -60,11 +61,27 @@ internal object NativeRegistry {
 
     fun rollShow(placement: AdPlacement): Boolean = allows(placement) && rollChance(chance)
 
+    /**
+     * The show-chance for a slot that takes the whole screen, rolled once per launch and then
+     * remembered.
+     *
+     * An inline slot rolls per slot key, which is what thins ads out across a list. A full-screen
+     * one is a single event, and the same answer has to serve two callers: the decision to route to
+     * the screen ([hasAd]) and the screen's own slot. Rolling twice could route a reader to a promo
+     * page that then declines to draw anything.
+     */
+    private fun rollFullscreen(placement: AdPlacement): Boolean =
+        fullscreenRolls.getOrPut(placement) { rollChance(chance) }
+
+    /** Whether [placement] may run, chance included for the full-screen slots. */
+    fun permits(placement: AdPlacement): Boolean =
+        allows(placement) && (!placement.fullscreen || rollFullscreen(placement))
+
     /** Whether a preloaded ad is sitting in the pool right now. */
     fun hasAd(): Boolean = pool?.hasAd() == true
 
     /** Whether [placement] may run *and* has something to show this instant. */
-    fun hasAd(placement: AdPlacement): Boolean = allows(placement) && hasAd()
+    fun hasAd(placement: AdPlacement): Boolean = permits(placement) && hasAd()
 
     fun acquire(context: Context, key: String, fullscreen: Boolean): NativeHolder? {
         cache[key]?.let { return it }
@@ -81,6 +98,7 @@ internal object NativeRegistry {
         enabled = false
         interval = 0
         placements = AdPlacement.entries.toSet()
+        fullscreenRolls.clear()
     }
 }
 
@@ -111,7 +129,7 @@ fun FullscreenNativeSlot(
     slotKey: String,
     modifier: Modifier = Modifier.fillMaxSize(),
 ) {
-    if (!NativeRegistry.allows(placement)) return
+    if (!NativeRegistry.permits(placement)) return
     AdHost(slotKey = slotKey, fullscreen = true, modifier = modifier)
 }
 

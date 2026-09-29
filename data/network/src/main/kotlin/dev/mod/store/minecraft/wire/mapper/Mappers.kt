@@ -86,10 +86,11 @@ private fun String.toEpochMillisOrNull(): Long? =
  * all — leaves every slot enabled rather than silently blanking the app's ads.
  */
 internal fun ConfigDto.toEntity(placements: List<AdPlacementDto>? = null): ConfigEntity = ConfigEntity(
+    // The master switch is folded in here, so nothing downstream has to remember to check it.
     adToggles = AdToggles(
-        appOpen = isOpenAdsEnabled,
-        native = isNativeAdsEnabled,
-        interstitial = isInterAdsEnabled,
+        appOpen = isAdsEnabled && isOpenAdsEnabled,
+        native = isAdsEnabled && isNativeAdsEnabled,
+        interstitial = isAdsEnabled && isInterAdsEnabled,
     ),
     adChance = AdChance(
         appOpen = chanceShowOpenAds,
@@ -97,6 +98,7 @@ internal fun ConfigDto.toEntity(placements: List<AdPlacementDto>? = null): Confi
         interstitial = chanceShowInterAds,
     ),
     interstitialCooldownSeconds = delayInter,
+    interstitialSkipsBeforeFirst = (skipBeforeFirstInterAdsCount ?: 0).coerceAtLeast(0),
     nativePreloadSize = countNativePreload,
     nativeInterval = adsInterval,
     nativeKind = NativeKind.fromRaw(adsNativeType),

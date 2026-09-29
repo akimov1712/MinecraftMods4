@@ -5,6 +5,12 @@ data class ConfigEntity(
     val adToggles: AdToggles,
     val adChance: AdChance,
     val interstitialCooldownSeconds: Int,
+    /**
+     * How many interstitial requests are swallowed before the first ad of the session is shown:
+     * with 2, the third mod opened is the first one carrying an ad. Counted in memory only, so
+     * every cold start skips its first N again.
+     */
+    val interstitialSkipsBeforeFirst: Int,
     val nativePreloadSize: Int,
     val nativeInterval: Int,
     val nativeKind: NativeKind,

@@ -19,10 +19,13 @@ internal data class AdPlacementDto(
 
 @Serializable
 internal data class ConfigDto(
+    /** The panel's master switch; off means no ads of any kind, whatever the per-type switches say. */
+    @SerialName("isAdsEnabled") val isAdsEnabled: Boolean = true,
     @SerialName("isOpenAdsEnabled") val isOpenAdsEnabled: Boolean = false,
     @SerialName("isNativeAdsEnabled") val isNativeAdsEnabled: Boolean = false,
     @SerialName("isInterAdsEnabled") val isInterAdsEnabled: Boolean = false,
     @SerialName("delayInter") val delayInter: Int = 60,
+    @SerialName("skipBeforeFirstInterAdsCount") val skipBeforeFirstInterAdsCount: Int? = null,
     @SerialName("countNativePreload") val countNativePreload: Int = 3,
     // Note: backend key keeps the historical "Inverval" typo.
     @SerialName("adsInverval") val adsInterval: Int = 3,

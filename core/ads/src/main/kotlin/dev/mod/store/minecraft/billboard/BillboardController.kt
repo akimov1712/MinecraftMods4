@@ -42,6 +42,17 @@ class BillboardController internal constructor(
 
     private var currentActivity: Activity? = null
     private var wasBackgrounded = false
+
+    /**
+     * Set when the process comes back to the foreground, spent on the next resumed Activity.
+     *
+     * The return itself cannot show the ad: ProcessLifecycleOwner reports ON_START from the
+     * Activity's onStart, one callback *before* onResume, and [currentActivity] is cleared on
+     * pause — so at that moment there is no Activity to show anything on, and the app-open ad was
+     * being dropped every single time. Waiting for the resume also satisfies the SDK, which needs a
+     * resumed Activity to put a full-screen ad on.
+     */
+    private var appOpenPending = false
     private var reviewRequested = false
     private var started = false
 
@@ -49,7 +60,7 @@ class BillboardController internal constructor(
 
     override fun hasNativeAd(placement: AdPlacement): Boolean = NativeRegistry.hasAd(placement)
 
-    override fun nativeAllowed(placement: AdPlacement): Boolean = NativeRegistry.allows(placement)
+    override fun nativeAllowed(placement: AdPlacement): Boolean = NativeRegistry.permits(placement)
 
     override suspend fun awaitBoot() = booted.await()
 
@@ -85,6 +96,7 @@ class BillboardController internal constructor(
                 casId = config.casId,
                 cooldownSeconds = settings.interstitialCooldownSeconds,
                 showChance = settings.adChance.interstitial,
+                skipsBeforeFirst = settings.interstitialSkipsBeforeFirst,
             ).also { it.load() }
         }
         if (settings.adToggles.appOpen) {
@@ -112,7 +124,8 @@ class BillboardController internal constructor(
             Lifecycle.Event.ON_START -> {
                 if (wasBackgrounded) {
                     wasBackgrounded = false
-                    currentActivity?.let { appOpen?.show(it) }
+                    // A cold start never gets here — the splash owns that moment instead.
+                    appOpenPending = appOpen != null
                 }
             }
             else -> Unit
@@ -122,6 +135,10 @@ class BillboardController internal constructor(
     private val activityTracker = object : Application.ActivityLifecycleCallbacks {
         override fun onActivityResumed(activity: Activity) {
             currentActivity = activity
+            if (appOpenPending) {
+                appOpenPending = false
+                appOpen?.show(activity)
+            }
             if (!reviewRequested) {
                 reviewRequested = true
                 reviewPrompter.maybeRequest(activity)

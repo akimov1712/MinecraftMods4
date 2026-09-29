@@ -67,13 +67,25 @@ class WireContractTest {
     }
 
     @Test
-    fun `an ads array the panel has not filled in leaves every slot on`() {
+    fun `the panel carries one row per slot the app knows about`() {
         val response = json.decodeFromString<ConfigResponseDto>(fixture("app_config.json"))
         val config = requireNotNull(response.config).toEntity(response.ads)
 
-        // This is what the live server answers today: an empty list, which must not be read as
-        // "every slot off" — it means nothing has been configured.
-        assertEquals(emptyList<Any>(), response.ads)
+        // Drift either way is worth failing on: a slot shipped in the app that the panel cannot
+        // switch off, or a row in the panel that no longer controls anything.
+        assertEquals(
+            AdPlacement.entries.map { it.id }.toSet(),
+            response.ads.orEmpty().mapNotNull { it.adId }.toSet(),
+        )
+        assertEquals(AdPlacement.entries.toSet(), config.enabledPlacements)
+    }
+
+    @Test
+    fun `an empty ads array means not configured, not every slot off`() {
+        val raw = """{"sdk":{"isNativeAdsEnabled":true},"ads":[]}"""
+        val response = json.decodeFromString<ConfigResponseDto>(raw)
+        val config = requireNotNull(response.config).toEntity(response.ads)
+
         assertEquals(AdPlacement.entries.toSet(), config.enabledPlacements)
     }
 
@@ -121,5 +133,37 @@ class WireContractTest {
         val config = requireNotNull(response.config).toEntity(response.ads)
 
         assertEquals(AdPlacement.entries.toSet(), config.enabledPlacements)
+    }
+
+    @Test
+    fun `the master switch turns every ad type off`() {
+        val raw = """
+            {
+              "sdk": {
+                "isAdsEnabled": false,
+                "isOpenAdsEnabled": true,
+                "isNativeAdsEnabled": true,
+                "isInterAdsEnabled": true
+              }
+            }
+        """.trimIndent()
+        val response = json.decodeFromString<ConfigResponseDto>(raw)
+        val config = requireNotNull(response.config).toEntity(response.ads)
+
+        assertFalse(config.adToggles.appOpen)
+        assertFalse(config.adToggles.native)
+        assertFalse(config.adToggles.interstitial)
+        assertFalse(config.isPlacementEnabled(AdPlacement.HOME_LIST_NATIVE))
+    }
+
+    @Test
+    fun `an opening grace period arrives as a number, missing means none`() {
+        val with = json.decodeFromString<ConfigResponseDto>(
+            """{"sdk":{"skipBeforeFirstInterAdsCount":3}}""",
+        )
+        assertEquals(3, requireNotNull(with.config).toEntity().interstitialSkipsBeforeFirst)
+
+        val without = json.decodeFromString<ConfigResponseDto>("""{"sdk":{}}""")
+        assertEquals(0, requireNotNull(without.config).toEntity().interstitialSkipsBeforeFirst)
     }
 }

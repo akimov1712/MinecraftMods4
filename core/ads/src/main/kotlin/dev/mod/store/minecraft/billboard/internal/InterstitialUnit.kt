@@ -10,14 +10,15 @@ import com.cleveradssolutions.sdk.screen.ScreenAdContentCallback
 import com.cleversolutions.ads.AdError
 
 /**
- * Interstitial wrapper. CAS autoloads/reloads itself (best fill rate); we only gate *showing*
- * with the server cooldown, the show-chance and the shared fullscreen gate.
+ * Interstitial wrapper. CAS autoloads/reloads itself (best fill rate); we only gate *showing* with
+ * the server cooldown, the show-chance, the shared fullscreen gate, and the opening grace period.
  */
 internal class InterstitialUnit(
     context: Context,
     private val casId: String,
     private val cooldownSeconds: Int,
     private val showChance: Int,
+    private val skipsBeforeFirst: Int,
 ) {
     private companion object {
         const val TYPE = "Interstitial"
@@ -26,6 +27,9 @@ internal class InterstitialUnit(
     private val appContext = context.applicationContext
     private var interstitial: CASInterstitial? = null
     private var lastShownAt = 0L
+
+    /** Requests swallowed so far by the opening grace period; never persisted. */
+    private var skipped = 0
 
     fun load() {
         interstitial = CASInterstitial(casId).apply {
@@ -39,6 +43,12 @@ internal class InterstitialUnit(
     }
 
     fun tryShow(activity: Activity) {
+        // Counted before the chance roll, so a skipped opening never burns a roll: with a grace of
+        // 2, the third request is the first that may show, whatever the chance says.
+        if (skipped < skipsBeforeFirst) {
+            skipped++
+            return
+        }
         if (!rollChance(showChance)) return
         if (System.currentTimeMillis() - lastShownAt < cooldownSeconds * 1000L) return
         if (!FullscreenGate.canShow()) return

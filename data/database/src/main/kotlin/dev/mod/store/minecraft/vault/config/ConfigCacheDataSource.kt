@@ -28,6 +28,7 @@ internal class ConfigCacheDataSource(
             interstitial = settings.getInt(KEY_INTER_CHANCE, 100),
         ),
         interstitialCooldownSeconds = settings.getInt(KEY_COOLDOWN, 60),
+        interstitialSkipsBeforeFirst = settings.getInt(KEY_INTER_SKIPS, 0),
         nativePreloadSize = settings.getInt(KEY_PRELOAD, 3),
         nativeInterval = settings.getInt(KEY_INTERVAL, 3),
         nativeKind = NativeKind.fromRaw(settings.getStringOrNull(KEY_NATIVE_KIND)),
@@ -51,6 +52,7 @@ internal class ConfigCacheDataSource(
         settings.putInt(KEY_NATIVE_CHANCE, config.adChance.native)
         settings.putInt(KEY_INTER_CHANCE, config.adChance.interstitial)
         settings.putInt(KEY_COOLDOWN, config.interstitialCooldownSeconds)
+        settings.putInt(KEY_INTER_SKIPS, config.interstitialSkipsBeforeFirst)
         settings.putInt(KEY_PRELOAD, config.nativePreloadSize)
         settings.putInt(KEY_INTERVAL, config.nativeInterval)
         settings.putString(KEY_NATIVE_KIND, config.nativeKind.name)
@@ -68,6 +70,7 @@ internal class ConfigCacheDataSource(
         const val KEY_NATIVE_CHANCE = "cfg.native.chance"
         const val KEY_INTER_CHANCE = "cfg.inter.chance"
         const val KEY_COOLDOWN = "cfg.cooldown"
+        const val KEY_INTER_SKIPS = "cfg.inter.skips"
         const val KEY_PRELOAD = "cfg.preload"
         const val KEY_INTERVAL = "cfg.interval"
         const val KEY_NATIVE_KIND = "cfg.native.kind"

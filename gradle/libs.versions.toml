@@ -30,7 +30,7 @@ coil = "3.1.0"
 napier = "2.7.1"
 
 # Monetization / analytics / review (same vendors as before)
-cas = "4.6.5"
+cas = "4.8.0"
 appMetrica = "7.14.0"
 playReview = "2.0.2"
 
