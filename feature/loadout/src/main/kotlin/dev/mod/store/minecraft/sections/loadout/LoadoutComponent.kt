@@ -5,6 +5,7 @@ import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
+import dev.mod.store.minecraft.core.ads.ReviewPrompt
 import dev.mod.store.minecraft.core.ads.ScreenAds
 import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.core.ui.state.FaultMessages
@@ -44,6 +45,7 @@ class DefaultLoadoutComponent(
     private val recordDownload: RecordDownloadUseCase by inject()
     private val faults: FaultMessages by inject()
     private val screenAds: ScreenAds by inject()
+    private val reviewPrompt: ReviewPrompt by inject()
 
     private val store = instanceKeeper.getStore {
         LoadoutStoreFactory(
@@ -55,6 +57,7 @@ class DefaultLoadoutComponent(
             isDownloaded = isDownloaded,
             openFile = openFile,
             recordDownload = recordDownload,
+            reviewPrompt = reviewPrompt,
             faults = faults,
         ).create()
     }

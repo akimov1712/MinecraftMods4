@@ -5,6 +5,7 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.arkivanov.mvikotlin.extensions.coroutines.coroutineBootstrapper
+import dev.mod.store.minecraft.core.ads.ReviewPrompt
 import dev.mod.store.minecraft.core.ui.state.FaultMessages
 import dev.mod.store.minecraft.core.ui.state.ScreenStage
 import dev.mod.store.minecraft.domain.creation.FetchCreationUseCase
@@ -92,6 +93,7 @@ internal class LoadoutStoreFactory(
     private val isDownloaded: IsCreationDownloadedUseCase,
     private val openFile: OpenCreationFileUseCase,
     private val recordDownload: RecordDownloadUseCase,
+    private val reviewPrompt: ReviewPrompt,
     private val faults: FaultMessages,
 ) {
 
@@ -233,6 +235,9 @@ internal class LoadoutStoreFactory(
                             // never reaches this branch, so only real downloads reach the stats.
                             // Fire and forget — the reader is not kept waiting on a statistic.
                             scope.launch { recordDownload(creationId) }
+                            // The file is on the device: the only moment in this app worth asking
+                            // for a rating at. Play shows the form at most once per install.
+                            reviewPrompt.onFileSaved()
                         }
                         DownloadStatus.Failed -> {
                             cancelStall(url)

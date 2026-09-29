@@ -1547,22 +1547,6 @@ private fun ReportSheet(
 
                 Column(verticalArrangement = Arrangement.spacedBy(7.dp)) {
                     Text(
-                        text = stringResource(R.string.spotlight_report_email_label),
-                        color = Palette.TextMuted,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.SemiBold,
-                    )
-                    OutlineField(
-                        value = form.email,
-                        onValueChange = { component.onIntent(Intent.ChangeReportEmail(it)) },
-                        modifier = Modifier.fillMaxWidth(),
-                        placeholder = stringResource(R.string.spotlight_report_email_hint),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                    )
-                }
-
-                Column(verticalArrangement = Arrangement.spacedBy(7.dp)) {
-                    Text(
                         text = stringResource(R.string.spotlight_report_message_label),
                         color = Palette.TextMuted,
                         fontSize = 14.sp,

@@ -1,41 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.cas)
 }
 
 val appArtifactIdValue: String = providers.gradleProperty("appArtifactId").getOrElse("app")
 val appApplicationId: String = "dev.modstore.$appArtifactIdValue"
-
-cas {
-    casId = appApplicationId
-    includeOptimalAds = true
-    adapters {
-        ironSource = true
-        googleAds = true
-        unityAds = true
-        kidoz = true
-        liftoffMonetize = true
-        inMobi = true
-        chartboost = true
-        dtExchange = true
-        mintegral = true
-        appLovin = true
-        audienceNetwork = true
-        pangle = true
-        yangoAds = true
-        bigoAds = true
-        casExchange = true
-        startIO = true
-        hyprMX = true
-        ysoNetwork = true
-        ogury = true
-        prado = true
-        superAwesome = true
-        smaato = true
-        maticoo = true
-    }
-}
 
 val appVersionCodeValue: Int = providers.gradleProperty("appVersionCode").map(String::toInt).getOrElse(1)
 val appVersionNameValue: String = providers.gradleProperty("appVersionName").getOrElse("1.0")

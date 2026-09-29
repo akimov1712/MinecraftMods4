@@ -26,7 +26,6 @@ val faqEntries: List<FaqEntry> = listOf(
     FaqEntry("what", R.string.faq_what_q, R.string.faq_what_a, R.string.faq_what_chip),
     FaqEntry("internet", R.string.faq_internet_q, R.string.faq_internet_a, R.string.faq_internet_chip),
     FaqEntry("free", R.string.faq_free_q, R.string.faq_free_a, R.string.faq_free_chip),
-    FaqEntry("ads", R.string.faq_ads_q, R.string.faq_ads_a, R.string.faq_ads_chip),
     FaqEntry("fresh", R.string.faq_fresh_q, R.string.faq_fresh_a, R.string.faq_fresh_chip),
     FaqEntry("safe", R.string.faq_safe_q, R.string.faq_safe_a, R.string.faq_safe_chip),
 )

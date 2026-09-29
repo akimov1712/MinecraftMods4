@@ -227,23 +227,6 @@ private fun FormPage(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                FieldLabel(stringResource(R.string.outreach_email_label))
-                OutlineField(
-                    value = state.email,
-                    onValueChange = { onIntent(Intent.ChangeEmail(it)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    placeholder = stringResource(R.string.outreach_email_hint),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                )
-                Text(
-                    text = stringResource(R.string.outreach_email_help),
-                    color = Palette.TextFaint,
-                    fontSize = 13.sp,
-                    lineHeight = 18.sp,
-                )
-
-                Spacer(Modifier.height(6.dp))
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,

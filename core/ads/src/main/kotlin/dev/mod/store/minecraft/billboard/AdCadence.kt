@@ -24,8 +24,15 @@ object AdCadence {
     /** Furthest apart they may be, so a list never runs dry of them. */
     const val MAX = 5
 
+    /** No breaks at all — what a build carrying no ad SDK reports. */
+    const val NONE = 0
+
+    /**
+     * A non-positive interval means this build places no list ads, and no list then leaves a gap
+     * for a slot that cannot fill.
+     */
     fun of(configInterval: Int): Int =
-        if (configInterval > 0) configInterval.coerceIn(MIN, MAX) else DEFAULT
+        if (configInterval > 0) configInterval.coerceIn(MIN, MAX) else NONE
 
     /** True when an ad belongs after the item at [index] (zero-based) at this [cadence]. */
     fun breaksAfter(index: Int, cadence: Int = DEFAULT): Boolean =

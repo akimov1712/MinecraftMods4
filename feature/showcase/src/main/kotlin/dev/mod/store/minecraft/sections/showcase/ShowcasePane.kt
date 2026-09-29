@@ -43,6 +43,7 @@ fun ShowcasePane(
             HomeFeed(
                 state = state,
                 nativeAdInterval = component.nativeAdInterval,
+                hasNativeAd = component.hasNativeAd,
                 onIntent = component::onIntent,
                 onOpenCreation = component::openCreation,
                 modifier = Modifier.fillMaxSize(),

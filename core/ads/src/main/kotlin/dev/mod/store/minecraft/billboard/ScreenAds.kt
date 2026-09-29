@@ -34,6 +34,7 @@ interface ScreenAds {
 
 /** Identity + flavour values the controller needs, supplied by :app (which has BuildConfig). */
 data class BillboardConfig(
+    /** Kept for when the ad SDK returns; nothing reads it while the app ships without ads. */
     val casId: String,
     val metricaKey: String,
     val debug: Boolean,

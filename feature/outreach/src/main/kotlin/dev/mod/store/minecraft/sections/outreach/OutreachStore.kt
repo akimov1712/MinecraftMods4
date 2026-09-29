@@ -13,8 +13,6 @@ import dev.mod.store.minecraft.feature.outreach.OutreachStore.Label
 import dev.mod.store.minecraft.feature.outreach.OutreachStore.State
 import kotlinx.coroutines.launch
 
-private const val MAX_EMAIL_LENGTH = 64
-
 /** The screen shows a live counter against this, so it is not private to the store. */
 const val MAX_MESSAGE_LENGTH = 2000
 
@@ -25,7 +23,6 @@ interface OutreachStore : Store<Intent, State, Label> {
 
     sealed interface Intent {
         data class SelectMode(val mode: OutreachMode) : Intent
-        data class ChangeEmail(val value: String) : Intent
         data class ChangeMessage(val value: String) : Intent
         data object Submit : Intent
 
@@ -35,13 +32,13 @@ interface OutreachStore : Store<Intent, State, Label> {
 
     data class State(
         val mode: OutreachMode = OutreachMode.Recommendation,
-        val email: String = "",
         val message: String = "",
         val sending: Boolean = false,
         /** True once a message went through — the screen swaps the form for a confirmation. */
         val sent: Boolean = false,
     ) {
-        val canSubmit: Boolean get() = !sending && email.isNotBlank() && message.isNotBlank()
+        // No address is asked for, so the message alone decides whether this can be sent.
+        val canSubmit: Boolean get() = !sending && message.isNotBlank()
     }
 
     sealed interface Label {
@@ -67,7 +64,6 @@ internal class OutreachStoreFactory(
 
     private sealed interface Message {
         data class ModeSet(val mode: OutreachMode) : Message
-        data class EmailSet(val value: String) : Message
         data class MessageSet(val value: String) : Message
         data class Sending(val value: Boolean) : Message
         data object Cleared : Message
@@ -76,10 +72,9 @@ internal class OutreachStoreFactory(
 
     private fun State.reduce(message: Message): State = when (message) {
         is Message.ModeSet -> copy(mode = message.mode)
-        is Message.EmailSet -> copy(email = message.value)
         is Message.MessageSet -> copy(message = message.value)
         is Message.Sending -> copy(sending = message.value)
-        Message.Cleared -> copy(email = "", message = "", sending = false)
+        Message.Cleared -> copy(message = "", sending = false)
         is Message.SentSet -> copy(sent = message.value)
     }
 
@@ -89,8 +84,6 @@ internal class OutreachStoreFactory(
         override fun executeIntent(intent: Intent) {
             when (intent) {
                 is Intent.SelectMode -> dispatch(Message.ModeSet(intent.mode))
-                is Intent.ChangeEmail ->
-                    if (intent.value.length <= MAX_EMAIL_LENGTH) dispatch(Message.EmailSet(intent.value))
                 is Intent.ChangeMessage ->
                     if (intent.value.length <= MAX_MESSAGE_LENGTH) dispatch(Message.MessageSet(intent.value))
                 Intent.Submit -> submit()
@@ -104,8 +97,8 @@ internal class OutreachStoreFactory(
             scope.launch {
                 dispatch(Message.Sending(true))
                 val outcome = when (current.mode) {
-                    OutreachMode.Recommendation -> submitRecommendation(current.email, current.message)
-                    OutreachMode.Report -> submitReport(current.email, current.message)
+                    OutreachMode.Recommendation -> submitRecommendation(current.message)
+                    OutreachMode.Report -> submitReport(current.message)
                 }
                 when (outcome) {
                     is Outcome.Done -> {

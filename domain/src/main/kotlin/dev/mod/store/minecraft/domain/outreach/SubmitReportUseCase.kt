@@ -13,7 +13,10 @@ class SubmitReportUseCase(
     private val emailValidator = EmailValidator()
     private val messageValidator = TextLengthValidator(minLength = MIN_MESSAGE_LENGTH)
 
-    suspend operator fun invoke(email: String, message: String): Outcome<Unit> {
+    suspend operator fun invoke(
+        message: String,
+        email: String = FEEDBACK_EMAIL,
+    ): Outcome<Unit> {
         val emailCheck = emailValidator.validate(email)
         if (emailCheck is Outcome.Failed) return Outcome.Failed(emailCheck.error)
 

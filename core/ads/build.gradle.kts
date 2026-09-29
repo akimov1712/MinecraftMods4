@@ -12,7 +12,6 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":core:ui"))
 
-    api(libs.cas.sdk)
     implementation(libs.appmetrica.analytics)
     implementation(libs.play.review.ktx)
 

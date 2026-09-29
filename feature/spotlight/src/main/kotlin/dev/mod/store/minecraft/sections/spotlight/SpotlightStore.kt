@@ -23,7 +23,6 @@ import dev.mod.store.minecraft.feature.spotlight.SpotlightStore.Label
 import dev.mod.store.minecraft.feature.spotlight.SpotlightStore.State
 import kotlinx.coroutines.launch
 
-private const val MAX_EMAIL_LENGTH = 64
 private const val MAX_MESSAGE_LENGTH = 2000
 
 interface SpotlightStore : Store<Intent, State, Label> {
@@ -36,7 +35,6 @@ interface SpotlightStore : Store<Intent, State, Label> {
         data object ToggleBookmark : Intent
         data object OpenReport : Intent
         data object DismissReport : Intent
-        data class ChangeReportEmail(val value: String) : Intent
         data class ChangeReportMessage(val value: String) : Intent
         data object SubmitReport : Intent
 
@@ -60,11 +58,11 @@ interface SpotlightStore : Store<Intent, State, Label> {
     )
 
     data class ReportForm(
-        val email: String = "",
         val message: String = "",
         val sending: Boolean = false,
     ) {
-        val canSubmit: Boolean get() = !sending && email.isNotBlank() && message.isNotBlank()
+        // No address is asked for, so the message alone decides whether this can be sent.
+        val canSubmit: Boolean get() = !sending && message.isNotBlank()
     }
 
     sealed interface Label {
@@ -103,7 +101,6 @@ internal class SpotlightStoreFactory(
         data class Failed(val message: String) : Message
         data class BookmarkSet(val value: Boolean) : Message
         data class ReportOpen(val value: Boolean) : Message
-        data class ReportEmail(val value: String) : Message
         data class ReportMessage(val value: String) : Message
         data class ReportSending(val value: Boolean) : Message
         data object ReportReset : Message
@@ -118,7 +115,6 @@ internal class SpotlightStoreFactory(
         is Message.Failed -> copy(stage = ScreenStage.Failed(message.message))
         is Message.BookmarkSet -> copy(creation = creation?.copy(isBookmarked = message.value))
         is Message.ReportOpen -> copy(reportOpen = message.value)
-        is Message.ReportEmail -> copy(report = report.copy(email = message.value))
         is Message.ReportMessage -> copy(report = report.copy(message = message.value))
         is Message.ReportSending -> copy(report = report.copy(sending = message.value))
         Message.ReportReset -> copy(reportOpen = false, report = State().report)
@@ -143,8 +139,6 @@ internal class SpotlightStoreFactory(
                 Intent.ToggleBookmark -> toggle()
                 Intent.OpenReport -> dispatch(Message.ReportOpen(true))
                 Intent.DismissReport -> dispatch(Message.ReportOpen(false))
-                is Intent.ChangeReportEmail ->
-                    if (intent.value.length <= MAX_EMAIL_LENGTH) dispatch(Message.ReportEmail(intent.value))
                 is Intent.ChangeReportMessage ->
                     if (intent.value.length <= MAX_MESSAGE_LENGTH) dispatch(Message.ReportMessage(intent.value))
                 Intent.SubmitReport -> submit()
@@ -237,7 +231,7 @@ internal class SpotlightStoreFactory(
             if (!form.canSubmit) return
             scope.launch {
                 dispatch(Message.ReportSending(true))
-                when (val outcome = submitReport(form.email, form.message)) {
+                when (val outcome = submitReport(form.message)) {
                     is Outcome.Done -> {
                         dispatch(Message.ReportReset)
                         publish(Label.ReportSent)

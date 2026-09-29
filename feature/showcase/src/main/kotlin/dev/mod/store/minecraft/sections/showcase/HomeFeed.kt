@@ -82,6 +82,7 @@ private val SIDE_PADDING = 16.dp
 fun HomeFeed(
     state: ShowcaseStore.State,
     nativeAdInterval: Int,
+    hasNativeAd: Boolean,
     onIntent: (Intent) -> Unit,
     onOpenCreation: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -115,7 +116,7 @@ fun HomeFeed(
 
             state.digest.isEmpty && stage.isLoading -> digestSkeleton()
 
-            else -> digestContent(state.digest, onIntent, onOpenCreation)
+            else -> digestContent(state.digest, hasNativeAd, onIntent, onOpenCreation)
         }
     }
 }
@@ -144,6 +145,7 @@ private fun PagingTrigger(
 
 private fun LazyListScope.digestContent(
     digest: HomeDigest,
+    hasNativeAd: Boolean,
     onIntent: (Intent) -> Unit,
     onOpenCreation: (Int) -> Unit,
 ) {
@@ -181,14 +183,16 @@ private fun LazyListScope.digestContent(
         }
     }
 
-    item(key = "ad_top") {
-        NativeSlot(
-            placement = AdPlacement.HOME_LIST_NATIVE,
-            slotKey = "home_top",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = SIDE_PADDING),
-        )
+    if (hasNativeAd) {
+        item(key = "ad_top") {
+            NativeSlot(
+                placement = AdPlacement.HOME_LIST_NATIVE,
+                slotKey = "home_top",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = SIDE_PADDING),
+            )
+        }
     }
 
     if (digest.popular.isNotEmpty()) {
@@ -222,14 +226,16 @@ private fun LazyListScope.digestContent(
         }
     }
 
-    item(key = "ad_middle") {
-        NativeSlot(
-            placement = AdPlacement.HOME_LIST_NATIVE,
-            slotKey = "home_middle",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = SIDE_PADDING),
-        )
+    if (hasNativeAd) {
+        item(key = "ad_middle") {
+            NativeSlot(
+                placement = AdPlacement.HOME_LIST_NATIVE,
+                slotKey = "home_middle",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = SIDE_PADDING),
+            )
+        }
     }
 
     if (digest.fresh.isNotEmpty()) {
@@ -273,14 +279,16 @@ private fun LazyListScope.digestContent(
         }
     }
 
-    item(key = "ad_bottom") {
-        NativeSlot(
-            placement = AdPlacement.HOME_LIST_NATIVE,
-            slotKey = "home_bottom",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = SIDE_PADDING),
-        )
+    if (hasNativeAd) {
+        item(key = "ad_bottom") {
+            NativeSlot(
+                placement = AdPlacement.HOME_LIST_NATIVE,
+                slotKey = "home_bottom",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = SIDE_PADDING),
+            )
+        }
     }
 }
 
