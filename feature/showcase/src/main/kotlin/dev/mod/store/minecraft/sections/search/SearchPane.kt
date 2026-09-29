@@ -55,6 +55,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mod.store.minecraft.core.ads.AdCadence
 import dev.mod.store.minecraft.core.ads.NativeSlot
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.component.CreationCard
 import dev.mod.store.minecraft.core.ui.component.CreationCardSkeleton
@@ -263,6 +264,7 @@ private fun LazyListScope.suggestions(
         if (AdCadence.breaksAfter(index, cadence)) {
             item(key = "suggest_ad_$index") {
                 NativeSlot(
+                    placement = AdPlacement.SEARCH_LIST_NATIVE,
                     slotKey = "search_suggest_$index",
                     modifier = Modifier
                         .fillMaxWidth()
@@ -310,6 +312,7 @@ private fun LazyListScope.results(
         if (AdCadence.breaksAfter(index, cadence)) {
             item(key = "result_ad_$index") {
                 NativeSlot(
+                    placement = AdPlacement.SEARCH_LIST_NATIVE,
                     slotKey = "search_$index",
                     modifier = Modifier
                         .fillMaxWidth()

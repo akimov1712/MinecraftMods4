@@ -6,6 +6,7 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import dev.mod.store.minecraft.core.ads.ScreenAds
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.core.ui.state.FaultMessages
 import dev.mod.store.minecraft.domain.creation.FetchCreationUseCase
 import dev.mod.store.minecraft.domain.creation.FetchFileSizeUseCase
@@ -65,7 +66,8 @@ class DefaultLoadoutComponent(
         store.accept(intent)
     }
 
-    override val hasNativeAd: Boolean get() = screenAds.hasNativeAd
+    override val hasNativeAd: Boolean
+        get() = screenAds.hasNativeAd(AdPlacement.DOWNLOADS_LIST_NATIVE)
 
     override fun back() = onBack()
 }

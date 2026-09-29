@@ -1,6 +1,7 @@
 package dev.mod.store.minecraft.data.network.mapper
 
 import dev.mod.store.minecraft.domain.config.AdChance
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.domain.config.AdToggles
 import dev.mod.store.minecraft.domain.config.ConfigEntity
 import dev.mod.store.minecraft.domain.config.NativeKind
@@ -10,6 +11,7 @@ import dev.mod.store.minecraft.domain.outreach.RecommendationEntity
 import dev.mod.store.minecraft.domain.reaction.ReactionSummary
 import dev.mod.store.minecraft.domain.reaction.ReactionType
 import dev.mod.store.minecraft.domain.outreach.ReportEntity
+import dev.mod.store.minecraft.data.network.dto.AdPlacementDto
 import dev.mod.store.minecraft.data.network.dto.ConfigDto
 import dev.mod.store.minecraft.data.network.dto.CreationDto
 import dev.mod.store.minecraft.data.network.dto.ReactionsDto
@@ -79,7 +81,11 @@ private fun String.unescapeHtml(): String = this
 private fun String.toEpochMillisOrNull(): Long? =
     takeIf { it.isNotBlank() }?.let { runCatching { Instant.parse(it).toEpochMilli() }.getOrNull() }
 
-internal fun ConfigDto.toEntity(): ConfigEntity = ConfigEntity(
+/**
+ * @param placements the response's `ads` array. Null — an older server, or no list configured at
+ * all — leaves every slot enabled rather than silently blanking the app's ads.
+ */
+internal fun ConfigDto.toEntity(placements: List<AdPlacementDto>? = null): ConfigEntity = ConfigEntity(
     adToggles = AdToggles(
         appOpen = isOpenAdsEnabled,
         native = isNativeAdsEnabled,
@@ -94,7 +100,17 @@ internal fun ConfigDto.toEntity(): ConfigEntity = ConfigEntity(
     nativePreloadSize = countNativePreload,
     nativeInterval = adsInterval,
     nativeKind = NativeKind.fromRaw(adsNativeType),
+    enabledPlacements = placements.toEnabledPlacements(),
 )
+
+private fun List<AdPlacementDto>?.toEnabledPlacements(): Set<AdPlacement> {
+    if (this == null) return AdPlacement.entries.toSet()
+    val known = mapNotNull { dto -> AdPlacement.fromId(dto.adId)?.to(dto.isEnabled ?: true) }
+    // A slot the panel has not heard of yet is left on, so shipping a new placement does not
+    // require a backend change first.
+    val unmentioned = AdPlacement.entries - known.map { it.first }.toSet()
+    return (known.filter { it.second }.map { it.first } + unmentioned).toSet()
+}
 
 internal fun ReportEntity.toDto(): ReportDto = ReportDto(message = message, email = email)
 

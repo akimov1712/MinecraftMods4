@@ -1,5 +1,7 @@
 package dev.mod.store.minecraft.core.ads
 
+import dev.mod.store.minecraft.domain.config.AdPlacement
+
 /**
  * The only surface sections see of the ad subsystem. Native list/fullscreen ads are the
  * `NativeSlot` composables; this covers fullscreen-on-navigation and the list ad cadence.
@@ -8,14 +10,17 @@ interface ScreenAds {
     /** How many catalog items between inline native ads (0 = none). */
     val nativeInterval: Int
 
-    /** True once at least one native ad is buffered and a slot can render immediately. */
-    val hasNativeAd: Boolean
+    /**
+     * True when [placement] may run — native ads on for the app and this slot left on in the admin
+     * panel — and at least one ad is buffered, so a slot can render immediately.
+     */
+    fun hasNativeAd(placement: AdPlacement): Boolean
 
     /**
-     * Whether native ads are switched on at all by the remote config. False means no pool was ever
-     * started, so waiting for one to fill is waiting for something that cannot happen.
+     * Whether [placement] may run at all, regardless of whether an ad is loaded yet. False means
+     * nothing will ever fill it, so waiting for one is waiting for something that cannot happen.
      */
-    val nativeEnabled: Boolean
+    fun nativeAllowed(placement: AdPlacement): Boolean
 
     /** Called when the Spotlight screen is shown — may surface an interstitial. */
     fun onSpotlightEntered()

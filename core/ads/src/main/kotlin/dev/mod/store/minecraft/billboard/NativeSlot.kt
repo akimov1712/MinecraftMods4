@@ -18,6 +18,7 @@ import dev.mod.store.minecraft.core.ads.internal.NativeAdViews
 import dev.mod.store.minecraft.core.ads.internal.NativePool
 import dev.mod.store.minecraft.core.ads.internal.buildNativeAdViews
 import dev.mod.store.minecraft.core.ads.internal.rollChance
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import kotlinx.coroutines.delay
 
 private const val ACQUIRE_ATTEMPTS = 10
@@ -34,6 +35,7 @@ internal object NativeRegistry {
     private var pool: NativePool? = null
     private var chance: Int = 100
     private val cache = HashMap<String, NativeHolder>()
+    private var placements: Set<AdPlacement> = AdPlacement.entries.toSet()
 
     var enabled: Boolean = false
         private set
@@ -42,17 +44,27 @@ internal object NativeRegistry {
     var interval: Int = 0
         private set
 
-    fun configure(pool: NativePool, chance: Int, interval: Int) {
+    fun configure(pool: NativePool, chance: Int, interval: Int, placements: Set<AdPlacement>) {
         this.pool = pool
         this.chance = chance
         this.interval = interval
+        this.placements = placements
         enabled = true
     }
 
-    fun rollShow(): Boolean = enabled && rollChance(chance)
+    /**
+     * Whether this slot may run at all: native ads switched on for the app, and this particular
+     * slot left on in the admin panel. Independent of whether an ad happens to be loaded.
+     */
+    fun allows(placement: AdPlacement): Boolean = enabled && placement in placements
+
+    fun rollShow(placement: AdPlacement): Boolean = allows(placement) && rollChance(chance)
 
     /** Whether a preloaded ad is sitting in the pool right now. */
     fun hasAd(): Boolean = pool?.hasAd() == true
+
+    /** Whether [placement] may run *and* has something to show this instant. */
+    fun hasAd(placement: AdPlacement): Boolean = allows(placement) && hasAd()
 
     fun acquire(context: Context, key: String, fullscreen: Boolean): NativeHolder? {
         cache[key]?.let { return it }
@@ -68,13 +80,21 @@ internal object NativeRegistry {
         pool = null
         enabled = false
         interval = 0
+        placements = AdPlacement.entries.toSet()
     }
 }
 
-/** Inline native ad for use between list items. Renders nothing if no ad is available. */
+/**
+ * Inline native ad for use between list items. Renders nothing when the slot is switched off in the
+ * admin panel, when the chance roll goes against it, or when no ad is available.
+ *
+ * Call sites that draw their own wrapper around the slot — padding, a divider, a spacer — should
+ * ask [dev.mod.store.minecraft.core.ads.ScreenAds.hasNativeAd] about the same placement first, or
+ * the wrapper is left behind around nothing.
+ */
 @Composable
-fun NativeSlot(slotKey: String, modifier: Modifier = Modifier) {
-    val show = remember(slotKey) { NativeRegistry.rollShow() }
+fun NativeSlot(placement: AdPlacement, slotKey: String, modifier: Modifier = Modifier) {
+    val show = remember(slotKey) { NativeRegistry.rollShow(placement) }
     if (!show) return
     AdHost(slotKey = slotKey, fullscreen = false, modifier = modifier)
 }
@@ -86,8 +106,12 @@ fun NativeSlot(slotKey: String, modifier: Modifier = Modifier) {
  * so can never have its bottom clipped off.
  */
 @Composable
-fun FullscreenNativeSlot(slotKey: String, modifier: Modifier = Modifier.fillMaxSize()) {
-    if (!NativeRegistry.enabled) return
+fun FullscreenNativeSlot(
+    placement: AdPlacement,
+    slotKey: String,
+    modifier: Modifier = Modifier.fillMaxSize(),
+) {
+    if (!NativeRegistry.allows(placement)) return
     AdHost(slotKey = slotKey, fullscreen = true, modifier = modifier)
 }
 

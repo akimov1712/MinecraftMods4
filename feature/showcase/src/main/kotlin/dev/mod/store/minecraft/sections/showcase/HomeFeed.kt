@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mod.store.minecraft.core.ads.AdCadence
 import dev.mod.store.minecraft.core.ads.NativeSlot
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.component.BannerSkeleton
 import dev.mod.store.minecraft.core.ui.component.CreationCard
@@ -182,6 +183,7 @@ private fun LazyListScope.digestContent(
 
     item(key = "ad_top") {
         NativeSlot(
+            placement = AdPlacement.HOME_LIST_NATIVE,
             slotKey = "home_top",
             modifier = Modifier
                 .fillMaxWidth()
@@ -222,6 +224,7 @@ private fun LazyListScope.digestContent(
 
     item(key = "ad_middle") {
         NativeSlot(
+            placement = AdPlacement.HOME_LIST_NATIVE,
             slotKey = "home_middle",
             modifier = Modifier
                 .fillMaxWidth()
@@ -272,6 +275,7 @@ private fun LazyListScope.digestContent(
 
     item(key = "ad_bottom") {
         NativeSlot(
+            placement = AdPlacement.HOME_LIST_NATIVE,
             slotKey = "home_bottom",
             modifier = Modifier
                 .fillMaxWidth()
@@ -415,6 +419,7 @@ private fun LazyListScope.browseContent(
         if (AdCadence.breaksAfter(index, cadence)) {
             item(key = "browse_ad_$index") {
                 NativeSlot(
+                    placement = AdPlacement.CATALOG_LIST_NATIVE,
                     slotKey = "browse_$index",
                     modifier = Modifier
                         .fillMaxWidth()

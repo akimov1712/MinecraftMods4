@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.mod.store.minecraft.core.ads.AdCadence
 import dev.mod.store.minecraft.core.ads.NativeSlot
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.component.CreationCard
 import dev.mod.store.minecraft.core.ui.component.CreationCardSkeleton
@@ -85,6 +86,7 @@ fun StashPane(
                     if (AdCadence.breaksAfter(index, cadence)) {
                         item(key = "ad_$index") {
                             NativeSlot(
+                                placement = AdPlacement.FAVORITES_LIST_NATIVE,
                                 slotKey = "stash_$index",
                                 modifier = Modifier.fillMaxWidth(),
                             )

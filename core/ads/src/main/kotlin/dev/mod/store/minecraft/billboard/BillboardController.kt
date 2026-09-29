@@ -12,6 +12,7 @@ import dev.mod.store.minecraft.core.ads.internal.InterstitialUnit
 import dev.mod.store.minecraft.core.ads.internal.NativePool
 import dev.mod.store.minecraft.core.ads.internal.ReviewPrompter
 import dev.mod.store.minecraft.core.ads.internal.initializeCas
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.domain.config.ConfigEntity
 import dev.mod.store.minecraft.domain.config.FetchConfigUseCase
 import kotlinx.coroutines.CompletableDeferred
@@ -46,9 +47,9 @@ class BillboardController internal constructor(
 
     override val nativeInterval: Int get() = NativeRegistry.interval
 
-    override val hasNativeAd: Boolean get() = NativeRegistry.hasAd()
+    override fun hasNativeAd(placement: AdPlacement): Boolean = NativeRegistry.hasAd(placement)
 
-    override val nativeEnabled: Boolean get() = NativeRegistry.enabled
+    override fun nativeAllowed(placement: AdPlacement): Boolean = NativeRegistry.allows(placement)
 
     override suspend fun awaitBoot() = booted.await()
 
@@ -100,6 +101,7 @@ class BillboardController internal constructor(
                 pool = pool,
                 chance = settings.adChance.native,
                 interval = settings.nativeInterval,
+                placements = settings.enabledPlacements,
             )
         }
     }

@@ -90,6 +90,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import dev.mod.store.minecraft.core.ads.NativeSlot
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.component.CreationPoster
 import dev.mod.store.minecraft.core.ui.component.ErrorState
@@ -977,7 +978,12 @@ private fun LazyListScope.overviewChapter(
     }
 
     // Once the description has been read — the natural pause in the chapter.
-    overviewAd(component, key = "overview_ad_description", slotKey = "spotlight_after_description")
+    overviewAd(
+        component,
+        placement = AdPlacement.ADDON_DETAILS_NATIVE,
+        key = "overview_ad_description",
+        slotKey = "spotlight_after_description",
+    )
 
     item(key = "overview_facts") {
         Spacer(Modifier.height(BLOCK_GAP))
@@ -1051,7 +1057,12 @@ private fun LazyListScope.overviewChapter(
         )
     }
 
-    overviewAd(component, key = "overview_ad_similar", slotKey = "spotlight_before_similar")
+    overviewAd(
+        component,
+        placement = AdPlacement.ADDON_RELATED_NATIVE,
+        key = "overview_ad_similar",
+        slotKey = "spotlight_before_similar",
+    )
 
     // What to open next, once this page has been read. Only mods the server picked from the same
     // app, and never this one, so every tile here is a real next step.
@@ -1102,13 +1113,15 @@ private fun LazyListScope.overviewChapter(
  */
 private fun LazyListScope.overviewAd(
     component: SpotlightComponent,
+    placement: AdPlacement,
     key: String,
     slotKey: String,
 ) {
-    if (!component.hasNativeAd) return
+    if (!component.hasNativeAd(placement)) return
     item(key = key) {
         Spacer(Modifier.height(BLOCK_GAP))
         NativeSlot(
+            placement = placement,
             slotKey = slotKey,
             modifier = Modifier
                 .fillMaxWidth()

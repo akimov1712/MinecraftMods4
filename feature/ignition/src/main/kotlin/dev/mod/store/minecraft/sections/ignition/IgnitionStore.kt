@@ -6,6 +6,7 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.arkivanov.mvikotlin.extensions.coroutines.coroutineBootstrapper
 import dev.mod.store.minecraft.core.ads.ScreenAds
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.feature.ignition.IgnitionStore.Intent
 import dev.mod.store.minecraft.feature.ignition.IgnitionStore.Label
 import dev.mod.store.minecraft.feature.ignition.IgnitionStore.Stage
@@ -118,7 +119,11 @@ internal class IgnitionStoreFactory(
                     if (state().stage == Stage.Ready) {
                         // Stage two's own slot has already taken an ad from the pool, so what the
                         // pool still holds is the *next* one — exactly the question being asked.
-                        publish(Label.Proceed(showPromo = screenAds.hasNativeAd))
+                        publish(
+                            Label.Proceed(
+                                showPromo = screenAds.hasNativeAd(AdPlacement.ADDON_OPEN_FULLSCREEN_NATIVE),
+                            ),
+                        )
                     }
             }
         }
@@ -144,14 +149,16 @@ internal class IgnitionStoreFactory(
 
                     // With native ads switched off there is no pool and nothing to wait for, so
                     // the rest of the budget is simply not spent.
-                    if (screenAds.nativeEnabled) {
+                    if (screenAds.nativeAllowed(AdPlacement.LOADER_NATIVE)) {
                         withTimeoutOrNull(remaining().coerceAtLeast(0L)) {
-                            while (!screenAds.hasNativeAd) delay(POLL_MS)
+                            while (!screenAds.hasNativeAd(AdPlacement.LOADER_NATIVE)) delay(POLL_MS)
                         }
                     }
                 } finally {
                     pacer.cancel()
-                    dispatch(Message.Ready(promoReady = screenAds.hasNativeAd))
+                    dispatch(
+                        Message.Ready(promoReady = screenAds.hasNativeAd(AdPlacement.LOADER_NATIVE)),
+                    )
                 }
 
                 // The budget is a ceiling on waiting, not a deadline for the ad network. An ad
@@ -159,8 +166,8 @@ internal class IgnitionStoreFactory(
                 // promoReady was a snapshot taken once — which is why the splash so often showed
                 // no promo while every list in the app showed one. Keep watching instead; the
                 // store's scope dies with the screen, so this stops when the reader leaves.
-                if (screenAds.nativeEnabled) {
-                    while (!screenAds.hasNativeAd) delay(POLL_MS)
+                if (screenAds.nativeAllowed(AdPlacement.LOADER_NATIVE)) {
+                    while (!screenAds.hasNativeAd(AdPlacement.LOADER_NATIVE)) delay(POLL_MS)
                     dispatch(Message.PromoArrived)
                 }
             }

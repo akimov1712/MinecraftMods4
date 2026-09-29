@@ -46,6 +46,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mod.store.minecraft.core.ads.NativeSlot
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.component.ErrorState
 import dev.mod.store.minecraft.core.ui.component.GlassIconButton
@@ -143,6 +144,7 @@ fun LoadoutPane(
                         if (showAds && (atBreak || closingShortList)) {
                             item(key = "ad_$index") {
                                 NativeSlot(
+                                    placement = AdPlacement.DOWNLOADS_LIST_NATIVE,
                                     slotKey = "loadout_$index",
                                     modifier = Modifier
                                         .fillMaxWidth()

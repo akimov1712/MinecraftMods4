@@ -48,6 +48,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mod.store.minecraft.core.ads.NativeSlot
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.component.GlassIconButton
 import dev.mod.store.minecraft.core.ui.effect.Appear
@@ -132,6 +133,7 @@ fun CompendiumPane(
                 if (component.hasNativeAd) {
                     item(key = "ad") {
                         NativeSlot(
+                            placement = AdPlacement.FAQ_NATIVE,
                             slotKey = "compendium",
                             modifier = Modifier
                                 .fillMaxWidth()

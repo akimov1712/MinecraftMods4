@@ -4,6 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import dev.mod.store.minecraft.core.ads.ScreenAds
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.koin.core.component.KoinComponent
@@ -28,7 +29,8 @@ class DefaultCompendiumComponent(
         CompendiumStoreFactory(storeFactory).create()
     }
 
-    override val hasNativeAd: Boolean get() = screenAds.hasNativeAd
+    override val hasNativeAd: Boolean
+        get() = screenAds.hasNativeAd(AdPlacement.FAQ_NATIVE)
 
     override val state: StateFlow<CompendiumStore.State> = store.stateFlow(lifecycle)
 

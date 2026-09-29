@@ -32,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.mod.store.minecraft.core.ads.NativeSlot
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.modifier.pressable
 import dev.mod.store.minecraft.core.ui.theme.Palette
@@ -80,6 +81,7 @@ fun WalkthroughPane(
             if (component.hasNativeAd) {
                 item(key = "ad") {
                     NativeSlot(
+                        placement = AdPlacement.GUIDE_NATIVE,
                         slotKey = "walkthrough",
                         modifier = Modifier
                             .fillMaxWidth()

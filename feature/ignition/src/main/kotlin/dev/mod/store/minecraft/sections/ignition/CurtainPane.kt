@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.mod.store.minecraft.core.ads.FullscreenNativeSlot
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.effect.tappable
 import dev.mod.store.minecraft.core.ui.theme.Palette
@@ -53,7 +54,10 @@ fun CurtainPane(
                 .statusBarsPadding()
                 .navigationBarsPadding(),
         ) {
-            FullscreenNativeSlot(slotKey = "curtain")
+            FullscreenNativeSlot(
+                placement = AdPlacement.ADDON_OPEN_FULLSCREEN_NATIVE,
+                slotKey = "curtain",
+            )
         }
 
         CloseKey(onClick = component::close)

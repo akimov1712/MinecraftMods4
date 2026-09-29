@@ -8,7 +8,17 @@ data class ConfigEntity(
     val nativePreloadSize: Int,
     val nativeInterval: Int,
     val nativeKind: NativeKind,
-)
+    /**
+     * Native slots the panel left switched on. Defaults to all of them, which is what an older
+     * server with no `ads` array — or a first launch with no cached list — means.
+     */
+    val enabledPlacements: Set<AdPlacement> = AdPlacement.entries.toSet(),
+) {
+
+    /** A slot is drawn only when the master native switch and its own switch are both on. */
+    fun isPlacementEnabled(placement: AdPlacement): Boolean =
+        adToggles.native && placement in enabledPlacements
+}
 
 /** Master on/off switches per ad placement. */
 data class AdToggles(

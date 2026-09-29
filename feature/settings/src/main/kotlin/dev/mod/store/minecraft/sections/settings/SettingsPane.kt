@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import dev.mod.store.minecraft.core.ads.NativeSlot
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.component.AppLogo
 import dev.mod.store.minecraft.core.ui.component.NoticeHost
@@ -209,7 +210,11 @@ fun SettingsPane(
             // The very end of the list, under the last row a reader would actually press.
             if (component.hasNativeAd) {
                 item(key = "ad") {
-                    NativeSlot(slotKey = "settings", modifier = Modifier.fillMaxWidth())
+                    NativeSlot(
+                        placement = AdPlacement.SETTINGS_NATIVE,
+                        slotKey = "settings",
+                        modifier = Modifier.fillMaxWidth(),
+                    )
                 }
             }
 

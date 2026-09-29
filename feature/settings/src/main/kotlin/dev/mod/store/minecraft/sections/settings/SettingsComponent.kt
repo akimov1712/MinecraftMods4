@@ -4,6 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import dev.mod.store.minecraft.core.ads.ScreenAds
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import dev.mod.store.minecraft.domain.bookmark.ClearBookmarksUseCase
@@ -39,7 +40,8 @@ class DefaultSettingsComponent(
         SettingsStoreFactory(storeFactory, observeBookmarkCount, clearBookmarks).create()
     }
 
-    override val hasNativeAd: Boolean get() = screenAds.hasNativeAd
+    override val hasNativeAd: Boolean
+        get() = screenAds.hasNativeAd(AdPlacement.SETTINGS_NATIVE)
 
     override val state: StateFlow<SettingsStore.State> = store.stateFlow(lifecycle)
     override val labels: Flow<SettingsStore.Label> = store.labels

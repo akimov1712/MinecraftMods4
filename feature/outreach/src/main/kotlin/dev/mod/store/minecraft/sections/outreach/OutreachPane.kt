@@ -46,6 +46,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mod.store.minecraft.core.ads.NativeSlot
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.component.GlassIconButton
 import dev.mod.store.minecraft.core.ui.component.NoticeHost
@@ -304,6 +305,7 @@ private fun FormPage(
             item(key = "ad") {
                 Spacer(Modifier.height(20.dp))
                 NativeSlot(
+                    placement = AdPlacement.SUGGEST_NATIVE,
                     slotKey = "outreach_form",
                     modifier = Modifier
                         .fillMaxWidth()
@@ -498,6 +500,7 @@ private fun SentPage(hasAd: Boolean, onCompose: () -> Unit) {
 
         if (hasAd) {
             NativeSlot(
+                placement = AdPlacement.SUGGEST_NATIVE,
                 slotKey = "outreach_sent",
                 modifier = Modifier.fillMaxWidth(),
             )

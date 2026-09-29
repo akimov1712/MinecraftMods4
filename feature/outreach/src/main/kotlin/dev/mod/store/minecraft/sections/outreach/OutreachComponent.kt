@@ -6,6 +6,7 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import dev.mod.store.minecraft.core.ads.ScreenAds
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.core.ui.state.FaultMessages
 import dev.mod.store.minecraft.domain.outreach.SubmitRecommendationUseCase
 import dev.mod.store.minecraft.domain.outreach.SubmitReportUseCase
@@ -46,7 +47,8 @@ class DefaultOutreachComponent(
         store.accept(intent)
     }
 
-    override val hasNativeAd: Boolean get() = screenAds.hasNativeAd
+    override val hasNativeAd: Boolean
+        get() = screenAds.hasNativeAd(AdPlacement.SUGGEST_NATIVE)
 
     override fun back() {
         onBack()

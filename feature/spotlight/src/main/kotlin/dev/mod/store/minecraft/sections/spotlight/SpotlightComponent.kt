@@ -8,6 +8,7 @@ import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import dev.mod.store.minecraft.core.ui.state.FaultMessages
 import dev.mod.store.minecraft.core.ads.ScreenAds
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.domain.bookmark.ToggleBookmarkUseCase
 import dev.mod.store.minecraft.domain.creation.FetchCreationUseCase
 import dev.mod.store.minecraft.domain.outreach.SubmitReportUseCase
@@ -24,7 +25,7 @@ interface SpotlightComponent {
     fun onIntent(intent: SpotlightStore.Intent)
 
     /** True when a native ad is buffered and a slot on this screen can fill immediately. */
-    val hasNativeAd: Boolean
+    fun hasNativeAd(placement: AdPlacement): Boolean
     fun back()
     fun openLoadout()
     fun openWalkthrough()
@@ -71,7 +72,7 @@ class DefaultSpotlightComponent(
         ).create()
     }
 
-    override val hasNativeAd: Boolean get() = screenAds.hasNativeAd
+    override fun hasNativeAd(placement: AdPlacement): Boolean = screenAds.hasNativeAd(placement)
 
     override val state: StateFlow<SpotlightStore.State> = store.stateFlow(lifecycle)
     override val labels: Flow<SpotlightStore.Label> = store.labels

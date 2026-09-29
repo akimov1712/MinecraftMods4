@@ -23,7 +23,7 @@ internal class ConfigRepositoryImpl(
             when (val outcome = networkCall { remote.fetchConfig() }) {
                 is Outcome.Done -> {
                     val config = outcome.value.config
-                    if (config != null) return Outcome.Done(config.toEntity())
+                    if (config != null) return Outcome.Done(config.toEntity(outcome.value.ads))
                     lastError = AppError.NetworkError.SERVER
                 }
 

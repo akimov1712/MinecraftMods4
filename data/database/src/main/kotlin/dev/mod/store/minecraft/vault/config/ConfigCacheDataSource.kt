@@ -2,6 +2,7 @@ package dev.mod.store.minecraft.data.database.config
 
 import com.russhwolf.settings.Settings
 import dev.mod.store.minecraft.domain.config.AdChance
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.domain.config.AdToggles
 import dev.mod.store.minecraft.domain.config.ConfigCache
 import dev.mod.store.minecraft.domain.config.ConfigEntity
@@ -30,7 +31,17 @@ internal class ConfigCacheDataSource(
         nativePreloadSize = settings.getInt(KEY_PRELOAD, 3),
         nativeInterval = settings.getInt(KEY_INTERVAL, 3),
         nativeKind = NativeKind.fromRaw(settings.getStringOrNull(KEY_NATIVE_KIND)),
+        enabledPlacements = readPlacements(),
     )
+
+    /**
+     * Nothing cached yet — a first launch with no network — means every slot is on, matching what
+     * a response without an `ads` array means.
+     */
+    private fun readPlacements(): Set<AdPlacement> {
+        val stored = settings.getStringOrNull(KEY_PLACEMENTS) ?: return AdPlacement.entries.toSet()
+        return stored.split(SEPARATOR).mapNotNull(AdPlacement::fromId).toSet()
+    }
 
     override fun write(config: ConfigEntity) {
         settings.putBoolean(KEY_OPEN_ENABLED, config.adToggles.appOpen)
@@ -43,6 +54,10 @@ internal class ConfigCacheDataSource(
         settings.putInt(KEY_PRELOAD, config.nativePreloadSize)
         settings.putInt(KEY_INTERVAL, config.nativeInterval)
         settings.putString(KEY_NATIVE_KIND, config.nativeKind.name)
+        settings.putString(
+            KEY_PLACEMENTS,
+            config.enabledPlacements.joinToString(SEPARATOR) { it.id },
+        )
     }
 
     private companion object {
@@ -56,5 +71,7 @@ internal class ConfigCacheDataSource(
         const val KEY_PRELOAD = "cfg.preload"
         const val KEY_INTERVAL = "cfg.interval"
         const val KEY_NATIVE_KIND = "cfg.native.kind"
+        const val KEY_PLACEMENTS = "cfg.native.placements"
+        const val SEPARATOR = ","
     }
 }

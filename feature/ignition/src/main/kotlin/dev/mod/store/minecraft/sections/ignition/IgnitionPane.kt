@@ -54,6 +54,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mod.store.minecraft.core.ads.FullscreenNativeSlot
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.core.ui.R
 import dev.mod.store.minecraft.core.ui.component.AppLogo
 import dev.mod.store.minecraft.core.ui.component.PillButton
@@ -392,6 +393,7 @@ private fun Promo(promoReady: Boolean, height: androidx.compose.ui.unit.Dp) {
             .padding(1.dp),
     ) {
         FullscreenNativeSlot(
+            placement = AdPlacement.LOADER_NATIVE,
             slotKey = "ignition",
             modifier = Modifier.fillMaxSize(),
         )

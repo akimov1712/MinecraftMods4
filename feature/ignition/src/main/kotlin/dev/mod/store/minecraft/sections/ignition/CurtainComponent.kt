@@ -2,6 +2,7 @@ package dev.mod.store.minecraft.feature.ignition
 
 import com.arkivanov.decompose.ComponentContext
 import dev.mod.store.minecraft.core.ads.ScreenAds
+import dev.mod.store.minecraft.domain.config.AdPlacement
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -22,7 +23,8 @@ class DefaultCurtainComponent(
 
     private val screenAds: ScreenAds by inject()
 
-    override val hasNativeAd: Boolean get() = screenAds.hasNativeAd
+    override val hasNativeAd: Boolean
+        get() = screenAds.hasNativeAd(AdPlacement.ADDON_OPEN_FULLSCREEN_NATIVE)
 
     override fun close() = onClose()
 }

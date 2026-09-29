@@ -6,6 +6,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class ConfigResponseDto(
     @SerialName("sdk") val config: ConfigDto? = null,
+    @SerialName("ads") val ads: List<AdPlacementDto>? = null,
+)
+
+/** One entry of the response's `ads` array: a native slot and the panel's switch for it. */
+@Serializable
+internal data class AdPlacementDto(
+    @SerialName("adId") val adId: String? = null,
+    @SerialName("label") val label: String? = null,
+    @SerialName("isEnabled") val isEnabled: Boolean? = null,
 )
 
 @Serializable
