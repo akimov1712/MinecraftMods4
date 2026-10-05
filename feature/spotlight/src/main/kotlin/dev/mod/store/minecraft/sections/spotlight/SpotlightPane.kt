@@ -448,9 +448,6 @@ private fun FactLine(creation: CreationEntity) {
         if (creation.rating > 0.0) {
             add(Icons.Filled.Star to formatRating(creation.rating) to Palette.Gold)
         }
-        if (creation.reactionCount > 0) {
-            add(Icons.Filled.LocalFireDepartment to formatCompact(creation.reactionCount) to Palette.Ember)
-        }
         if (creation.downloadsCount > 0) {
             add(Icons.Filled.Download to formatCompact(creation.downloadsCount) to Palette.Positive)
         }

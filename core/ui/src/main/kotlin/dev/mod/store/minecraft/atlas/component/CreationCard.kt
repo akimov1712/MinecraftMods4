@@ -129,13 +129,6 @@ fun CreationCard(
                         tint = Palette.Gold,
                     )
                 }
-                if (creation.reactionCount > 0) {
-                    MetaChip(
-                        text = formatCompact(creation.reactionCount),
-                        icon = Icons.Rounded.LocalFireDepartment,
-                        tint = Palette.Ember,
-                    )
-                }
             }
         }
     }

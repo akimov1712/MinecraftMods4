@@ -4,7 +4,7 @@ package dev.mod.store.minecraft.domain.creation
  * A single browsable/installable creation. [isBookmarked] is not part of the network payload —
  * it is merged in by the use case that combines the catalog with the local bookmark store.
  *
- * [rating], [reactionCount] and [publishedAtEpochMs] are the "social" numbers the
+ * [rating] and [publishedAtEpochMs] are the "social" numbers the
  * home screen decorates its cards with; they are absent from older payloads, hence the defaults.
  *
  * [trendingPosition], [similar] and [downloadsCount] only come with the single-mod request:
@@ -21,7 +21,6 @@ data class CreationEntity(
     val fileUrls: List<String>,
     val supportedVersions: List<String>,
     val rating: Double = 0.0,
-    val reactionCount: Int = 0,
     val publishedAtEpochMs: Long? = null,
     val isBookmarked: Boolean = false,
     val trendingPosition: Int? = null,

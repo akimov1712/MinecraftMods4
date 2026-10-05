@@ -29,7 +29,6 @@ internal fun CreationDto.toEntity(isBookmarked: Boolean = false): CreationEntity
     fileUrls = files,
     supportedVersions = versions.map { it.version },
     rating = rating,
-    reactionCount = reactionCount,
     publishedAtEpochMs = createdAt.toEpochMillisOrNull(),
     isBookmarked = isBookmarked,
     // Positions arrive 1-based; anything else is the server saying "not in the selection".
