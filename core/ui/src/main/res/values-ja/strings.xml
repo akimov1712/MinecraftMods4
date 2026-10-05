@@ -51,6 +51,17 @@
     <string name="showcase_section_fresh">新着</string>
     <string name="showcase_section_top_rated">高評価</string>
     <string name="showcase_see_all">すべて</string>
+    <string name="showcase_filter_open">フィルター</string>
+    <string name="showcase_filter_title">表示する内容</string>
+    <string name="showcase_filter_kind">種類</string>
+    <string name="showcase_filter_order">並び順</string>
+    <string name="showcase_filter_apply">表示</string>
+    <string name="showcase_filter_reset">リセット</string>
+    <string name="showcase_filter_all">すべてのMOD</string>
+    <string name="showcase_sort_trending_note">おすすめ</string>
+    <string name="showcase_sort_popular_note">ダウンロードが多い</string>
+    <string name="showcase_sort_fresh_note">新着</string>
+    <string name="showcase_sort_rated_note">評価が高い</string>
     <string name="showcase_fresh_badge">新着</string>
     <string name="showcase_browse_back">戻る</string>
     <string name="showcase_browse_count">%1$s 件</string>

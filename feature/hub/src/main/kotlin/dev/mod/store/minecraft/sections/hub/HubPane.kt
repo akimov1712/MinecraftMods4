@@ -167,11 +167,14 @@ private fun HubBar(
             .navigationBarsPadding()
             .padding(horizontal = 16.dp, vertical = 10.dp)
             .height(BAR_HEIGHT)
+            // Kept shallow on purpose: a drop shadow is always cast downwards, so a tall one
+            // pools into the gesture strip below the bar and reads as a red smear that the bar
+            // seems to have left behind. This is just enough to lift the bar off the list.
             .shadow(
-                elevation = 22.dp,
+                elevation = 8.dp,
                 shape = BarShape,
-                ambientColor = Palette.Accent,
-                spotColor = Palette.Accent,
+                ambientColor = Palette.Accent.copy(alpha = 0.5f),
+                spotColor = Palette.Accent.copy(alpha = 0.5f),
             )
             .clip(BarShape)
             .background(Palette.Surface)

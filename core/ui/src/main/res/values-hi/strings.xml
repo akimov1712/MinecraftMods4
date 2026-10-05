@@ -48,6 +48,17 @@
     <string name="showcase_section_fresh">नए मॉड</string>
     <string name="showcase_section_top_rated">टॉप रेटेड</string>
     <string name="showcase_see_all">सभी</string>
+    <string name="showcase_filter_open">फ़िल्टर</string>
+    <string name="showcase_filter_title">क्या दिखाएँ</string>
+    <string name="showcase_filter_kind">प्रकार</string>
+    <string name="showcase_filter_order">क्रम</string>
+    <string name="showcase_filter_apply">दिखाएँ</string>
+    <string name="showcase_filter_reset">रीसेट</string>
+    <string name="showcase_filter_all">सभी मॉड</string>
+    <string name="showcase_sort_trending_note">हमारी पसंद</string>
+    <string name="showcase_sort_popular_note">सबसे ज़्यादा डाउनलोड</string>
+    <string name="showcase_sort_fresh_note">हाल में जोड़े</string>
+    <string name="showcase_sort_rated_note">सर्वोच्च रेटिंग</string>
     <string name="showcase_fresh_badge">नया</string>
     <string name="showcase_browse_back">वापस</string>
     <string name="showcase_browse_count">%1$s मिले</string>

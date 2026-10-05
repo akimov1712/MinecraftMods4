@@ -51,6 +51,17 @@
     <string name="showcase_section_fresh">새로 나온 모드</string>
     <string name="showcase_section_top_rated">평점 높은 순</string>
     <string name="showcase_see_all">전체</string>
+    <string name="showcase_filter_open">필터</string>
+    <string name="showcase_filter_title">무엇을 볼까요</string>
+    <string name="showcase_filter_kind">종류</string>
+    <string name="showcase_filter_order">정렬</string>
+    <string name="showcase_filter_apply">보기</string>
+    <string name="showcase_filter_reset">초기화</string>
+    <string name="showcase_filter_all">모든 모드</string>
+    <string name="showcase_sort_trending_note">추천</string>
+    <string name="showcase_sort_popular_note">많이 받은 순</string>
+    <string name="showcase_sort_fresh_note">새로 추가</string>
+    <string name="showcase_sort_rated_note">평점 높은 순</string>
     <string name="showcase_fresh_badge">NEW</string>
     <string name="showcase_browse_back">뒤로</string>
     <string name="showcase_browse_count">%1$s개 찾음</string>

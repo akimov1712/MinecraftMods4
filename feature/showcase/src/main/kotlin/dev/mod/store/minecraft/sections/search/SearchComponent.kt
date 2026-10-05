@@ -7,7 +7,6 @@ import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import dev.mod.store.minecraft.core.ads.ScreenAds
 import dev.mod.store.minecraft.core.ui.state.FaultMessages
-import dev.mod.store.minecraft.domain.creation.FetchHomeDigestUseCase
 import dev.mod.store.minecraft.domain.creation.FetchShowcaseUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,12 +30,11 @@ class DefaultSearchComponent(
 
     private val storeFactory: StoreFactory by inject()
     private val fetchShowcase: FetchShowcaseUseCase by inject()
-    private val fetchHomeDigest: FetchHomeDigestUseCase by inject()
     private val faults: FaultMessages by inject()
     private val screenAds: ScreenAds by inject()
 
     private val store = instanceKeeper.getStore {
-        SearchStoreFactory(storeFactory, fetchShowcase, fetchHomeDigest, faults).create()
+        SearchStoreFactory(storeFactory, fetchShowcase, faults).create()
     }
 
     override val state: StateFlow<SearchStore.State> = store.stateFlow(lifecycle)

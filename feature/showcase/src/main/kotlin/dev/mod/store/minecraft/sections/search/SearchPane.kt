@@ -148,11 +148,7 @@ fun SearchPane(
                 contentPadding = PaddingValues(bottom = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                if (state.query.isBlank()) {
-                    suggestions(state, component.nativeAdInterval, component::openCreation)
-                } else {
-                    results(state, component.nativeAdInterval, component::onIntent, component::openCreation)
-                }
+                results(state, component.nativeAdInterval, component::onIntent, component::openCreation)
             }
 
             // The field lives at the bottom, next to the thumb and to the key that opened it.
@@ -209,68 +205,9 @@ private fun PagingTrigger(
         }
     }
     LaunchedEffect(nearEnd, state.stage, state.endReached, state.results.size) {
-        if (nearEnd && state.query.isNotBlank() && !state.stage.isLoading && !state.stage.isFailed && !state.endReached) {
+        // The catalogue shown before anything is typed pages exactly like a search does.
+        if (nearEnd && !state.stage.isLoading && !state.stage.isFailed && !state.endReached) {
             onIntent(Intent.LoadMore)
-        }
-    }
-}
-
-/**
- * What the screen shows before anything is typed: a plain list of what is trending, with nothing
- * announcing it. An empty search field is a place to start tapping, not a second home screen, and
- * the reader does not need to be told where the suggestions came from.
- */
-private fun LazyListScope.suggestions(
-    state: SearchStore.State,
-    nativeAdInterval: Int,
-    onOpenCreation: (Int) -> Unit,
-) {
-    val trending = state.suggestions.trending
-
-    if (trending.isEmpty()) {
-        if (state.suggestionsLoading) {
-            items(4, key = { index -> "suggestion_skeleton_$index" }) {
-                CreationCardSkeleton(modifier = Modifier.padding(horizontal = SIDE_PADDING))
-            }
-        } else {
-            item(key = "suggestions_empty") {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = SIDE_PADDING, vertical = 40.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        text = stringResource(R.string.search_hint),
-                        color = Palette.TextFaint,
-                        fontSize = 13.sp,
-                    )
-                }
-            }
-        }
-        return
-    }
-
-    val cadence = AdCadence.of(nativeAdInterval)
-    trending.forEachIndexed { index, creation ->
-        item(key = "suggest_${creation.id}") {
-            CreationCard(
-                creation = creation,
-                onClick = { onOpenCreation(creation.id) },
-                modifier = Modifier.padding(horizontal = SIDE_PADDING),
-                rank = index + 1,
-            )
-        }
-        if (AdCadence.breaksAfter(index, cadence)) {
-            item(key = "suggest_ad_$index") {
-                NativeSlot(
-                    placement = AdPlacement.SEARCH_LIST_NATIVE,
-                    slotKey = "search_suggest_$index",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = SIDE_PADDING),
-                )
-            }
         }
     }
 }
@@ -281,7 +218,7 @@ private fun LazyListScope.results(
     onIntent: (Intent) -> Unit,
     onOpenCreation: (Int) -> Unit,
 ) {
-    if (state.results.isNotEmpty()) {
+    if (state.results.isNotEmpty() && state.query.isNotBlank()) {
         item(key = "results_count") {
             Text(
                 text = stringResource(R.string.showcase_browse_count, formatCount(state.total)),

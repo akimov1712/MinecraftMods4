@@ -7,10 +7,8 @@ import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import dev.mod.store.minecraft.core.ui.state.FaultMessages
 import dev.mod.store.minecraft.core.ads.ScreenAds
-import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.domain.bookmark.FetchBookmarkedIdsUseCase
 import dev.mod.store.minecraft.domain.bookmark.ObserveBookmarkCountUseCase
-import dev.mod.store.minecraft.domain.creation.FetchHomeDigestUseCase
 import dev.mod.store.minecraft.domain.creation.FetchShowcaseUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,9 +19,6 @@ interface ShowcaseComponent {
     val state: StateFlow<ShowcaseStore.State>
     val labels: Flow<ShowcaseStore.Label>
     val nativeAdInterval: Int
-
-    /** True when an ad is buffered, so a section break can hold one. */
-    val hasNativeAd: Boolean
     fun onIntent(intent: ShowcaseStore.Intent)
     fun openCreation(creationId: Int)
 }
@@ -39,7 +34,6 @@ class DefaultShowcaseComponent(
 ) : ShowcaseComponent, ComponentContext by componentContext, KoinComponent {
 
     private val storeFactory: StoreFactory by inject()
-    private val fetchHomeDigest: FetchHomeDigestUseCase by inject()
     private val fetchShowcase: FetchShowcaseUseCase by inject()
     private val observeBookmarkCount: ObserveBookmarkCountUseCase by inject()
     private val fetchBookmarkedIds: FetchBookmarkedIdsUseCase by inject()
@@ -49,7 +43,6 @@ class DefaultShowcaseComponent(
     private val store = instanceKeeper.getStore {
         ShowcaseStoreFactory(
             storeFactory = storeFactory,
-            fetchHomeDigest = fetchHomeDigest,
             fetchShowcase = fetchShowcase,
             observeBookmarkCount = observeBookmarkCount,
             fetchBookmarkedIds = fetchBookmarkedIds,
@@ -60,9 +53,6 @@ class DefaultShowcaseComponent(
     override val state: StateFlow<ShowcaseStore.State> = store.stateFlow(lifecycle)
     override val labels: Flow<ShowcaseStore.Label> = store.labels
     override val nativeAdInterval: Int get() = screenAds.nativeInterval
-
-    override val hasNativeAd: Boolean
-        get() = screenAds.hasNativeAd(AdPlacement.HOME_LIST_NATIVE)
 
     override fun onIntent(intent: ShowcaseStore.Intent) {
         store.accept(intent)

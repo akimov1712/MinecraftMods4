@@ -47,10 +47,21 @@
     <!-- Catalog and search -->
     <string name="showcase_section_pick">Mod hari ini</string>
     <string name="showcase_section_trending">Sedang naik daun</string>
-    <string name="showcase_section_popular">Paling banyak dipasang</string>
-    <string name="showcase_section_fresh">Baru masuk</string>
+    <string name="showcase_section_popular">Populer</string>
+    <string name="showcase_section_fresh">Baru</string>
     <string name="showcase_section_top_rated">Nilai tertinggi</string>
     <string name="showcase_see_all">Semua</string>
+    <string name="showcase_filter_open">Filter</string>
+    <string name="showcase_filter_title">Tampilkan apa</string>
+    <string name="showcase_filter_kind">Jenis</string>
+    <string name="showcase_filter_order">Urutan</string>
+    <string name="showcase_filter_apply">Tampilkan</string>
+    <string name="showcase_filter_reset">Atur ulang</string>
+    <string name="showcase_filter_all">Semua mod</string>
+    <string name="showcase_sort_trending_note">pilihan kami</string>
+    <string name="showcase_sort_popular_note">paling banyak diunduh</string>
+    <string name="showcase_sort_fresh_note">baru ditambahkan</string>
+    <string name="showcase_sort_rated_note">nilai tertinggi</string>
     <string name="showcase_fresh_badge">BARU</string>
     <string name="showcase_browse_back">Kembali</string>
     <string name="showcase_browse_count">%1$s ditemukan</string>

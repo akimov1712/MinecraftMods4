@@ -38,8 +38,8 @@ import dev.mod.store.minecraft.core.ui.util.formatRating
 import dev.mod.store.minecraft.domain.creation.CreationEntity
 
 /**
- * The rail tile: artwork, name and one line of metadata. Deliberately narrow — three of them
- * should hint at the fourth off the right edge.
+ * The rail tile: artwork, name and — when [meta] is on — one line of version and rating.
+ * Deliberately narrow: three of them should hint at the fourth off the right edge.
  */
 @Composable
 fun CreationPoster(
@@ -50,6 +50,8 @@ fun CreationPoster(
     aspectRatio: Float = 1f,
     rank: Int? = null,
     accent: Color = Palette.Accent,
+    /** The version and rating line under the name. Off where a bare name reads better. */
+    meta: Boolean = true,
 ) {
     Column(
         modifier = modifier
@@ -99,35 +101,40 @@ fun CreationPoster(
             }
         }
 
+        // Always two lines tall, even for a short name: side by side in a rail, titles of different
+        // heights push their version and rating lines out of step and the row looks ragged.
         Text(
             text = creation.title,
             color = Palette.TextPrimary,
             fontSize = 16.sp,
             lineHeight = 21.sp,
             fontWeight = FontWeight.SemiBold,
+            minLines = 2,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
         )
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            creation.supportedVersions.firstOrNull()?.let { version ->
-                Text(
-                    text = stringResource(R.string.creation_version_short, version),
-                    color = Palette.TextFaint,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium,
-                    maxLines = 1,
-                )
-            }
-            if (creation.rating > 0.0) {
-                MetaChip(
-                    text = formatRating(creation.rating),
-                    icon = Icons.Rounded.Star,
-                    tint = Palette.Gold,
-                )
+        if (meta) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                creation.supportedVersions.firstOrNull()?.let { version ->
+                    Text(
+                        text = stringResource(R.string.creation_version_short, version),
+                        color = Palette.TextFaint,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium,
+                        maxLines = 1,
+                    )
+                }
+                if (creation.rating > 0.0) {
+                    MetaChip(
+                        text = formatRating(creation.rating),
+                        icon = Icons.Rounded.Star,
+                        tint = Palette.Gold,
+                    )
+                }
             }
         }
     }

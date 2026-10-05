@@ -29,7 +29,6 @@ internal fun CreationDto.toEntity(isBookmarked: Boolean = false): CreationEntity
     fileUrls = files,
     supportedVersions = versions.map { it.version },
     rating = rating,
-    commentCount = commentCount,
     reactionCount = reactionCount,
     publishedAtEpochMs = createdAt.toEpochMillisOrNull(),
     isBookmarked = isBookmarked,

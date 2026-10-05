@@ -30,8 +30,18 @@ enum class CreationCategory {
         }
 
     companion object {
-        /** Resolves the category reported inside a creation payload, defaulting to [Addon]. */
+        /**
+         * Resolves the category reported inside a creation payload, defaulting to [Addon].
+         *
+         * The backend is not consistent about which spelling it sends: a creation reports `WORLD`
+         * or `SKIN_PACK` — the same words the catalog filter takes — while other payloads use the
+         * plain name. Matching both is why every map used to arrive labelled "Addon": `WORLD`
+         * matches no enum name, and the fallback swallowed it.
+         */
         fun fromResponse(value: String): CreationCategory =
-            entries.firstOrNull { it.name.equals(value, ignoreCase = true) } ?: Addon
+            entries.firstOrNull {
+                it.name.equals(value, ignoreCase = true) ||
+                    it.filterValue.equals(value, ignoreCase = true)
+            } ?: Addon
     }
 }

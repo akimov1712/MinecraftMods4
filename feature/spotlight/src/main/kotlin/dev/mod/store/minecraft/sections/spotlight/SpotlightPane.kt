@@ -40,7 +40,6 @@ import androidx.compose.material.icons.automirrored.filled.InsertDriveFile
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
-import androidx.compose.material.icons.filled.ChatBubbleOutline
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Download
@@ -451,9 +450,6 @@ private fun FactLine(creation: CreationEntity) {
         }
         if (creation.reactionCount > 0) {
             add(Icons.Filled.LocalFireDepartment to formatCompact(creation.reactionCount) to Palette.Ember)
-        }
-        if (creation.commentCount > 0) {
-            add(Icons.Filled.ChatBubbleOutline to formatCompact(creation.commentCount) to Palette.Sky)
         }
         if (creation.downloadsCount > 0) {
             add(Icons.Filled.Download to formatCompact(creation.downloadsCount) to Palette.Positive)

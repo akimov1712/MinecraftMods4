@@ -21,7 +21,7 @@
     <string name="fault_not_found">Nothing was found.</string>
     <string name="fault_unknown">An unexpected error occurred.</string>
     <string name="fault_validation">Please check the entered data.</string>
-    <string name="category_addon">Addon</string>
+    <string name="category_addon">Addons</string>
     <string name="category_maps">Maps</string>
     <string name="category_texture">Textures</string>
     <string name="category_skin">Skins</string>
@@ -47,10 +47,21 @@
     <!-- Catalog and search -->
     <string name="showcase_section_pick">Mod of the day</string>
     <string name="showcase_section_trending">Trending</string>
-    <string name="showcase_section_popular">Top installs</string>
-    <string name="showcase_section_fresh">Fresh drops</string>
+    <string name="showcase_section_popular">Popular</string>
+    <string name="showcase_section_fresh">New</string>
     <string name="showcase_section_top_rated">Top rated</string>
     <string name="showcase_see_all">All</string>
+    <string name="showcase_filter_open">Filter</string>
+    <string name="showcase_filter_title">What to show</string>
+    <string name="showcase_filter_kind">Kind</string>
+    <string name="showcase_filter_order">Order</string>
+    <string name="showcase_filter_apply">Show</string>
+    <string name="showcase_filter_reset">Reset</string>
+    <string name="showcase_filter_all">All mods</string>
+    <string name="showcase_sort_trending_note">our pick</string>
+    <string name="showcase_sort_popular_note">downloaded most</string>
+    <string name="showcase_sort_fresh_note">just added</string>
+    <string name="showcase_sort_rated_note">best rated</string>
     <string name="showcase_fresh_badge">NEW</string>
     <string name="showcase_browse_back">Back</string>
     <string name="showcase_browse_count">%1$s found</string>

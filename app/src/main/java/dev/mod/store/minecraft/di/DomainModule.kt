@@ -8,7 +8,6 @@ import dev.mod.store.minecraft.domain.bookmark.ToggleBookmarkUseCase
 import dev.mod.store.minecraft.domain.config.FetchConfigUseCase
 import dev.mod.store.minecraft.domain.creation.FetchCreationUseCase
 import dev.mod.store.minecraft.domain.creation.FetchFileSizeUseCase
-import dev.mod.store.minecraft.domain.creation.FetchHomeDigestUseCase
 import dev.mod.store.minecraft.domain.creation.FetchShowcaseUseCase
 import dev.mod.store.minecraft.domain.loadout.DownloadCreationUseCase
 import dev.mod.store.minecraft.domain.loadout.IsCreationDownloadedUseCase
@@ -23,7 +22,6 @@ import org.koin.dsl.module
 /** Use cases — pure-Kotlin orchestration over the repositories bound in :wire / :vault. */
 val domainModule = module {
     single { FetchShowcaseUseCase(get(), get()) }
-    single { FetchHomeDigestUseCase(get(), get()) }
     single { FetchCreationUseCase(get(), get()) }
     single { FetchFileSizeUseCase(get()) }
     single { ToggleBookmarkUseCase(get()) }

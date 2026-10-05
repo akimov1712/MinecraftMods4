@@ -17,8 +17,8 @@ import dev.mod.store.minecraft.core.ui.util.ObserveSignals
 import dev.mod.store.minecraft.feature.showcase.ShowcaseStore.Intent
 
 /**
- * Home: the editorial digest and the "one section in full" list live in the same scrollable feed,
- * wrapped in pull-to-refresh. The only thing this level owns is the snackbar.
+ * Home: one filtered, sorted list of the catalog wrapped in pull-to-refresh. The only thing this
+ * level owns is the snackbar.
  */
 @Composable
 fun ShowcasePane(
@@ -43,7 +43,6 @@ fun ShowcasePane(
             HomeFeed(
                 state = state,
                 nativeAdInterval = component.nativeAdInterval,
-                hasNativeAd = component.hasNativeAd,
                 onIntent = component::onIntent,
                 onOpenCreation = component::openCreation,
                 modifier = Modifier.fillMaxSize(),

@@ -4,7 +4,12 @@ plugins {
 }
 
 val appArtifactIdValue: String = providers.gradleProperty("appArtifactId").getOrElse("app")
-val appApplicationId: String = "dev.modstore.$appArtifactIdValue"
+
+/**
+ * The identity Google Play knows this app by. The prefix is fixed for every app in the family; only
+ * the last segment changes, and it comes from `appArtifactId` in gradle.properties.
+ */
+val appApplicationId: String = "com.mcmoddev.$appArtifactIdValue"
 
 val appVersionCodeValue: Int = providers.gradleProperty("appVersionCode").map(String::toInt).getOrElse(1)
 val appVersionNameValue: String = providers.gradleProperty("appVersionName").getOrElse("1.0")

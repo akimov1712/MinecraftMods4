@@ -51,6 +51,17 @@
     <string name="showcase_section_fresh">Новинки</string>
     <string name="showcase_section_top_rated">Высокий рейтинг</string>
     <string name="showcase_see_all">Все</string>
+    <string name="showcase_filter_open">Фильтр</string>
+    <string name="showcase_filter_title">Что показать</string>
+    <string name="showcase_filter_kind">Тип</string>
+    <string name="showcase_filter_order">Порядок</string>
+    <string name="showcase_filter_apply">Показать</string>
+    <string name="showcase_filter_reset">Сбросить</string>
+    <string name="showcase_filter_all">Все моды</string>
+    <string name="showcase_sort_trending_note">наш выбор</string>
+    <string name="showcase_sort_popular_note">чаще скачивают</string>
+    <string name="showcase_sort_fresh_note">недавно добавили</string>
+    <string name="showcase_sort_rated_note">лучшие оценки</string>
     <string name="showcase_fresh_badge">НОВОЕ</string>
     <string name="showcase_browse_back">Назад</string>
     <string name="showcase_browse_count">Найдено: %1$s</string>

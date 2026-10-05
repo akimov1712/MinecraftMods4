@@ -51,6 +51,17 @@
     <string name="showcase_section_fresh">Nouveautés</string>
     <string name="showcase_section_top_rated">Mieux notés</string>
     <string name="showcase_see_all">Tout</string>
+    <string name="showcase_filter_open">Filtre</string>
+    <string name="showcase_filter_title">Quoi afficher</string>
+    <string name="showcase_filter_kind">Type</string>
+    <string name="showcase_filter_order">Ordre</string>
+    <string name="showcase_filter_apply">Afficher</string>
+    <string name="showcase_filter_reset">Réinitialiser</string>
+    <string name="showcase_filter_all">Tous les mods</string>
+    <string name="showcase_sort_trending_note">notre sélection</string>
+    <string name="showcase_sort_popular_note">les plus téléchargés</string>
+    <string name="showcase_sort_fresh_note">ajoutés récemment</string>
+    <string name="showcase_sort_rated_note">les mieux notés</string>
     <string name="showcase_fresh_badge">NOUVEAU</string>
     <string name="showcase_browse_back">Retour</string>
     <string name="showcase_browse_count">%1$s trouvés</string>

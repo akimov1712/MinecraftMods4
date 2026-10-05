@@ -51,6 +51,17 @@
     <string name="showcase_section_fresh">الجديد</string>
     <string name="showcase_section_top_rated">الأعلى تقييمًا</string>
     <string name="showcase_see_all">الكل</string>
+    <string name="showcase_filter_open">تصفية</string>
+    <string name="showcase_filter_title">ماذا نعرض</string>
+    <string name="showcase_filter_kind">النوع</string>
+    <string name="showcase_filter_order">الترتيب</string>
+    <string name="showcase_filter_apply">عرض</string>
+    <string name="showcase_filter_reset">إعادة تعيين</string>
+    <string name="showcase_filter_all">كل المودات</string>
+    <string name="showcase_sort_trending_note">اختيارنا</string>
+    <string name="showcase_sort_popular_note">الأكثر تنزيلًا</string>
+    <string name="showcase_sort_fresh_note">أُضيف حديثًا</string>
+    <string name="showcase_sort_rated_note">الأعلى تقييمًا</string>
     <string name="showcase_fresh_badge">جديد</string>
     <string name="showcase_browse_back">رجوع</string>
     <string name="showcase_browse_count">تم العثور على %1$s</string>

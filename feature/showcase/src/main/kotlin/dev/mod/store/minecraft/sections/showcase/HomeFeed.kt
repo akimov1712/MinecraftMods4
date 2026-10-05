@@ -1,122 +1,473 @@
 package dev.mod.store.minecraft.feature.showcase
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.TrendingUp
-import androidx.compose.material.icons.rounded.AutoAwesome
-import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material.icons.rounded.EmojiEvents
-import androidx.compose.material.icons.rounded.NewReleases
-import androidx.compose.material.icons.rounded.WorkspacePremium
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.GridView
+import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import dev.mod.store.minecraft.core.ads.AdCadence
 import dev.mod.store.minecraft.core.ads.NativeSlot
-import dev.mod.store.minecraft.domain.config.AdPlacement
 import dev.mod.store.minecraft.core.ui.R
-import dev.mod.store.minecraft.core.ui.component.BannerSkeleton
 import dev.mod.store.minecraft.core.ui.component.CreationCard
 import dev.mod.store.minecraft.core.ui.component.CreationCardSkeleton
-import dev.mod.store.minecraft.core.ui.component.CreationPoster
-import dev.mod.store.minecraft.core.ui.component.CreationRow
-import dev.mod.store.minecraft.core.ui.component.CreationRowSkeleton
 import dev.mod.store.minecraft.core.ui.component.EmptyState
 import dev.mod.store.minecraft.core.ui.component.ErrorState
-import dev.mod.store.minecraft.core.ui.component.GlassIconButton
 import dev.mod.store.minecraft.core.ui.component.PillButton
-import dev.mod.store.minecraft.core.ui.component.RailSkeleton
-import dev.mod.store.minecraft.core.ui.component.SectionHeader
-import dev.mod.store.minecraft.core.ui.component.ShimmerBox
-import dev.mod.store.minecraft.core.ui.effect.Appear
+import dev.mod.store.minecraft.core.ui.component.creationCategoryAccent
+import dev.mod.store.minecraft.core.ui.component.creationCategoryIcon
+import dev.mod.store.minecraft.core.ui.component.creationCategoryLabel
 import dev.mod.store.minecraft.core.ui.effect.CardShape
 import dev.mod.store.minecraft.core.ui.effect.SmallShape
+import dev.mod.store.minecraft.core.ui.effect.tappable
 import dev.mod.store.minecraft.core.ui.state.ScreenStage
 import dev.mod.store.minecraft.core.ui.theme.Palette
-import dev.mod.store.minecraft.core.ui.util.formatCount
-import dev.mod.store.minecraft.domain.creation.CreationEntity
+import dev.mod.store.minecraft.domain.config.AdPlacement
+import dev.mod.store.minecraft.domain.creation.CreationCategory
 import dev.mod.store.minecraft.domain.creation.CreationFeed
-import dev.mod.store.minecraft.domain.creation.HomeDigest
-import dev.mod.store.minecraft.feature.showcase.ShowcaseStore.Browse
 import dev.mod.store.minecraft.feature.showcase.ShowcaseStore.Intent
 
-private const val CHART_SIZE = 5
+internal val SIDE_PADDING = 16.dp
+
+/** How close to the foot of the list the next page is asked for. */
 private const val PRELOAD_DISTANCE = 3
-private val SIDE_PADDING = 16.dp
+
+private const val SKELETON_CARDS = 4
+
+private val SHEET_SHAPE = RoundedCornerShape(topStart = 26.dp, topEnd = 26.dp)
+
+/** Content kinds in the order the tab strip shows them: the two anyone comes for lead. */
+private val KINDS = listOf(
+    CreationCategory.Addon,
+    CreationCategory.Maps,
+    CreationCategory.Texture,
+    CreationCategory.Skin,
+)
+
+/** The orders offered, in the order the sheet lists them. */
+private val SORTS = listOf(
+    CreationFeed.Trending,
+    CreationFeed.Popular,
+    CreationFeed.Fresh,
+    CreationFeed.TopRated,
+)
 
 /**
- * Home: the daily banner, a live strip of what is climbing, then tight rails and a chart. Rows
- * are sized so several sections are visible at once rather than one card per screenful.
+ * Home: one list of the catalog, and one key that opens the sheet deciding what is in it.
+ *
+ * The page itself carries no controls — no tab strip, no menu, no counter. Everything that shapes
+ * the list lives in a sheet that rises from the foot of the screen with targets big enough to hit
+ * without aiming, and what is currently chosen is written under the title in plain words. Picking
+ * in the sheet takes effect at once, so the list is already right when the sheet goes away.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeFeed(
     state: ShowcaseStore.State,
     nativeAdInterval: Int,
-    hasNativeAd: Boolean,
     onIntent: (Intent) -> Unit,
     onOpenCreation: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val listState = rememberLazyListState()
-    val browse = state.browse
-    val stage = state.stage
+    var sheetOpen by remember { mutableStateOf(false) }
 
-    PagingTrigger(listState, browse, onIntent)
+    PagingTrigger(listState, state, onIntent)
 
-    LaunchedEffect(browse?.feed) {
-        if (browse != null) listState.scrollToItem(0)
+    // A new slice is a new list: start it from the top rather than halfway down the old one.
+    LaunchedEffect(state.category, state.sort) {
+        listState.scrollToItem(0)
     }
 
     LazyColumn(
         state = listState,
         modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(top = 10.dp, bottom = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(bottom = 24.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
-        when {
-            browse != null -> browseContent(browse, nativeAdInterval, onIntent, onOpenCreation)
+        stickyHeader(key = "header") {
+            Header(
+                state = state,
+                onOpenSort = { sheetOpen = true },
+                onPickCategory = { onIntent(Intent.ChangeCategory(it)) },
+            )
+        }
 
-            stage is ScreenStage.Failed && state.digest.isEmpty -> item(key = "error") {
-                ErrorState(
-                    message = stage.message,
-                    onRetry = { onIntent(Intent.Refresh) },
-                    modifier = Modifier.padding(horizontal = SIDE_PADDING, vertical = 32.dp),
-                )
+        when {
+            state.items.isNotEmpty() -> catalog(state, nativeAdInterval, onOpenCreation)
+
+            state.stage.isLoading -> items(SKELETON_CARDS, key = { index -> "skeleton_$index" }) {
+                CreationCardSkeleton(modifier = Modifier.padding(horizontal = SIDE_PADDING))
             }
 
-            state.digest.isEmpty && stage.isLoading -> digestSkeleton()
+            else -> Unit
+        }
 
-            else -> digestContent(state.digest, hasNativeAd, onIntent, onOpenCreation)
+        item(key = "footer") {
+            Footer(state = state, onIntent = onIntent)
+        }
+    }
+
+    if (sheetOpen) {
+        SortSheet(
+            state = state,
+            onIntent = onIntent,
+            onClose = { sheetOpen = false },
+        )
+    }
+}
+
+// region header
+
+/** The title, the key that opens the order window, and the tab strip of content kinds. */
+@Composable
+private fun Header(
+    state: ShowcaseStore.State,
+    onOpenSort: () -> Unit,
+    onPickCategory: (CreationCategory?) -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Palette.Canvas)
+            .statusBarsPadding()
+            .padding(top = 10.dp, bottom = 2.dp),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = SIDE_PADDING),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = stringResource(R.string.hub_tab_showcase),
+                color = Palette.TextPrimary,
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.weight(1f),
+            )
+            // Lit while the order is not the house one, so a surprising list has a visible reason.
+            val sorted = state.sort != CreationFeed.Trending
+            Box(
+                modifier = Modifier
+                    .size(44.dp)
+                    .clip(CardShape)
+                    .tappable(onClick = onOpenSort)
+                    .background(if (sorted) Palette.Accent else Palette.Surface),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Tune,
+                    contentDescription = stringResource(R.string.showcase_filter_order),
+                    tint = if (sorted) Palette.OnAccentDark else Palette.TextMuted,
+                    modifier = Modifier.size(20.dp),
+                )
+            }
+        }
+
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = SIDE_PADDING),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            item(key = "all") {
+                KindTab(
+                    label = stringResource(R.string.showcase_filter_all),
+                    selected = state.category == null,
+                    onClick = { onPickCategory(null) },
+                )
+            }
+            items(KINDS, key = { it.name }) { category ->
+                KindTab(
+                    label = creationCategoryLabel(category),
+                    selected = state.category == category,
+                    onClick = { onPickCategory(category) },
+                )
+            }
+        }
+    }
+}
+
+/** One tab: the name, and a short bar under the one in force. */
+@Composable
+private fun KindTab(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .tappable(onClick = onClick)
+            .padding(top = 10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = label,
+            color = if (selected) Palette.TextPrimary else Palette.TextFaint,
+            fontSize = 15.sp,
+            fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
+            maxLines = 1,
+        )
+        Spacer(Modifier.height(7.dp))
+        Box(
+            modifier = Modifier
+                .height(3.dp)
+                .width(if (selected) 20.dp else 0.dp)
+                .clip(CircleShape)
+                .background(Palette.Accent),
+        )
+    }
+}
+
+// endregion
+
+// region sheet
+
+/**
+ * The order, in a window of its own: rows that say in plain words what each one does. Nothing is
+ * staged — a tap applies at once, and the list behind is already rebuilt when the window closes.
+ */
+@Composable
+private fun SortSheet(
+    state: ShowcaseStore.State,
+    onIntent: (Intent) -> Unit,
+    onClose: () -> Unit,
+) {
+    Dialog(
+        onDismissRequest = onClose,
+        properties = DialogProperties(usePlatformDefaultWidth = false),
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .tappable(pressedScale = 1f, onClick = onClose),
+            contentAlignment = Alignment.BottomCenter,
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(SHEET_SHAPE)
+                    .background(Palette.Surface)
+                    .border(1.dp, Palette.Stroke, SHEET_SHAPE)
+                    // Swallows taps so pressing inside the sheet never closes it.
+                    .tappable(pressedScale = 1f) {}
+                    .navigationBarsPadding()
+                    .padding(horizontal = SIDE_PADDING, vertical = 18.dp),
+                verticalArrangement = Arrangement.spacedBy(14.dp),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .size(width = 40.dp, height = 4.dp)
+                        .clip(CircleShape)
+                        .background(Palette.Stroke),
+                )
+
+                Text(
+                    text = stringResource(R.string.showcase_filter_order),
+                    color = Palette.TextPrimary,
+                    fontSize = 19.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+
+                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    SORTS.forEach { sort ->
+                        OrderRow(
+                            title = stringResource(sort.titleRes()),
+                            note = stringResource(sort.noteRes()),
+                            selected = state.sort == sort,
+                            onClick = { onIntent(Intent.ChangeSort(sort)) },
+                        )
+                    }
+                }
+
+                Spacer(Modifier.height(2.dp))
+
+                PillButton(
+                    text = stringResource(R.string.showcase_filter_apply),
+                    onClick = onClose,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SheetLabel(text: String) {
+    Text(
+        text = text.uppercase(),
+        color = Palette.TextFaint,
+        fontSize = 12.sp,
+        fontWeight = FontWeight.Bold,
+    )
+}
+
+/** One order, with the plain-words version of what it does under its name. */
+@Composable
+private fun OrderRow(
+    title: String,
+    note: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(SmallShape)
+            .tappable(onClick = onClick)
+            .background(if (selected) Palette.SurfaceHigh else Color.Transparent)
+            .padding(horizontal = 12.dp, vertical = 11.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = title,
+                color = Palette.TextPrimary,
+                fontSize = 16.sp,
+                fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
+            )
+            Text(
+                text = note,
+                color = Palette.TextFaint,
+                fontSize = 13.sp,
+                maxLines = 1,
+            )
+        }
+        Box(
+            modifier = Modifier
+                .size(24.dp)
+                .clip(CircleShape)
+                .background(if (selected) Palette.Accent else Color.Transparent)
+                .border(
+                    width = if (selected) 0.dp else 1.5.dp,
+                    color = if (selected) Color.Transparent else Palette.Stroke,
+                    shape = CircleShape,
+                ),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (selected) {
+                Icon(
+                    imageVector = Icons.Rounded.Check,
+                    contentDescription = null,
+                    tint = Palette.OnAccentDark,
+                    modifier = Modifier.size(15.dp),
+                )
+            }
+        }
+    }
+}
+
+// endregion
+
+// region list
+
+private fun LazyListScope.catalog(
+    state: ShowcaseStore.State,
+    nativeAdInterval: Int,
+    onOpenCreation: (Int) -> Unit,
+) {
+    val cadence = AdCadence.of(nativeAdInterval)
+    state.items.forEachIndexed { index, creation ->
+        item(key = "mod_${creation.id}") {
+            CreationCard(
+                creation = creation,
+                onClick = { onOpenCreation(creation.id) },
+                modifier = Modifier.padding(horizontal = SIDE_PADDING),
+            )
+        }
+        if (AdCadence.breaksAfter(index, cadence)) {
+            item(key = "ad_$index") {
+                NativeSlot(
+                    placement = AdPlacement.CATALOG_LIST_NATIVE,
+                    slotKey = "catalog_$index",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = SIDE_PADDING),
+                )
+            }
+        }
+    }
+}
+
+/** Whatever the foot of the list has to say: a page loading, a retry, an error, or nothing. */
+@Composable
+private fun Footer(
+    state: ShowcaseStore.State,
+    onIntent: (Intent) -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = SIDE_PADDING),
+        contentAlignment = Alignment.Center,
+    ) {
+        val stage = state.stage
+        when {
+            stage is ScreenStage.Failed && state.items.isEmpty() -> ErrorState(
+                message = stage.message,
+                onRetry = { onIntent(Intent.Refresh) },
+            )
+
+            stage.isFailed -> PillButton(
+                text = stringResource(R.string.showcase_browse_retry),
+                onClick = { onIntent(Intent.LoadMore) },
+            )
+
+            stage.isLoading && state.items.isNotEmpty() -> CircularProgressIndicator(
+                modifier = Modifier.size(24.dp),
+                strokeWidth = 2.5.dp,
+                color = Palette.Accent,
+            )
+
+            state.items.isEmpty() && !stage.isLoading -> EmptyState()
+
+            else -> Box(Modifier.height(4.dp))
         }
     }
 }
@@ -124,7 +475,7 @@ fun HomeFeed(
 @Composable
 private fun PagingTrigger(
     listState: LazyListState,
-    browse: Browse?,
+    state: ShowcaseStore.State,
     onIntent: (Intent) -> Unit,
 ) {
     val nearEnd by remember(listState) {
@@ -134,341 +485,14 @@ private fun PagingTrigger(
             last >= info.totalItemsCount - PRELOAD_DISTANCE
         }
     }
-    LaunchedEffect(nearEnd, browse?.stage, browse?.endReached, browse?.items?.size) {
-        if (nearEnd && browse != null && !browse.stage.isLoading && !browse.stage.isFailed && !browse.endReached) {
+    LaunchedEffect(nearEnd, state.stage, state.endReached, state.items.size) {
+        if (nearEnd && !state.stage.isLoading && !state.stage.isFailed && !state.endReached) {
             onIntent(Intent.LoadMore)
         }
     }
 }
 
-// region sections
-
-private fun LazyListScope.digestContent(
-    digest: HomeDigest,
-    hasNativeAd: Boolean,
-    onIntent: (Intent) -> Unit,
-    onOpenCreation: (Int) -> Unit,
-) {
-    digest.pickOfDay?.let { pick ->
-        item(key = "pick") {
-            Appear(index = 1) {
-                Column(
-                    modifier = Modifier.padding(horizontal = SIDE_PADDING),
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                ) {
-                    SectionHeader(
-                        title = stringResource(R.string.showcase_section_pick),
-                        icon = Icons.Rounded.AutoAwesome,
-                        accent = Palette.Gold,
-                    )
-                    PickOfDayBanner(creation = pick, onClick = { onOpenCreation(pick.id) })
-                }
-            }
-        }
-    }
-
-    if (digest.trending.isNotEmpty()) {
-        item(key = "trending") {
-            Appear(index = 2) {
-                Rail(
-                    title = stringResource(R.string.showcase_section_trending),
-                    icon = Icons.AutoMirrored.Rounded.TrendingUp,
-                    accent = Palette.Accent,
-                    creations = digest.trending,
-                    ranked = true,
-                    onSeeAll = { onIntent(Intent.OpenFeed(CreationFeed.Trending)) },
-                    onOpenCreation = onOpenCreation,
-                )
-            }
-        }
-    }
-
-    if (hasNativeAd) {
-        item(key = "ad_top") {
-            NativeSlot(
-                placement = AdPlacement.HOME_LIST_NATIVE,
-                slotKey = "home_top",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = SIDE_PADDING),
-            )
-        }
-    }
-
-    if (digest.popular.isNotEmpty()) {
-        item(key = "popular") {
-            Appear(index = 0) {
-                Column(
-                    modifier = Modifier.padding(horizontal = SIDE_PADDING),
-                    verticalArrangement = Arrangement.spacedBy(2.dp),
-                ) {
-                    SectionHeader(
-                        title = stringResource(R.string.showcase_section_popular),
-                        icon = Icons.Rounded.EmojiEvents,
-                        accent = Palette.Gold,
-                        actionLabel = stringResource(R.string.showcase_see_all),
-                        onAction = { onIntent(Intent.OpenFeed(CreationFeed.Popular)) },
-                        modifier = Modifier.padding(bottom = 6.dp),
-                    )
-                    digest.popular.take(CHART_SIZE).forEachIndexed { index, creation ->
-                        CreationRow(
-                            creation = creation,
-                            onClick = { onOpenCreation(creation.id) },
-                            rank = index + 1,
-                            trailing = {
-                                val move = chartMove(creation, index, digest.trending)
-                                ChartMoveTag(move = move.first, delta = move.second)
-                            },
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    if (hasNativeAd) {
-        item(key = "ad_middle") {
-            NativeSlot(
-                placement = AdPlacement.HOME_LIST_NATIVE,
-                slotKey = "home_middle",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = SIDE_PADDING),
-            )
-        }
-    }
-
-    if (digest.fresh.isNotEmpty()) {
-        item(key = "fresh") {
-            Appear(index = 0) {
-                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    SectionHeader(
-                        title = stringResource(R.string.showcase_section_fresh),
-                        icon = Icons.Rounded.NewReleases,
-                        accent = Palette.Positive,
-                        actionLabel = stringResource(R.string.showcase_see_all),
-                        onAction = { onIntent(Intent.OpenFeed(CreationFeed.Fresh)) },
-                        modifier = Modifier.padding(horizontal = SIDE_PADDING),
-                    )
-                    LazyRow(
-                        contentPadding = PaddingValues(horizontal = SIDE_PADDING),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    ) {
-                        items(digest.fresh, key = { it.id }) { creation ->
-                            FreshCard(creation = creation, onClick = { onOpenCreation(creation.id) })
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    if (digest.topRated.isNotEmpty()) {
-        item(key = "top_rated") {
-            Appear(index = 0) {
-                Rail(
-                    title = stringResource(R.string.showcase_section_top_rated),
-                    icon = Icons.Rounded.WorkspacePremium,
-                    accent = Palette.Sky,
-                    creations = digest.topRated,
-                    ranked = false,
-                    onSeeAll = { onIntent(Intent.OpenFeed(CreationFeed.TopRated)) },
-                    onOpenCreation = onOpenCreation,
-                )
-            }
-        }
-    }
-
-    if (hasNativeAd) {
-        item(key = "ad_bottom") {
-            NativeSlot(
-                placement = AdPlacement.HOME_LIST_NATIVE,
-                slotKey = "home_bottom",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = SIDE_PADDING),
-            )
-        }
-    }
-}
-
-/** A titled row of tiles — the shape every rail shares. */
-@Composable
-private fun Rail(
-    title: String,
-    icon: ImageVector,
-    accent: Color,
-    creations: List<CreationEntity>,
-    ranked: Boolean,
-    onSeeAll: () -> Unit,
-    onOpenCreation: (Int) -> Unit,
-) {
-    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        SectionHeader(
-            title = title,
-            icon = icon,
-            accent = accent,
-            actionLabel = stringResource(R.string.showcase_see_all),
-            onAction = onSeeAll,
-            modifier = Modifier.padding(horizontal = SIDE_PADDING),
-        )
-        LazyRow(
-            contentPadding = PaddingValues(horizontal = SIDE_PADDING),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            itemsIndexed(creations, key = { _, creation -> creation.id }) { index, creation ->
-                CreationPoster(
-                    creation = creation,
-                    onClick = { onOpenCreation(creation.id) },
-                    rank = if (ranked) index + 1 else null,
-                    accent = accent,
-                )
-            }
-        }
-    }
-}
-
-private fun LazyListScope.digestSkeleton() {
-    item(key = "skeleton_banner") {
-        Column(
-            modifier = Modifier.padding(horizontal = SIDE_PADDING),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            ShimmerBox(
-                modifier = Modifier
-                    .width(160.dp)
-                    .height(26.dp),
-                shape = SmallShape,
-            )
-            BannerSkeleton()
-        }
-    }
-
-    item(key = "skeleton_rail") {
-        RailSkeleton(modifier = Modifier.padding(horizontal = SIDE_PADDING))
-    }
-
-    item(key = "skeleton_chart") {
-        Column(
-            modifier = Modifier.padding(horizontal = SIDE_PADDING),
-            verticalArrangement = Arrangement.spacedBy(2.dp),
-        ) {
-            ShimmerBox(
-                modifier = Modifier
-                    .width(140.dp)
-                    .height(26.dp)
-                    .padding(bottom = 6.dp),
-                shape = SmallShape,
-            )
-            repeat(CHART_SIZE) { CreationRowSkeleton() }
-        }
-    }
-}
-
 // endregion
-
-// region one section in full
-
-private fun LazyListScope.browseContent(
-    browse: Browse,
-    nativeAdInterval: Int,
-    onIntent: (Intent) -> Unit,
-    onOpenCreation: (Int) -> Unit,
-) {
-    item(key = "browse_head") {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = SIDE_PADDING),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = stringResource(browse.feed.titleRes()),
-                    color = Palette.TextPrimary,
-                    fontSize = 19.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-                if (browse.total > 0) {
-                    Text(
-                        text = stringResource(R.string.showcase_browse_count, formatCount(browse.total)),
-                        color = Palette.TextFaint,
-                        fontSize = 12.sp,
-                    )
-                }
-            }
-            GlassIconButton(
-                icon = Icons.Rounded.Close,
-                contentDescription = stringResource(R.string.showcase_browse_back),
-                onClick = { onIntent(Intent.CloseBrowse) },
-                size = 36.dp,
-            )
-        }
-    }
-
-    if (browse.items.isEmpty() && browse.stage.isLoading) {
-        items(4, key = { index -> "browse_skeleton_$index" }) {
-            CreationCardSkeleton(modifier = Modifier.padding(horizontal = SIDE_PADDING))
-        }
-        return
-    }
-
-    val cadence = AdCadence.of(nativeAdInterval)
-    browse.items.forEachIndexed { index, creation ->
-        item(key = "browse_${creation.id}") {
-            CreationCard(
-                creation = creation,
-                onClick = { onOpenCreation(creation.id) },
-                modifier = Modifier.padding(horizontal = SIDE_PADDING),
-                rank = index + 1,
-            )
-        }
-        if (AdCadence.breaksAfter(index, cadence)) {
-            item(key = "browse_ad_$index") {
-                NativeSlot(
-                    placement = AdPlacement.CATALOG_LIST_NATIVE,
-                    slotKey = "browse_$index",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = SIDE_PADDING),
-                )
-            }
-        }
-    }
-
-    item(key = "browse_footer") {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = SIDE_PADDING),
-            contentAlignment = Alignment.Center,
-        ) {
-            val browseStage = browse.stage
-            when {
-                browseStage is ScreenStage.Failed && browse.items.isEmpty() -> ErrorState(
-                    message = browseStage.message,
-                    onRetry = { onIntent(Intent.Refresh) },
-                )
-
-                browseStage.isFailed -> PillButton(
-                    text = stringResource(R.string.showcase_browse_retry),
-                    onClick = { onIntent(Intent.LoadMore) },
-                )
-
-                browseStage.isLoading -> CircularProgressIndicator(
-                    modifier = Modifier.size(24.dp),
-                    strokeWidth = 2.5.dp,
-                    color = Palette.Accent,
-                )
-
-                browse.items.isEmpty() -> EmptyState()
-
-                else -> Box(Modifier.height(4.dp))
-            }
-        }
-    }
-}
 
 internal fun CreationFeed.titleRes(): Int = when (this) {
     CreationFeed.Trending -> R.string.showcase_section_trending
@@ -477,19 +501,10 @@ internal fun CreationFeed.titleRes(): Int = when (this) {
     CreationFeed.Fresh -> R.string.showcase_section_fresh
 }
 
-// endregion
-
-/** How far a mod sits from its editorial position — the delta shown next to a chart place. */
-private fun chartMove(
-    creation: CreationEntity,
-    index: Int,
-    trending: List<CreationEntity>,
-): Pair<ChartMove, Int> {
-    val trendingIndex = trending.indexOfFirst { it.id == creation.id }
-    return when {
-        trendingIndex < 0 -> ChartMove.New to 0
-        trendingIndex < index -> ChartMove.Down to (index - trendingIndex)
-        trendingIndex > index -> ChartMove.Up to (trendingIndex - index)
-        else -> ChartMove.Flat to 0
-    }
+/** The same order said plainly, for readers who do not sort catalogues for a living. */
+private fun CreationFeed.noteRes(): Int = when (this) {
+    CreationFeed.Trending -> R.string.showcase_sort_trending_note
+    CreationFeed.Popular -> R.string.showcase_sort_popular_note
+    CreationFeed.TopRated -> R.string.showcase_sort_rated_note
+    CreationFeed.Fresh -> R.string.showcase_sort_fresh_note
 }

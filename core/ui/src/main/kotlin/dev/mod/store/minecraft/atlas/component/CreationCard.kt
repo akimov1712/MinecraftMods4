@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Bookmark
-import androidx.compose.material.icons.rounded.ChatBubble
 import androidx.compose.material.icons.rounded.LocalFireDepartment
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Icon
@@ -135,12 +134,6 @@ fun CreationCard(
                         text = formatCompact(creation.reactionCount),
                         icon = Icons.Rounded.LocalFireDepartment,
                         tint = Palette.Ember,
-                    )
-                } else if (creation.commentCount > 0) {
-                    MetaChip(
-                        text = formatCompact(creation.commentCount),
-                        icon = Icons.Rounded.ChatBubble,
-                        tint = Palette.Sky,
                     )
                 }
             }

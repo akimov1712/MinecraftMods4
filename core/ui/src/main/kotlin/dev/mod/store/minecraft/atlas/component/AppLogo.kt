@@ -17,6 +17,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
+import android.graphics.Bitmap
+import android.graphics.drawable.AdaptiveIconDrawable
+import android.graphics.drawable.LayerDrawable
 import dev.mod.store.minecraft.core.ui.theme.Palette
 
 /**
@@ -33,10 +36,27 @@ fun AppLogo(
     val context = LocalContext.current
     val icon: ImageBitmap? = remember(context) {
         runCatching {
-            context.packageManager
-                .getApplicationIcon(context.packageName)
-                .toBitmap(width = 288, height = 288)
-                .asImageBitmap()
+            val icon = context.packageManager.getApplicationIcon(context.packageName)
+            // An adaptive icon arrives already cut to the launcher's mask — a circle on most
+            // phones. Painting its two layers ourselves gives the full square artwork back, and
+            // the rounding is then ours to choose.
+            if (icon is AdaptiveIconDrawable) {
+                // Both layers, painted without the launcher's mask, then cropped to the safe zone
+                // the artwork actually lives in. Keeping the whole square would show the outer band
+                // of the background layer — the green frame every launcher hides under its mask.
+                val full = LayerDrawable(arrayOf(icon.background, icon.foreground))
+                    .toBitmap(width = SOURCE, height = SOURCE)
+                val inset = (SOURCE - SOURCE * SAFE_ZONE) / 2f
+                Bitmap.createBitmap(
+                    full,
+                    inset.toInt(),
+                    inset.toInt(),
+                    (SOURCE * SAFE_ZONE).toInt(),
+                    (SOURCE * SAFE_ZONE).toInt(),
+                ).asImageBitmap()
+            } else {
+                icon.toBitmap(width = SOURCE, height = SOURCE).asImageBitmap()
+            }
         }.getOrNull()
     }
 
@@ -56,3 +76,12 @@ fun AppLogo(
         }
     }
 }
+
+/** Side of the bitmap the launcher icon is rendered into. */
+private const val SOURCE = 288
+
+/**
+ * How much of an adaptive icon is guaranteed to hold artwork: 72 of its 108 units. The rest is
+ * bleed the launcher mask eats, and showing it is what put a green band around the logo.
+ */
+private const val SAFE_ZONE = 72f / 108f

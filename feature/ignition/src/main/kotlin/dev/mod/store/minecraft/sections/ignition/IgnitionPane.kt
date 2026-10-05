@@ -202,7 +202,7 @@ private fun Emblem() {
     Box(contentAlignment = Alignment.Center) {
         Box(modifier = Modifier.size(frame).border(1.dp, Palette.Stroke))
 
-        AppLogo(size = side, shape = RectangleShape)
+        AppLogo(size = side)
 
         Canvas(modifier = Modifier.size(frame)) {
             val arm = 14.dp.toPx()

@@ -54,6 +54,8 @@ import dev.mod.store.minecraft.core.ui.component.NoticeHost
 import dev.mod.store.minecraft.core.ui.component.ShimmerBox
 import dev.mod.store.minecraft.core.ui.effect.tappable
 import dev.mod.store.minecraft.core.ui.state.ScreenStage
+import dev.mod.store.minecraft.core.ui.effect.SmallShape
+import androidx.compose.foundation.layout.width
 import dev.mod.store.minecraft.core.ui.theme.Palette
 import dev.mod.store.minecraft.core.ui.util.ObserveSignals
 import dev.mod.store.minecraft.feature.loadout.LoadoutStore.FileItem
@@ -258,14 +260,28 @@ private fun FileCard(item: FileItem, component: LoadoutComponent) {
                     softWrap = false,
                     modifier = Modifier.basicMarquee(iterations = Int.MAX_VALUE),
                 )
-                Text(
-                    text = statusText(item),
-                    color = if (ready) Palette.Positive else Palette.TextFaint,
-                    fontSize = 13.sp,
-                    maxLines = 1,
-                    softWrap = false,
-                    overflow = TextOverflow.Ellipsis,
-                )
+                // Until the size answers there is nothing honest to write, so the line is left
+                // as a shimmering bar — the same promise a messenger makes with hidden text. A
+                // size that never arrives keeps shimmering rather than claiming "unknown".
+                val status = item.status
+                if (status is FileStatus.Idle && item.sizeBytes == null) {
+                    ShimmerBox(
+                        modifier = Modifier
+                            .padding(vertical = 3.dp)
+                            .width(66.dp)
+                            .height(12.dp),
+                        shape = SmallShape,
+                    )
+                } else {
+                    Text(
+                        text = statusText(item),
+                        color = if (ready) Palette.Positive else Palette.TextFaint,
+                        fontSize = 13.sp,
+                        maxLines = 1,
+                        softWrap = false,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             }
 
             when {
@@ -472,7 +488,8 @@ private fun LoadingPage() {
 /** The single line under a file's name. A running download shows [ProgressLine] instead. */
 @Composable
 private fun statusText(item: FileItem): String = when (val status = item.status) {
-    FileStatus.Idle -> formatBytes(item.sizeBytes) ?: stringResource(R.string.loadout_unknown_size)
+    // Only ever called once the size is in; the waiting state is drawn, not written.
+    FileStatus.Idle -> formatBytes(item.sizeBytes).orEmpty()
     is FileStatus.Downloading -> stringResource(R.string.loadout_percent, status.percent)
     FileStatus.Ready -> stringResource(R.string.loadout_ready)
 }

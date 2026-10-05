@@ -14,7 +14,6 @@ internal data class CreationDto(
     @SerialName("files") val files: List<String> = emptyList(),
     @SerialName("versions") val versions: List<VersionDto> = emptyList(),
     @SerialName("rating") val rating: Double = 0.0,
-    @SerialName("commentCounts") val commentCount: Int = 0,
     @SerialName("reactionsCount") val reactionCount: Int = 0,
     @SerialName("createdAt") val createdAt: String = "",
     /** 1-based place in the app's trending selection; null outside it. Needs `appId` on the request. */
