@@ -8,6 +8,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -103,7 +104,11 @@ fun IgnitionPane(
     val ready = state.stage == Stage.Ready
     val progress by animateFloatAsState(
         targetValue = state.progress,
-        animationSpec = tween(320, easing = EaseOutCubic),
+        // The meter is eased while it climbs, and snapped the moment the work is done. Boot ends by
+        // setting the figure to 1 and flipping the stage in the same breath: the loading block
+        // starts fading after 160ms while an eased bar would still be 320ms from the end, so the
+        // last thing anyone saw was a meter stopping at 97% and vanishing.
+        animationSpec = if (state.progress >= 1f) snap() else tween(320, easing = EaseOutCubic),
         label = "boot-progress",
     )
 

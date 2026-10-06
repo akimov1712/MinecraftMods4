@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -96,7 +97,7 @@ fun CompendiumPane(
         if (lines.isNotEmpty()) listState.animateScrollToItem(lines.size)
     }
 
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier.fillMaxSize().statusBarsPadding()) {
         Header(
             canRestart = state.asked.isNotEmpty(),
             onRestart = { component.onIntent(Intent.Restart) },

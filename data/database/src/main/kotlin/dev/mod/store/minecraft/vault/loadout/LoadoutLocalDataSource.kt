@@ -84,6 +84,30 @@ internal class LoadoutLocalDataSource(
         savedFile(fileName).let { it.exists() && it.isFile }
     }
 
+    /**
+     * How many files this app has put on the phone.
+     *
+     * Counted through MediaStore rather than by listing the folder: from Android 10 the download
+     * directory is not ours to read — `ls` on it comes back "permission denied" even for the files
+     * we wrote ourselves — while the MediaStore rows we own are always visible to us. Asking the
+     * file system instead would answer zero on every modern phone.
+     */
+    suspend fun countSaved(): Int = withContext(dispatchers.io) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            runCatching {
+                context.contentResolver.query(
+                    MediaStore.Downloads.EXTERNAL_CONTENT_URI,
+                    arrayOf(MediaStore.Downloads._ID),
+                    "${MediaStore.Downloads.RELATIVE_PATH} LIKE ?",
+                    arrayOf("%${Environment.DIRECTORY_DOWNLOADS}/$SUBDIR%"),
+                    null,
+                )?.use { cursor -> cursor.count }
+            }.getOrNull() ?: 0
+        } else {
+            savedDir().listFiles()?.count { it.isFile } ?: 0
+        }
+    }
+
     suspend fun openInMinecraft(fileName: String): Boolean = withContext(dispatchers.io) {
         val file = savedFile(fileName)
         if (!file.exists() || !file.isFile) return@withContext false
@@ -101,14 +125,34 @@ internal class LoadoutLocalDataSource(
         }.isSuccess
     }
 
-    @Suppress("DEPRECATION")
-    private fun savedFile(name: String): File {
-        val dir = File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-            SUBDIR,
-        )
-        return File(dir, name)
+    /**
+     * Removes every file this app has saved, and reports how many went.
+     *
+     * Deleted through MediaStore for the same reason they are counted there: the folder is not ours
+     * to walk, but the rows we wrote are ours to remove, and no permission dialog is involved
+     * because we own them.
+     */
+    suspend fun clearSaved(): Int = withContext(dispatchers.io) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            runCatching {
+                context.contentResolver.delete(
+                    MediaStore.Downloads.EXTERNAL_CONTENT_URI,
+                    "${MediaStore.Downloads.RELATIVE_PATH} LIKE ?",
+                    arrayOf("%${Environment.DIRECTORY_DOWNLOADS}/$SUBDIR%"),
+                )
+            }.getOrDefault(0)
+        } else {
+            savedDir().listFiles()?.count { it.isFile && it.delete() } ?: 0
+        }
     }
+
+    private fun savedFile(name: String): File = File(savedDir(), name)
+
+    @Suppress("DEPRECATION")
+    private fun savedDir(): File = File(
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+        SUBDIR,
+    )
 
     private suspend inline fun streamWithProgress(
         input: InputStream,

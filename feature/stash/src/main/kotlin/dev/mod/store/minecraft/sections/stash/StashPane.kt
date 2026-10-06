@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,7 +37,7 @@ fun StashPane(
 ) {
     val state by component.state.collectAsState()
 
-    Column(modifier = modifier.fillMaxSize().padding(top = 12.dp)) {
+    Column(modifier = modifier.fillMaxSize().statusBarsPadding().padding(top = 12.dp)) {
         Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
             Text(
                 text = stringResource(R.string.stash_title),

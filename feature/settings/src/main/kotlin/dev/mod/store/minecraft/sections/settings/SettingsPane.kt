@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.HelpOutline
 import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.material.icons.rounded.Bookmark
+import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material.icons.rounded.DeleteSweep
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.StarRate
@@ -88,7 +90,7 @@ fun SettingsPane(
         }.getOrNull().orEmpty()
     }
 
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(modifier = modifier.fillMaxSize().statusBarsPadding()) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(horizontal = SIDE_PADDING, vertical = 14.dp),
@@ -133,15 +135,15 @@ fun SettingsPane(
             item(key = "saved") {
                 SettingsGroup(title = stringResource(R.string.settings_group_data)) {
                     SettingsRow(
-                        icon = Icons.Rounded.Bookmark,
-                        title = stringResource(R.string.settings_saved),
-                        value = state.savedCount.toString(),
+                        icon = Icons.Rounded.Download,
+                        title = stringResource(R.string.settings_downloaded),
+                        value = state.downloadedCount.toString(),
                     )
                     SettingsRow(
                         icon = Icons.Rounded.DeleteSweep,
                         title = stringResource(R.string.settings_clear),
                         tint = Palette.Negative,
-                        enabled = state.savedCount > 0,
+                        enabled = state.downloadedCount > 0,
                         onClick = { component.onIntent(Intent.AskClear) },
                     )
                 }

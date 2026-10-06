@@ -1,6 +1,8 @@
 package dev.mod.store.minecraft.feature.loadout
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -319,7 +321,12 @@ private fun FileCard(item: FileItem, component: LoadoutComponent) {
 private fun ProgressLine(status: FileStatus.Downloading) {
     val fill by animateFloatAsState(
         targetValue = status.fraction,
-        animationSpec = tween(280),
+        // The last step is not animated. The figure beside the bar is the real number, while the
+        // bar is a spring chasing it from up to 280ms behind — so at the moment the file lands the
+        // text said 100% and the bar was still short of the end, and then the row turned into
+        // "saved" and took the unfinished bar with it. Snapping on the final step lets the two
+        // agree on the one frame that matters.
+        animationSpec = if (status.fraction >= 1f) snap() else tween(280, easing = LinearEasing),
         label = "file-fill",
     )
 

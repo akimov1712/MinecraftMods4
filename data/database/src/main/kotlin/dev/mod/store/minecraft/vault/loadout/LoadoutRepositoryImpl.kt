@@ -13,5 +13,9 @@ internal class LoadoutRepositoryImpl(
 
     override suspend fun isDownloaded(fileName: String): Boolean = local.isDownloaded(fileName)
 
+    override suspend fun countDownloaded(): Int = local.countSaved()
+
+    override suspend fun clearDownloaded(): Int = local.clearSaved()
+
     override suspend fun openInMinecraft(fileName: String): Boolean = local.openInMinecraft(fileName)
 }

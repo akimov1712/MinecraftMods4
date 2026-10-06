@@ -1,12 +1,13 @@
 package dev.mod.store.minecraft.feature.hub
 
-import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -14,58 +15,48 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import dev.mod.store.minecraft.core.ui.R
+import dev.mod.store.minecraft.core.ui.effect.SmallShape
 import dev.mod.store.minecraft.core.ui.effect.tappable
 import dev.mod.store.minecraft.core.ui.theme.Palette
 import dev.mod.store.minecraft.feature.compendium.CompendiumPane
 import dev.mod.store.minecraft.feature.settings.SettingsPane
 import dev.mod.store.minecraft.feature.showcase.ShowcasePane
 import dev.mod.store.minecraft.feature.stash.StashPane
-import kotlinx.coroutines.launch
 
-/** Renders the active tab child above the navigation bar. */
+/** Renders the active tab child above the ledge. */
 @Composable
 fun HubPane(
     component: HubComponent,
@@ -79,7 +70,7 @@ fun HubPane(
         containerColor = Color.Transparent,
         contentColor = Palette.TextPrimary,
         bottomBar = {
-            HubBar(
+            HubLedge(
                 activeTab = activeTab,
                 onSelect = component::selectTab,
                 onSearch = component::openSearch,
@@ -90,7 +81,6 @@ fun HubPane(
             stack = component.stack,
             modifier = Modifier
                 .fillMaxSize()
-                .statusBarsPadding()
                 .padding(bottom = innerPadding.calculateBottomPadding()),
         ) { created ->
             when (val child = created.instance) {
@@ -103,263 +93,199 @@ fun HubPane(
     }
 }
 
-private val BarShape = RoundedCornerShape(30.dp)
-private val KeyShape = RoundedCornerShape(22.dp)
+private val LEDGE_HEIGHT = 62.dp
 
-/** Slot order inside the bar; the null slot is search, which is not a destination. */
-private val BarSlots = listOf(HubTab.Showcase, HubTab.Stash, null, HubTab.Compendium, HubTab.Settings)
+/** How far the torch beam reaches down from the rim. */
+private val BEAM_DEPTH = 46.dp
 
-// The bar is built from fixed measurements rather than fractions, because the glow behind the keys
-// is painted by hand and has to land on exactly the same centre line the layout puts the icons on.
+/** The lantern's shape: a block set into the rock, not a button stuck on it. */
+private val LanternShape = RoundedCornerShape(16.dp)
 
-private val BAR_HEIGHT = 82.dp
-
-/** Keeps the outer keys off the rounded rim instead of letting them run into it. */
-private val BAR_INSET = 8.dp
-
-/** Every key reserves the same band for its glyph, whatever size that glyph is drawn at. */
-private val ICON_BAND = 42.dp
-private val KEY_GAP = 3.dp
-private val LABEL_HEIGHT = 15.dp
-
-private val KEY_COLUMN = ICON_BAND + KEY_GAP + LABEL_HEIGHT
+/** Slot order along the ledge; the null slot is search, which is not a destination. */
+private val Slots = listOf(
+    HubTab.Showcase,
+    HubTab.Stash,
+    null,
+    HubTab.Compendium,
+    HubTab.Settings,
+)
 
 /**
- * The bar floats clear of the screen edges and carries no dividers or pills. Five slots of equal
- * width, each one an icon band with its name under it — search included, so the solid key in the
- * middle sits on the same centre line as everything else instead of pushing its neighbours around.
- * What marks the open destination is light: a red aura that glides under the icons and a cap of
- * colour on the rim above it, and every press throws a ring outward from the key you touched.
+ * A ledge rather than a floating bar: it sits flush on the bottom edge like a shelf of rock, with a
+ * hairline rim along its top.
  *
- * The glow, the cap and the rings are painted in one [drawBehind] that reads its animations straight
- * from [Animatable]s — the draw phase repeats each frame, the composition does not.
+ * Four of the five slots are destinations and one is lit at a time: a torch beam falls from the rim
+ * onto it and only that one says its name, the rest staying glyphs in the dark. The middle slot is
+ * not a destination at all — it is a lantern set into the rock, raised above the rim and burning on
+ * its own, because searching is something you *do* rather than somewhere you *are*.
+ *
+ * The beam and the lantern's halo are painted in one [drawBehind] reading an [Animatable], so the
+ * light travels every frame without recomposing the keys.
  */
 @Composable
-private fun HubBar(
+private fun HubLedge(
     activeTab: HubTab,
     onSelect: (HubTab) -> Unit,
     onSearch: () -> Unit,
 ) {
-    val activeSlot = BarSlots.indexOf(activeTab).coerceAtLeast(0)
-    val aura = remember { Animatable(activeSlot.toFloat()) }
-    val spread = remember { Animatable(1f) }
-    var spreadSlot by remember { mutableIntStateOf(activeSlot) }
-    val scope = rememberCoroutineScope()
+    val activeSlot = Slots.indexOf(activeTab).coerceAtLeast(0)
+    val beam = remember { Animatable(activeSlot.toFloat()) }
 
     LaunchedEffect(activeSlot) {
-        aura.animateTo(
+        beam.animateTo(
             targetValue = activeSlot.toFloat(),
-            animationSpec = spring(dampingRatio = 0.62f, stiffness = Spring.StiffnessLow),
+            animationSpec = spring(dampingRatio = 0.75f, stiffness = Spring.StiffnessMediumLow),
         )
-    }
-
-    fun burst(slot: Int) {
-        spreadSlot = slot
-        scope.launch {
-            spread.snapTo(0f)
-            spread.animateTo(1f, tween(durationMillis = 560, easing = FastOutSlowInEasing))
-        }
     }
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .navigationBarsPadding()
-            .padding(horizontal = 16.dp, vertical = 10.dp)
-            .height(BAR_HEIGHT)
-            // Kept shallow on purpose: a drop shadow is always cast downwards, so a tall one
-            // pools into the gesture strip below the bar and reads as a red smear that the bar
-            // seems to have left behind. This is just enough to lift the bar off the list.
-            .shadow(
-                elevation = 8.dp,
-                shape = BarShape,
-                ambientColor = Palette.Accent.copy(alpha = 0.5f),
-                spotColor = Palette.Accent.copy(alpha = 0.5f),
-            )
-            .clip(BarShape)
             .background(Palette.Surface)
-            .border(1.dp, Palette.Stroke, BarShape)
             .drawBehind {
-                val inset = BAR_INSET.toPx()
-                val slot = (size.width - inset * 2f) / BarSlots.size
+                val slot = size.width / Slots.size
+                val beamCentre = slot * (beam.value + 0.5f)
+                val lanternCentre = slot * 2.5f
 
-                /** Centre of the slot a key occupies — the same maths the Row lays keys out with. */
-                fun slotCentre(index: Float) = inset + slot * (index + 0.5f)
+                // The rim: a dark hairline the whole way across, bright only under the torch.
+                drawRect(color = Palette.Stroke, size = Size(size.width, 1.dp.toPx()))
+                drawRect(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(Color.Transparent, Palette.Accent, Color.Transparent),
+                        startX = beamCentre - slot * 0.5f,
+                        endX = beamCentre + slot * 0.5f,
+                    ),
+                    topLeft = Offset(beamCentre - slot * 0.5f, 0f),
+                    size = Size(slot, 2.dp.toPx()),
+                )
 
-                // The centre line of the icon band, so the glow sits on the glyphs and not below.
-                val row = (size.height - KEY_COLUMN.toPx()) / 2f + ICON_BAND.toPx() / 2f
+                // The beam, falling from the rim onto the lit key.
+                val depth = BEAM_DEPTH.toPx()
+                drawRect(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Palette.Accent.copy(alpha = 0.22f),
+                            Palette.Accent.copy(alpha = 0.07f),
+                            Color.Transparent,
+                        ),
+                        startY = 0f,
+                        endY = depth,
+                    ),
+                    topLeft = Offset(beamCentre - slot * 0.42f, 0f),
+                    size = Size(slot * 0.84f, depth),
+                )
 
-                // The aura under the open destination.
-                val auraX = slotCentre(aura.value)
-                val auraR = slot * 1.05f
+                // The lantern's own halo, which never moves.
+                val halo = slot * 0.62f
                 drawCircle(
                     brush = Brush.radialGradient(
                         colors = listOf(
-                            Palette.Accent.copy(alpha = 0.46f),
-                            Palette.Accent.copy(alpha = 0.13f),
+                            Palette.Accent.copy(alpha = 0.30f),
+                            Palette.Accent.copy(alpha = 0.08f),
                             Color.Transparent,
                         ),
-                        center = Offset(auraX, row),
-                        radius = auraR,
+                        center = Offset(lanternCentre, 6.dp.toPx()),
+                        radius = halo,
                     ),
-                    radius = auraR,
-                    center = Offset(auraX, row),
+                    radius = halo,
+                    center = Offset(lanternCentre, 6.dp.toPx()),
                 )
-
-                // Its cap, set just inside the rim so the rounded corners never clip it.
-                val capHeight = 4.dp.toPx()
-                val capWidth = slot * 0.42f
-                drawRoundRect(
-                    color = Palette.Accent,
-                    topLeft = Offset(auraX - capWidth / 2f, 7.dp.toPx()),
-                    size = Size(capWidth, capHeight),
-                    cornerRadius = CornerRadius(capHeight),
-                )
-
-                // The spread thrown by the last press.
-                val p = spread.value
-                if (p < 1f) {
-                    val burstX = slotCentre(spreadSlot.toFloat())
-                    drawCircle(
-                        color = Palette.Accent.copy(alpha = 0.38f * (1f - p)),
-                        radius = p * slot * 1.7f,
-                        center = Offset(burstX, row),
-                        style = Stroke(width = (1f + 2.5f * (1f - p)).dp.toPx()),
-                    )
-                    drawCircle(
-                        color = Palette.AccentSoft.copy(alpha = 0.26f * (1f - p)),
-                        radius = p * slot * 1.05f,
-                        center = Offset(burstX, row),
-                        style = Stroke(width = 1.5.dp.toPx()),
-                    )
-                }
             }
-            .padding(horizontal = BAR_INSET),
+            .navigationBarsPadding()
+            .height(LEDGE_HEIGHT),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        BarSlots.forEachIndexed { index, tab ->
+        Slots.forEach { tab ->
             if (tab == null) {
-                SearchKey(
-                    onClick = {
-                        burst(index)
-                        onSearch()
-                    },
-                )
+                Lantern(onClick = onSearch)
             } else {
-                HubKey(
-                    tab = tab,
-                    active = tab == activeTab,
-                    onClick = {
-                        burst(index)
-                        onSelect(tab)
-                    },
-                )
+                LedgeKey(tab = tab, lit = tab == activeTab, onClick = onSelect.let { { it(tab) } })
             }
         }
     }
 }
 
 /**
- * The shape every slot shares: one band of fixed height for the glyph, its name directly under it,
- * the pair centred in the bar. Because the band is the same height for a 25dp icon and a 42dp disc,
- * all five glyphs land on one line and all five names on another.
+ * Search: the one key that is filled rather than drawn, lifted clear of the rim so it reads as an
+ * object sitting on the ledge instead of another glyph cut into it.
  */
 @Composable
-private fun RowScope.BarKey(
-    label: String,
-    tint: Color,
-    bold: Boolean,
-    pressedScale: Float,
-    onClick: () -> Unit,
-    glyph: @Composable () -> Unit,
-) {
+private fun RowScope.Lantern(onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .weight(1f)
-            .fillMaxHeight()
-            .clip(KeyShape)
-            .tappable(pressedScale = pressedScale, onClick = onClick),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(ICON_BAND),
-            contentAlignment = Alignment.Center,
-            content = { glyph() },
-        )
-        Spacer(Modifier.height(KEY_GAP))
-        Text(
-            text = label,
-            color = tint,
-            fontSize = 11.sp,
-            lineHeight = 15.sp,
-            fontWeight = if (bold) FontWeight.Bold else FontWeight.Medium,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth(),
-        )
-    }
-}
-
-/** Search: the one key painted solid, so "do" never looks like "go". */
-@Composable
-private fun RowScope.SearchKey(onClick: () -> Unit) {
-    BarKey(
-        label = stringResource(R.string.hub_search),
-        tint = Palette.AccentSoft,
-        bold = true,
-        pressedScale = 0.88f,
-        onClick = onClick,
-    ) {
-        Box(
-            modifier = Modifier
-                .size(42.dp)
-                .clip(CircleShape)
-                .background(Palette.Accent),
+                .offset(y = (-13).dp)
+                .size(48.dp)
+                .clip(LanternShape)
+                .tappable(pressedScale = 0.88f, onClick = onClick)
+                .background(Palette.Accent)
+                .border(2.dp, Palette.Canvas.copy(alpha = 0.55f), LanternShape),
             contentAlignment = Alignment.Center,
         ) {
             Icon(
-                imageVector = Icons.Filled.Search,
+                imageVector = Icons.Rounded.Search,
                 contentDescription = stringResource(R.string.hub_search),
                 tint = Palette.OnAccentDark,
-                modifier = Modifier.size(23.dp),
+                modifier = Modifier.size(24.dp),
             )
         }
+        Text(
+            text = stringResource(R.string.hub_search),
+            color = Palette.Accent,
+            fontSize = 11.sp,
+            lineHeight = 14.sp,
+            fontWeight = FontWeight.Bold,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.offset(y = (-9).dp),
+        )
     }
 }
 
-/** A destination key: solid icon that swells inside the aura, name underneath. */
+/** A glyph in the dark; when the torch reaches it, its name unfolds underneath. */
 @Composable
-private fun RowScope.HubKey(
+private fun RowScope.LedgeKey(
     tab: HubTab,
-    active: Boolean,
+    lit: Boolean,
     onClick: () -> Unit,
 ) {
-    val tint by animateColorAsState(
-        targetValue = if (active) Palette.OnAccent else Palette.TextFaint,
-        label = "key-tint",
-    )
-    val icon by animateDpAsState(
-        targetValue = if (active) 28.dp else 25.dp,
-        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
-        label = "key-icon",
-    )
-
-    BarKey(
-        label = stringResource(tab.labelRes),
-        tint = tint,
-        bold = active,
-        pressedScale = 0.9f,
-        onClick = onClick,
+    Column(
+        modifier = Modifier
+            .weight(1f)
+            .fillMaxWidth()
+            .clip(SmallShape)
+            .tappable(pressedScale = 0.92f, onClick = onClick)
+            .padding(vertical = 6.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
         Icon(
             imageVector = tab.icon,
-            contentDescription = null,
-            tint = tint,
-            modifier = Modifier.size(icon),
+            contentDescription = stringResource(tab.labelRes),
+            tint = if (lit) Palette.Accent else Palette.TextFaint,
+            modifier = Modifier.size(if (lit) 25.dp else 23.dp),
         )
+        AnimatedVisibility(
+            visible = lit,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically(),
+        ) {
+            Text(
+                text = stringResource(tab.labelRes),
+                color = Palette.AccentSoft,
+                fontSize = 11.sp,
+                lineHeight = 14.sp,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(top = 3.dp),
+            )
+        }
     }
 }

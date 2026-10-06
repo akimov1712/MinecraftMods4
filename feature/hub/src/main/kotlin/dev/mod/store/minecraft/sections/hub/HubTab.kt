@@ -3,22 +3,23 @@ package dev.mod.store.minecraft.feature.hub
 import dev.mod.store.minecraft.core.ui.R
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Support
+import androidx.compose.material.icons.rounded.Explore
+import androidx.compose.material.icons.rounded.Handyman
+import androidx.compose.material.icons.rounded.Inventory2
+import androidx.compose.material.icons.rounded.Lightbulb
 import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
- * The tabbed destinations. Icons are solid throughout — the bar reads as one set rather than a
- * mix of outlines and fills.
+ * The four places you can be. The glyphs are objects rather than symbols — a compass to find your
+ * way, a chest for what you kept, a lamp for an answer, tools for everything else — which is how
+ * the game itself labels things.
  */
 enum class HubTab(
     @param:StringRes val labelRes: Int,
     val icon: ImageVector,
 ) {
-    Showcase(R.string.hub_tab_showcase, Icons.Filled.Home),
-    Stash(R.string.hub_tab_stash, Icons.Filled.Bookmark),
-    Compendium(R.string.hub_tab_compendium, Icons.Filled.Support),
-    Settings(R.string.hub_tab_settings, Icons.Filled.Settings),
+    Showcase(R.string.hub_tab_showcase, Icons.Rounded.Explore),
+    Stash(R.string.hub_tab_stash, Icons.Rounded.Inventory2),
+    Compendium(R.string.hub_tab_compendium, Icons.Rounded.Lightbulb),
+    Settings(R.string.hub_tab_settings, Icons.Rounded.Handyman),
 }

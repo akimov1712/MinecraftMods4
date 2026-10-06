@@ -10,6 +10,8 @@ import dev.mod.store.minecraft.domain.creation.FetchCreationUseCase
 import dev.mod.store.minecraft.domain.creation.FetchFileSizeUseCase
 import dev.mod.store.minecraft.domain.creation.FetchShowcaseUseCase
 import dev.mod.store.minecraft.domain.loadout.DownloadCreationUseCase
+import dev.mod.store.minecraft.domain.loadout.ClearDownloadedFilesUseCase
+import dev.mod.store.minecraft.domain.loadout.CountDownloadedFilesUseCase
 import dev.mod.store.minecraft.domain.loadout.IsCreationDownloadedUseCase
 import dev.mod.store.minecraft.domain.loadout.OpenCreationFileUseCase
 import dev.mod.store.minecraft.domain.loadout.RecordDownloadUseCase
@@ -34,6 +36,8 @@ val domainModule = module {
     single { FetchConfigUseCase(get(), get()) }
     single { DownloadCreationUseCase(get()) }
     single { IsCreationDownloadedUseCase(get()) }
+    single { CountDownloadedFilesUseCase(get()) }
+    single { ClearDownloadedFilesUseCase(get()) }
     single { OpenCreationFileUseCase(get()) }
     single { RecordDownloadUseCase(get(), get()) }
     single { FetchReactionsUseCase(get(), get()) }

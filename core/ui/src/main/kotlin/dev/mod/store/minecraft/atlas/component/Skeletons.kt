@@ -26,22 +26,22 @@ import dev.mod.store.minecraft.core.ui.effect.SmallShape
  */
 
 /** Stands in for [CreationCard]: wide cover left, three lines of varying length right. */
+private val CardSkeletonShape = androidx.compose.foundation.shape.RoundedCornerShape(18.dp)
+
 @Composable
 fun CreationCardSkeleton(modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         ShimmerBox(
             modifier = Modifier
-                .width(150.dp)
-                .aspectRatio(1.35f),
-            shape = SmallShape,
+                .fillMaxWidth()
+                .aspectRatio(16f / 9f),
+            shape = CardSkeletonShape,
         )
         Column(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             ShimmerBox(

@@ -76,7 +76,7 @@ private val PURPOSES = listOf(
     Purpose(
         mode = OutreachMode.Recommendation,
         icon = Icons.Rounded.Lightbulb,
-        accent = Palette.Violet,
+        accent = Palette.Amethyst,
         titleRes = R.string.outreach_mode_recommend,
         bodyRes = R.string.outreach_mode_recommend_body,
         hintRes = R.string.outreach_message_recommend_hint,

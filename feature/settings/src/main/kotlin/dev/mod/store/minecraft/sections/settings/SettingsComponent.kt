@@ -7,8 +7,9 @@ import dev.mod.store.minecraft.core.ads.ScreenAds
 import dev.mod.store.minecraft.domain.config.AdPlacement
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
-import dev.mod.store.minecraft.domain.bookmark.ClearBookmarksUseCase
-import dev.mod.store.minecraft.domain.bookmark.ObserveBookmarkCountUseCase
+import com.arkivanov.essenty.lifecycle.doOnResume
+import dev.mod.store.minecraft.domain.loadout.ClearDownloadedFilesUseCase
+import dev.mod.store.minecraft.domain.loadout.CountDownloadedFilesUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import org.koin.core.component.KoinComponent
@@ -33,11 +34,21 @@ class DefaultSettingsComponent(
 
     private val storeFactory: StoreFactory by inject()
     private val screenAds: ScreenAds by inject()
-    private val observeBookmarkCount: ObserveBookmarkCountUseCase by inject()
-    private val clearBookmarks: ClearBookmarksUseCase by inject()
+    private val countDownloadedFiles: CountDownloadedFilesUseCase by inject()
+    private val clearDownloadedFiles: ClearDownloadedFilesUseCase by inject()
 
     private val store = instanceKeeper.getStore {
-        SettingsStoreFactory(storeFactory, observeBookmarkCount, clearBookmarks).create()
+        SettingsStoreFactory(
+            storeFactory = storeFactory,
+            countDownloadedFiles = countDownloadedFiles,
+            clearDownloadedFiles = clearDownloadedFiles,
+        ).create()
+    }
+
+    init {
+        // Files arrive while this screen sits in the background, so the figure is re-read every
+        // time the tab comes back rather than once when the component is built.
+        lifecycle.doOnResume { store.accept(SettingsStore.Intent.Refresh) }
     }
 
     override val hasNativeAd: Boolean

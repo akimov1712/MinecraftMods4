@@ -31,6 +31,13 @@ enum class CreationCategory {
 
     companion object {
         /**
+         * The order these are offered to a reader: add-ons first because they are what most people
+         * come for, then maps, textures and skins. Declaration order is a different thing and must
+         * not be used for this — it exists for the wire format, not for the shelf.
+         */
+        val browseOrder: List<CreationCategory> = listOf(Addon, Maps, Texture, Skin)
+
+        /**
          * Resolves the category reported inside a creation payload, defaulting to [Addon].
          *
          * The backend is not consistent about which spelling it sends: a creation reports `WORLD`

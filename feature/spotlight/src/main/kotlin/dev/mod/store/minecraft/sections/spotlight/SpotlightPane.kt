@@ -126,9 +126,11 @@ private val GUTTER = 20.dp
 /** The air between two blocks. Nothing on this page touches anything else. */
 private val BLOCK_GAP = 14.dp
 
-private val BLOCK_SHAPE = RoundedCornerShape(20.dp)
-private val TILE_SHAPE = RoundedCornerShape(14.dp)
-private val SHEET_SHAPE = RoundedCornerShape(topStart = 26.dp, topEnd = 26.dp)
+// Stone is cut, not moulded: every corner on this page is a small, equal bevel.
+private val BLOCK_SHAPE = RoundedCornerShape(12.dp)
+private val TILE_SHAPE = RoundedCornerShape(10.dp)
+private val TAG_SHAPE = RoundedCornerShape(7.dp)
+private val SHEET_SHAPE = RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp)
 
 private const val DESCRIPTION_LINES = 6
 
@@ -334,9 +336,16 @@ private fun Cover(creation: CreationEntity, onOpen: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(1.35f)
+            // The artwork is a framed picture now, not a full-bleed banner, so it starts below the
+            // clock instead of running under it.
+            .statusBarsPadding()
+            .padding(horizontal = GUTTER)
+            .padding(top = 52.dp)
+            .aspectRatio(1.5f)
+            .clip(BLOCK_SHAPE)
             .background(Palette.Surface)
-            .tappable(pressedScale = 1f, onClick = onOpen),
+            .border(1.dp, Palette.Stroke, BLOCK_SHAPE)
+            .tappable(pressedScale = 0.99f, onClick = onOpen),
     ) {
         RemoteImage(
             url = creation.imageUrl,
@@ -350,10 +359,10 @@ private fun Cover(creation: CreationEntity, onOpen: () -> Unit) {
                 .fillMaxSize()
                 .background(
                     Brush.verticalGradient(
-                        0f to Palette.Canvas.copy(alpha = 0.70f),
-                        0.28f to Color.Transparent,
-                        0.78f to Color.Transparent,
-                        1f to Palette.Canvas,
+                        0f to Palette.Canvas.copy(alpha = 0.55f),
+                        0.26f to Color.Transparent,
+                        0.70f to Color.Transparent,
+                        1f to Palette.Canvas.copy(alpha = 0.72f),
                     ),
                 ),
         )
@@ -363,11 +372,11 @@ private fun Cover(creation: CreationEntity, onOpen: () -> Unit) {
             Row(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(end = GUTTER, bottom = 14.dp)
-                    .clip(CircleShape)
+                    .padding(end = 12.dp, bottom = 12.dp)
+                    .clip(TAG_SHAPE)
                     .background(Palette.Scrim)
-                    .border(1.dp, Palette.GlassStroke, CircleShape)
-                    .padding(horizontal = 12.dp, vertical = 7.dp),
+                    .border(1.dp, Palette.GlassStroke, TAG_SHAPE)
+                    .padding(horizontal = 10.dp, vertical = 6.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
             ) {
@@ -404,9 +413,10 @@ private fun Identity(creation: CreationEntity) {
         ) {
             Row(
                 modifier = Modifier
-                    .clip(CircleShape)
-                    .background(accent.copy(alpha = 0.16f))
-                    .padding(horizontal = 12.dp, vertical = 7.dp),
+                    .clip(TAG_SHAPE)
+                    .background(Palette.Surface)
+                    .border(1.dp, accent.copy(alpha = 0.55f), TAG_SHAPE)
+                    .padding(horizontal = 11.dp, vertical = 7.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
             ) {
@@ -503,26 +513,42 @@ private fun GetFiles(creation: CreationEntity, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = GUTTER)
-            .clip(CircleShape)
+            .clip(BLOCK_SHAPE)
             .background(Palette.Accent)
             .tappable(pressedScale = 0.97f, onClick = onClick)
-            .padding(vertical = 16.dp),
+            .padding(horizontal = 14.dp, vertical = 13.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Icon(
-            imageVector = Icons.Filled.Download,
-            contentDescription = null,
-            tint = Palette.OnAccentDark,
-            modifier = Modifier.size(21.dp),
-        )
+        Box(
+            modifier = Modifier
+                .size(34.dp)
+                .clip(TAG_SHAPE)
+                .background(Palette.OnAccentDark.copy(alpha = 0.16f)),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Download,
+                contentDescription = null,
+                tint = Palette.OnAccentDark,
+                modifier = Modifier.size(19.dp),
+            )
+        }
         Text(
             text = stringResource(R.string.spotlight_get_files),
             color = Palette.OnAccentDark,
             fontSize = 17.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(start = 9.dp),
+            modifier = Modifier.weight(1f),
         )
+        if (creation.fileUrls.size > 1) {
+            Text(
+                text = creation.fileUrls.size.toString(),
+                color = Palette.OnAccentDark,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Bold,
+            )
+        }
     }
 }
 
@@ -534,10 +560,10 @@ private fun GetFiles(creation: CreationEntity, onClick: () -> Unit) {
 private fun TrendingBadge(place: Int) {
     Row(
         modifier = Modifier
-            .clip(CircleShape)
-            .background(Palette.Accent.copy(alpha = 0.14f))
-            .border(1.dp, Palette.Accent.copy(alpha = 0.35f), CircleShape)
-            .padding(horizontal = 12.dp, vertical = 7.dp),
+            .clip(TAG_SHAPE)
+            .background(Palette.Accent.copy(alpha = 0.13f))
+            .border(1.dp, Palette.Accent.copy(alpha = 0.45f), TAG_SHAPE)
+            .padding(horizontal = 11.dp, vertical = 7.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
@@ -635,7 +661,7 @@ private fun ReactionKey(
         label = "reaction-border",
     )
     val fill by animateColorAsState(
-        targetValue = if (selected) Palette.Accent.copy(alpha = 0.16f) else Palette.Surface,
+        targetValue = if (selected) Palette.Accent.copy(alpha = 0.20f) else Palette.Canvas,
         label = "reaction-fill",
     )
 
@@ -644,6 +670,7 @@ private fun ReactionKey(
             .clip(TILE_SHAPE)
             .background(fill)
             .border(if (selected) 1.5.dp else 1.dp, border, TILE_SHAPE)
+            .padding(horizontal = 2.dp)
             .semantics { contentDescription = label }
             .tappable(enabled = enabled, pressedScale = 0.92f, onClick = onClick)
             .padding(vertical = 10.dp),
@@ -715,19 +742,19 @@ private fun ChapterRail(
                         verticalArrangement = Arrangement.Center,
                     ) {
                         Text(
-                            text = stringResource(entry.labelRes),
-                            color = if (live) Palette.TextPrimary else Palette.TextFaint,
-                            fontSize = 15.sp,
+                            text = stringResource(entry.labelRes).uppercase(),
+                            color = if (live) Palette.Accent else Palette.TextFaint,
+                            fontSize = 12.sp,
+                            letterSpacing = 1.1.sp,
                             fontWeight = if (live) FontWeight.Bold else FontWeight.Medium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
-                        Spacer(Modifier.height(8.dp))
+                        Spacer(Modifier.height(9.dp))
                         Box(
                             modifier = Modifier
-                                .width(if (live) 26.dp else 0.dp)
-                                .height(3.dp)
-                                .clip(CircleShape)
+                                .width(if (live) slot - 18.dp else 0.dp)
+                                .height(2.dp)
                                 .background(Palette.Accent),
                         )
                     }
@@ -762,23 +789,33 @@ private fun Block(
             .padding(horizontal = GUTTER)
             .clip(BLOCK_SHAPE)
             .background(Palette.Surface)
-            .padding(horizontal = 16.dp, vertical = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(14.dp),
+            .border(1.dp, Palette.Stroke, BLOCK_SHAPE)
+            .padding(horizontal = 15.dp, vertical = 15.dp),
+        verticalArrangement = Arrangement.spacedBy(13.dp),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(9.dp),
         ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = Palette.AccentSoft,
-                modifier = Modifier.size(19.dp),
-            )
+            Box(
+                modifier = Modifier
+                    .size(26.dp)
+                    .clip(TAG_SHAPE)
+                    .background(Palette.Accent.copy(alpha = 0.14f)),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = Palette.Accent,
+                    modifier = Modifier.size(15.dp),
+                )
+            }
             Text(
-                text = title,
-                color = Palette.TextPrimary,
-                fontSize = 17.sp,
+                text = title.uppercase(),
+                color = Palette.TextMuted,
+                fontSize = 12.sp,
+                letterSpacing = 1.3.sp,
                 fontWeight = FontWeight.Bold,
             )
         }
@@ -1034,7 +1071,7 @@ private fun LazyListScope.overviewChapter(
             icon = Icons.Filled.Upload,
             title = stringResource(R.string.spotlight_suggest),
             subtitle = stringResource(R.string.spotlight_suggest_sub),
-            tint = Palette.Violet,
+            tint = Palette.Amethyst,
             onClick = component::openOutreach,
         )
     }
